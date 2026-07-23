@@ -626,10 +626,6 @@ void muleToolbar(wxToolBar *parent);
 
 wxBitmap clientImages(size_t index);
 
-wxBitmap dlStatusImages(size_t index);
-
-wxBitmap connImages(size_t index);
-
 wxBitmap moreImages(size_t index);
 
 wxBitmap amuleSpecial(size_t index);

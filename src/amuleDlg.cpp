@@ -77,6 +77,8 @@
 #include "PartFileConvertDlg.h"
 #endif
 #include "IPFilter.h"
+#include "CamuleArtProvider.h" // Needed for CamuleArtProvider::MakeId
+#include "CCtypeAsciiScope.h"  // Needed for locale-safe ASCII lowercasing of art ids
 
 #include <wx/artprov.h> // Needed for wxArtProvider::GetIcon
 
@@ -811,14 +813,6 @@ void CamuleDlg::AddServerMessageLine(wxString &message)
 
 void CamuleDlg::ShowConnectionState(bool skinChanged)
 {
-	static wxImageList status_arrows(16, 16, true, 0);
-	if (!status_arrows.GetImageCount()) {
-		// Generate the image list (This is only done once)
-		for (int t = 0; t < 7; ++t) {
-			status_arrows.Add(connImages(t));
-		}
-	}
-
 	// Wipe the Server Info text ctrl on any transition that leaves it
 	// showing messages from a server we're no longer talking to:
 	//   1) connected -> disconnected
@@ -1013,16 +1007,58 @@ void CamuleDlg::ShowConnectionState(bool skinChanged)
 		wxStaticBitmap *connBitmap = CastChild("connImage", wxStaticBitmap);
 		wxCHECK_RET(connBitmap, "'connImage' widget not found");
 
-		wxBitmap statusIcon = connBitmap->GetBitmap();
+		// Overlay art ids, indexed by the ED2KState / EKadState enums
+		// above (the Kad table is offset by EKadOff).
+		static const char *const ed2kArt[] = { "amule:status_conn_ed2k_off",
+			"amule:status_conn_ed2k_low",
+			"amule:status_conn_ed2k_connecting",
+			"amule:status_conn_ed2k_high" };
+		static const char *const kadArt[] = { "amule:status_conn_kad_off",
+			"amule:status_conn_kad_firewalled",
+			"amule:status_conn_kad_ok" };
+
+		// Compose the globe from the base art plus one overlay arrow per
+		// network. GetBitmapFor rasterizes each bundle at this window's
+		// DPI scale, so the SVG art stays crisp on hi-DPI displays.
+		const wxBitmap baseIcon =
+			wxArtProvider::GetBitmapBundle("amule:status_conn_base").GetBitmapFor(connBitmap);
 		// Sanity check - otherwise there's a crash here if aMule runs out of resources
-		if (statusIcon.GetRefData() == NULL) {
+		if (!baseIcon.IsOk()) {
 			return;
 		}
 
-		wxMemoryDC bitmapDC(statusIcon);
+		// GetBitmapFor() hands back the art-provider-cached bundle's own
+		// (copy-on-write) bitmap, and a wxMemoryDC draws into that shared
+		// pixel buffer without unsharing it. Compositing the overlays
+		// straight onto it would stamp the arrows into the cached base, so
+		// they would accumulate on every later state change (and poison the
+		// base for any other consumer of the bundle). Draw into a private
+		// deep copy instead. The overlays are fetched the same way, so they
+		// share baseIcon's scale factor and line up during compositing.
+		wxBitmap statusIcon(baseIcon.ConvertToImage(), -1, baseIcon.GetScaleFactor());
 
-		status_arrows.Draw(kadState, bitmapDC, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
-		status_arrows.Draw(ed2kState, bitmapDC, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
+		{
+			wxMemoryDC bitmapDC(statusIcon);
+
+			bitmapDC.DrawBitmap(wxArtProvider::GetBitmapBundle(kadArt[kadState - EKadOff])
+						    .GetBitmapFor(connBitmap),
+				0,
+				0,
+				true);
+			bitmapDC.DrawBitmap(
+				wxArtProvider::GetBitmapBundle(ed2kArt[ed2kState]).GetBitmapFor(connBitmap),
+				0,
+				0,
+				true);
+		}
+
+		// GetBitmapFor() returns an *unscaled* bitmap (scale factor 1.0) whose
+		// pixel size already matches the window DPI. Setting it on the static
+		// bitmap as-is renders the globe DPI-scale times larger than the sibling
+		// status icons, which are bundle-backed and size themselves in logical
+		// units. Stamp the window's scale factor on the composite so its logical
+		// size matches theirs (a no-op at 100% DPI).
+		statusIcon.SetScaleFactor(connBitmap->GetDPIScaleFactor());
 
 		connBitmap->SetBitmap(statusIcon);
 	}
@@ -1096,7 +1132,12 @@ void CamuleDlg::ShowTransferRate()
 	}
 
 	wxStaticBitmap *bmp = CastChild("transferImg", wxStaticBitmap);
-	bmp->SetBitmap(dlStatusImages((kBpsUp > 0.01 ? 2 : 0) + (kBpsDown > 0.01 ? 1 : 0)));
+	static const char *const speedArt[] = { "amule:status_speed_idle",
+		"amule:status_speed_down",
+		"amule:status_speed_up",
+		"amule:status_speed_both" };
+	bmp->SetBitmap(wxArtProvider::GetBitmapBundle(
+		speedArt[(kBpsUp > 0.01 ? 2 : 0) + (kBpsDown > 0.01 ? 1 : 0)]));
 }
 
 void CamuleDlg::DlgShutDown()
@@ -1576,6 +1617,26 @@ void CamuleDlg::Add_Skin_Icon(const wxString &iconName, const wxBitmap &stdIcon,
 	if (iconName.StartsWith("Client_")) {
 		m_imagelist.Add(bmp);
 	} else if (iconName.StartsWith("Toolbar_")) {
+		if (!useSkins) {
+			// The built-in toolbar art ships as an SVG twin through
+			// CamuleArtProvider ("amule:toolbar_<name>"), which wx
+			// rasterizes at whatever size/DPI the toolbar asks for.
+			// An active skin keeps full control: its PNG takes the
+			// raster path below instead.
+			// Fold "Toolbar_Foo" to the "toolbar_foo" art id.
+			// CCtypeAsciiScope pins LC_CTYPE to "C" so wxString::Lower()
+			// stays ASCII-correct: in a Turkic locale it would otherwise
+			// map 'I' to the dotless 'ı' and "Toolbar_Import" would no
+			// longer match the embedded id (same helper the GeoIP flag
+			// lookup uses).
+			CCtypeAsciiScope asciiCtype;
+			wxBitmapBundle art = wxArtProvider::GetBitmapBundle(
+				CamuleArtProvider::MakeId(iconName.Lower()), wxART_TOOLBAR, wxSize(32, 32));
+			if (art.IsOk()) {
+				m_tblist.push_back(art);
+				return;
+			}
+		}
 		// The toolbar art only exists at one (32x32) size. Store it as a
 		// wxBitmapBundle with a smooth 2x upscale so DPI-aware toolbars
 		// pick a correctly sized bitmap on hi-DPI screens instead of

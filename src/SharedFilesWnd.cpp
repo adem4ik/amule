@@ -23,6 +23,7 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
 //
 
+#include <wx/artprov.h> // Needed for the "amule:" art ids
 #include <wx/config.h>
 #include <wx/gauge.h> // Do_not_auto_remove (win32)
 #include <wx/radiobut.h>
@@ -326,10 +327,11 @@ void CSharedFilesWnd::OnToggleClientList(wxCommandEvent &WXUNUSED(evt))
 
 		peerslistctrl->SetShowing(true);
 
-		button->SetBitmapLabel(amuleDlgImages(10));
-		button->SetBitmapFocus(amuleDlgImages(10));
-		button->SetBitmapSelected(amuleDlgImages(10));
-		button->SetBitmapHover(amuleDlgImages(10));
+		const wxBitmapBundle art = wxArtProvider::GetBitmapBundle("amule:arrows_down");
+		button->SetBitmapLabel(art);
+		button->SetBitmapFocus(art);
+		button->SetBitmapPressed(art);
+		button->SetBitmapCurrent(art);
 	} else {
 		peerslistctrl->SetShowing(false);
 
@@ -341,10 +343,11 @@ void CSharedFilesWnd::OnToggleClientList(wxCommandEvent &WXUNUSED(evt))
 
 		splitter->SetSashPosition(height);
 
-		button->SetBitmapLabel(amuleDlgImages(11));
-		button->SetBitmapFocus(amuleDlgImages(11));
-		button->SetBitmapSelected(amuleDlgImages(11));
-		button->SetBitmapHover(amuleDlgImages(11));
+		const wxBitmapBundle art = wxArtProvider::GetBitmapBundle("amule:arrows_up");
+		button->SetBitmapLabel(art);
+		button->SetBitmapFocus(art);
+		button->SetBitmapPressed(art);
+		button->SetBitmapCurrent(art);
 	}
 }
 

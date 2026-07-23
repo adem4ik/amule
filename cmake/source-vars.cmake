@@ -55,9 +55,10 @@ if (BUILD_MONOLITHIC OR BUILD_REMOTEGUI)
 		# wxArtProvider subclass + the C TU it pulls icon bytes
 		# from. ${AMULE_ICON_DATA_C} resolves to either the build-
 		# generated copy (Python3 found at configure → regenerated
-		# from src/icons/*.png by src/icons/embed_icons.py) or the
-		# checked-in fallback (Python3 missing → use the file as
-		# committed). See src/CMakeLists.txt for the resolution.
+		# from src/icons/*.png and their .svg twins by
+		# src/icons/embed_icons.py) or the checked-in fallback
+		# (Python3 missing → use the file as committed). See
+		# src/CMakeLists.txt for the resolution.
 		CamuleArtProvider.cpp
 		${AMULE_ICON_DATA_C}
 		AddFriend.cpp

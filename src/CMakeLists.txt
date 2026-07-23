@@ -46,8 +46,9 @@ add_compile_options (
 	$<$<CXX_COMPILER_ID:Clang,AppleClang>:-Werror=inconsistent-missing-override>
 )
 
-# Embed every PNG under src/icons/ as a static byte-array table in a
-# generated C TU (see src/icons/embed_icons.py for the format).
+# Embed every PNG under src/icons/ (plus each icon's optional
+# same-name SVG twin) as a static byte-array table in a generated
+# C TU (see src/icons/embed_icons.py for the format).
 # CamuleArtProvider then exposes the entries to wxArtProvider at
 # runtime — there's no longer any compile-time #include of icon
 # source data, which is why this PR also deletes the entire
@@ -61,8 +62,9 @@ add_compile_options (
 # was taken.
 find_package (Python3 COMPONENTS Interpreter)
 if (Python3_FOUND)
-	file (GLOB_RECURSE AMULE_ICON_PNGS CONFIGURE_DEPENDS
-		${CMAKE_CURRENT_SOURCE_DIR}/icons/*.png)
+	file (GLOB_RECURSE AMULE_ICON_FILES CONFIGURE_DEPENDS
+		${CMAKE_CURRENT_SOURCE_DIR}/icons/*.png
+		${CMAKE_CURRENT_SOURCE_DIR}/icons/*.svg)
 	add_custom_command (
 		OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icons/icon_data.c
 		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/icons
@@ -71,7 +73,7 @@ if (Python3_FOUND)
 			${CMAKE_CURRENT_BINARY_DIR}/icons/icon_data.c
 		DEPENDS
 			${CMAKE_CURRENT_SOURCE_DIR}/icons/embed_icons.py
-			${AMULE_ICON_PNGS}
+			${AMULE_ICON_FILES}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/icons
 		COMMENT "Embedding ${CMAKE_CURRENT_SOURCE_DIR}/icons -> icon_data.c"
 	)

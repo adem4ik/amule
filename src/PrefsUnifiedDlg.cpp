@@ -28,6 +28,7 @@
 #include <common/Constants.h>
 #include <common/Macros.h> // Needed for itemsof()
 
+#include <wx/artprov.h> // wxArtProvider::GetBitmapBundle for the page icons
 #include <wx/bmpbndl.h> // wxBitmapBundle for DPI-aware page icons
 #include <wx/colordlg.h>
 #include <wx/combobox.h> // network-interface drop-down (bind-to-interface)
@@ -56,9 +57,9 @@
 #include "ProtocolHandlerManager.h" // ed2k:// + magnet: scheme-handler toggle backend
 #ifdef GEOIP_GUI
 #include "IP2Country.h"  // CIP2Country::Update / GetDatabasePath
-#include <wx/artprov.h>  // wxArtProvider::GetBitmap for the IP2Country tab icon
 #include <wx/filename.h> // wxFileName for status-line size lookup
 #endif
+#include "CamuleArtProvider.h" // CamuleArtProvider::MakeId for the page-icon bundles
 #include "MuleColour.h"
 #include "EditServerListDlg.h"
 #include "SharedFileList.h" // Needed for CSharedFileList
@@ -286,33 +287,37 @@ struct PrefsPage
 	wxSizer *(*m_function)(wxWindow *, bool, bool);
 	//! The index of the image used on the list.
 	int m_imageidx;
+	//! CamuleArtProvider icon name ("prefs_general"): resolved as
+	//! "amule:<name>" for an SVG-backed bundle before falling back to
+	//! the legacy m_imageidx art.
+	const char *m_artName;
 };
 
-PrefsPage pages[] = { { wxTRANSLATE("General"), PreferencesGeneralTab, 13 },
-	{ wxTRANSLATE("Connection"), PreferencesConnectionTab, 14 },
-	{ wxTRANSLATE("Directories"), PreferencesDirectoriesTab, 17 },
-	{ wxTRANSLATE("Servers"), PreferencesServerTab, 15 },
-	{ wxTRANSLATE("Files"), PreferencesFilesTab, 16 },
-	{ wxTRANSLATE("Security"), PreferencesSecurityTab, 22 },
-	{ wxTRANSLATE("Interface"), PreferencesGuiTweaksTab, 19 },
+PrefsPage pages[] = { { wxTRANSLATE("General"), PreferencesGeneralTab, 13, "prefs_general" },
+	{ wxTRANSLATE("Connection"), PreferencesConnectionTab, 14, "prefs_connection" },
+	{ wxTRANSLATE("Directories"), PreferencesDirectoriesTab, 17, "prefs_directories" },
+	{ wxTRANSLATE("Servers"), PreferencesServerTab, 15, "prefs_servers" },
+	{ wxTRANSLATE("Files"), PreferencesFilesTab, 16, "prefs_files" },
+	{ wxTRANSLATE("Security"), PreferencesSecurityTab, 22, "prefs_security" },
+	{ wxTRANSLATE("Interface"), PreferencesGuiTweaksTab, 19, "prefs_interface" },
 #ifdef GEOIP_GUI
 	// Inserted between Interface and Statistics so the GeoIP / country-flag
 	// settings sit next to the related display option (the master
 	// IDC_SHOW_COUNTRY_FLAGS checkbox lives in this new tab too). Hidden
 	// from the page list when ENABLE_IP2COUNTRY is off so users who built
 	// without libmaxminddb don't see a panel that can't function.
-	{ wxTRANSLATE("IP2Country"), PreferencesIP2CountryTab, 13 },
+	{ wxTRANSLATE("IP2Country"), PreferencesIP2CountryTab, 13, "prefs_ip2country" },
 #endif
-	{ wxTRANSLATE("Statistics"), PreferencesStatisticsTab, 10 },
-	{ wxTRANSLATE("Proxy"), PreferencesProxyTab, 24 },
-	{ wxTRANSLATE("Filters"), PreferencesFilteringTab, 23 },
-	{ wxTRANSLATE("Remote Controls"), PreferencesRemoteControlsTab, 11 },
-	{ wxTRANSLATE("Online Signature"), PreferencesOnlineSigTab, 21 },
-	{ wxTRANSLATE("Advanced"), PreferencesaMuleTweaksTab, 12 },
-	{ wxTRANSLATE("Events"), PreferencesEventsTab, 5 }
+	{ wxTRANSLATE("Statistics"), PreferencesStatisticsTab, 10, "prefs_statistics" },
+	{ wxTRANSLATE("Proxy"), PreferencesProxyTab, 24, "prefs_proxy" },
+	{ wxTRANSLATE("Filters"), PreferencesFilteringTab, 23, "prefs_filters" },
+	{ wxTRANSLATE("Remote Controls"), PreferencesRemoteControlsTab, 11, "prefs_remote" },
+	{ wxTRANSLATE("Online Signature"), PreferencesOnlineSigTab, 21, "prefs_onlinesig" },
+	{ wxTRANSLATE("Advanced"), PreferencesaMuleTweaksTab, 12, "prefs_advanced" },
+	{ wxTRANSLATE("Events"), PreferencesEventsTab, 5, "prefs_events" }
 #ifdef __DEBUG__
 	,
-	{ wxTRANSLATE("Debugging"), PreferencesDebug, 25 }
+	{ wxTRANSLATE("Debugging"), PreferencesDebug, 25, "prefs_debug" }
 #endif
 };
 
@@ -362,11 +367,21 @@ PrefsUnifiedDlg::PrefsUnifiedDlg(wxWindow *parent)
 	// Build the page icons, in page order
 	wxVector<wxBitmapBundle> iconBundles;
 	for (unsigned int i = 0; i < itemsof(pages); ++i) {
-		// The IP2Country tab uses an embedded-PNG icon shipped via
-		// CamuleArtProvider (registered in CamuleGuiApp::OnInit) rather
-		// than the hardcoded amuleSpecial XPM data the other tabs use.
-		// Existing tabs are kept on amuleSpecial to avoid a wholesale
-		// migration; new tabs should prefer the PNG path.
+		// Page icons ship as SVG twins through CamuleArtProvider
+		// ("amule:prefs_<name>"), rasterized by wx at whatever size and
+		// DPI the list asks for. The legacy raster art below stays as
+		// the fallback for icons without an embedded entry.
+		wxBitmapBundle art =
+			wxArtProvider::GetBitmapBundle(CamuleArtProvider::MakeId(pages[i].m_artName),
+				wxART_LIST,
+				wxSize(kPrefsIconW, kPrefsIconH));
+		if (art.IsOk()) {
+			iconBundles.push_back(art);
+			continue;
+		}
+		// Art-provider miss: the IP2Country tab uses an embedded-PNG
+		// icon via wxArtProvider::GetBitmap, every other tab the
+		// hardcoded amuleSpecial raster data.
 #ifdef GEOIP_GUI
 		if (pages[i].m_function == PreferencesIP2CountryTab) {
 			iconBundles.push_back(makeIcon(wxArtProvider::GetBitmap(

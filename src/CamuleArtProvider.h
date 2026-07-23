@@ -18,6 +18,7 @@
 #define SRC_CAMULE_ART_PROVIDER_H
 
 #include <wx/artprov.h>
+#include <wx/bmpbndl.h> // Needed for wxBitmapBundle
 
 class CamuleArtProvider : public wxArtProvider
 {
@@ -31,6 +32,14 @@ public:
 
 protected:
 	wxBitmap CreateBitmap(const wxArtID &id, const wxArtClient &client, const wxSize &size) override;
+
+	// Bundle-aware lookup behind wxArtProvider::GetBitmapBundle().
+	// Icons with an embedded SVG twin become resolution-independent
+	// bundles (wx rasterizes the SVG at whatever size/DPI the consuming
+	// widget asks for); PNG-only icons fall back to the PNG plus a
+	// smooth 2x upscale.
+	wxBitmapBundle CreateBitmapBundle(
+		const wxArtID &id, const wxArtClient &client, const wxSize &size) override;
 };
 
 #endif // SRC_CAMULE_ART_PROVIDER_H

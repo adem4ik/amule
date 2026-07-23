@@ -27,6 +27,7 @@
 
 #include <common/MenuIDs.h>
 
+#include <wx/artprov.h> // Needed for the "amule:" art ids
 #include <wx/config.h>
 
 // This include must be before amuleDlg.h
@@ -83,7 +84,9 @@ CTransferWnd::CTransferWnd(wxWindow *pParent)
 	m_dlTab = CastChild(ID_CATEGORIES, CMuleNotebook);
 
 	// Set disabled image for clear complete button
-	CastChild(ID_BTNCLRCOMPL, wxBitmapButton)->SetBitmapDisabled(amuleDlgImages(34));
+	const wxBitmapBundle clrDisabled =
+		wxArtProvider::GetBitmapBundle("amule:transfer_clear_completed_disabled");
+	CastChild(ID_BTNCLRCOMPL, wxBitmapButton)->SetBitmapDisabled(clrDisabled);
 
 	// We want to use our own popup
 	m_dlTab->SetPopupHandler(this);
@@ -425,10 +428,11 @@ void CTransferWnd::OnToggleClientList(wxCommandEvent &WXUNUSED(evt))
 
 		clientlistctrl->SetShowing(true);
 
-		button->SetBitmapLabel(amuleDlgImages(10));
-		button->SetBitmapFocus(amuleDlgImages(10));
-		button->SetBitmapSelected(amuleDlgImages(10));
-		button->SetBitmapHover(amuleDlgImages(10));
+		const wxBitmapBundle art = wxArtProvider::GetBitmapBundle("amule:arrows_down");
+		button->SetBitmapLabel(art);
+		button->SetBitmapFocus(art);
+		button->SetBitmapPressed(art);
+		button->SetBitmapCurrent(art);
 	} else {
 		clientlistctrl->SetShowing(false);
 
@@ -440,10 +444,11 @@ void CTransferWnd::OnToggleClientList(wxCommandEvent &WXUNUSED(evt))
 
 		splitter->SetSashPosition(height);
 
-		button->SetBitmapLabel(amuleDlgImages(11));
-		button->SetBitmapFocus(amuleDlgImages(11));
-		button->SetBitmapSelected(amuleDlgImages(11));
-		button->SetBitmapHover(amuleDlgImages(11));
+		const wxBitmapBundle art = wxArtProvider::GetBitmapBundle("amule:arrows_up");
+		button->SetBitmapLabel(art);
+		button->SetBitmapFocus(art);
+		button->SetBitmapPressed(art);
+		button->SetBitmapCurrent(art);
 	}
 }
 

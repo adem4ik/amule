@@ -37,6 +37,7 @@
 // Include private header
 #include "muuli_wdr.h"
 
+#include <wx/artprov.h> // Needed for the "amule:" art ids (status bar + transfer window icons)
 #include <wx/intl.h>
 #include <wx/wrapsizer.h> // Needed for the responsive statistics legends
 
@@ -109,7 +110,7 @@ wxSizer *muleDlg( wxWindow *parent, bool call_fit, bool set_sizer )
     item0->Add( item2, wxSizerFlags().Expand().CenterVertical() );
     wxBoxSizer *item6 = new wxBoxSizer( wxHORIZONTAL );
 
-    wxStaticBitmap *item7 = new wxStaticBitmap( parent, -1, amuleDlgImages( 31 ), wxDefaultPosition, wxDefaultSize );
+    wxStaticBitmap *item7 = new wxStaticBitmap( parent, -1, wxArtProvider::GetBitmapBundle( "amule:status_log_info" ), wxDefaultPosition, wxDefaultSize );
     item7->SetToolTip( _("Events are displayed here. For a complete list of events, refer to the log in the Servers-tab.") );
     item6->Add( item7, 0, wxALIGN_CENTER, 5 );
 
@@ -119,7 +120,7 @@ wxSizer *muleDlg( wxWindow *parent, bool call_fit, bool set_sizer )
     wxStaticLine *item9 = new wxStaticLine( parent, -1, wxDefaultPosition, wxSize(-1,20), wxLI_VERTICAL );
     item6->Add( item9, 0, wxALIGN_CENTER, 5 );
 
-    wxStaticBitmap *item10 = new wxStaticBitmap( parent, -1, amuleDlgImages( 4 ), wxDefaultPosition, wxDefaultSize );
+    wxStaticBitmap *item10 = new wxStaticBitmap( parent, -1, wxArtProvider::GetBitmapBundle( "amule:status_users" ), wxDefaultPosition, wxDefaultSize );
     item10->SetToolTip( _("Number of users on the server you are connected to ...") );
     item6->Add( item10, 0, wxALIGN_CENTER, 5 );
 
@@ -129,7 +130,7 @@ wxSizer *muleDlg( wxWindow *parent, bool call_fit, bool set_sizer )
     item6->Add( item11, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
     wxStaticLine *item12 = new wxStaticLine( parent, -1, wxDefaultPosition, wxSize(-1,20), wxLI_VERTICAL );
     item6->Add( item12, wxSizerFlags().Center().Border(wxLEFT, 5) );
-    wxStaticBitmap *item13 = new wxStaticBitmap( parent, -1, amuleDlgImages( 5 ), wxDefaultPosition, wxDefaultSize );
+    wxStaticBitmap *item13 = new wxStaticBitmap( parent, -1, wxArtProvider::GetBitmapBundle( "amule:status_speed_idle" ), wxDefaultPosition, wxDefaultSize );
     item13->SetName( "transferImg" );
     item6->Add( item13, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
     wxStaticText *item14 = new wxStaticText( parent, -1, _("Up: 0.0 | Down: 0.0"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -139,7 +140,7 @@ wxSizer *muleDlg( wxWindow *parent, bool call_fit, bool set_sizer )
 
     wxStaticLine *item15 = new wxStaticLine( parent, -1, wxDefaultPosition, wxSize(-1,20), wxLI_VERTICAL );
     item6->Add( item15, wxSizerFlags().Center().Border(wxLEFT, 5) );
-    wxStaticBitmap *item16 = new wxStaticBitmap( parent, -1, amuleDlgImages( 13 ), wxDefaultPosition, wxDefaultSize );
+    wxStaticBitmap *item16 = new wxStaticBitmap( parent, -1, wxArtProvider::GetBitmapBundle( "amule:status_conn_base" ), wxDefaultPosition, wxDefaultSize );
     item16->SetToolTip( _("Displays the connected status and active transfers. Red arrows signifies that you are currently not connected, yellow arrows signify that you have low ID (firewalled) and green arrows signify that you have high ID (The optimal connection type).") );
     item16->SetName( "connImage" );
     item6->Add( item16, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
@@ -384,10 +385,10 @@ wxSizer *transferTopPane( wxWindow *parent, bool call_fit, bool set_sizer )
 
     wxBoxSizer *item1 = new wxBoxSizer( wxHORIZONTAL );
 
-    wxBitmapButton *item2 = new wxBitmapButton( parent, ID_BTNCLRCOMPL, amuleDlgImages( 17 ), wxDefaultPosition, wxSize(30,30) );
+    wxBitmapButton *item2 = new wxBitmapButton( parent, ID_BTNCLRCOMPL, wxArtProvider::GetBitmapBundle( "amule:transfer_clear_completed" ), wxDefaultPosition, wxSize(34,34) );
     item2->SetToolTip( _("Clears completed downloads") );
     item2->Enable( false );
-    item1->Add( item2, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
+    item1->Add( item2, wxSizerFlags().Center().FixedMinSize().Border(wxLEFT|wxRIGHT, 5) );
     wxStaticText *item3 = new wxStaticText( parent, -1, _("Downloads"), wxDefaultPosition, wxDefaultSize, 0 );
     item3->SetName( "downloadsLabel" );
     item1->Add( item3, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
@@ -419,7 +420,7 @@ wxSizer *transferBottomPane( wxWindow *parent, bool call_fit, bool set_sizer )
     item1->AddGrowableCol( 1 );
     s_clientlistHeader = item1;
 
-    wxBitmapButton *item2 = new wxBitmapButton( parent, ID_CLIENTTOGGLE, amuleDlgImages( 10 ), wxDefaultPosition, wxDefaultSize );
+    wxBitmapButton *item2 = new wxBitmapButton( parent, ID_CLIENTTOGGLE, wxArtProvider::GetBitmapBundle( "amule:arrows_down" ), wxDefaultPosition, wxDefaultSize );
     item1->Add( item2, 0, wxALIGN_CENTER_VERTICAL, 5 );
 
     wxBoxSizer *item3 = new wxBoxSizer( wxHORIZONTAL );
@@ -710,9 +711,9 @@ wxSizer *fileDetails( wxWindow *parent, bool call_fit, bool set_sizer )
     item0->Add( item65, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, 5) );
     wxBoxSizer *item73 = new wxBoxSizer( wxHORIZONTAL );
 
-    wxBitmapButton *item74 = new wxBitmapButton( parent, IDC_NEXTFILE, amuleDlgImages( 10 ), wxDefaultPosition, wxDefaultSize );
+    wxBitmapButton *item74 = new wxBitmapButton( parent, IDC_NEXTFILE, wxArtProvider::GetBitmapBundle( "amule:arrows_down" ), wxDefaultPosition, wxDefaultSize );
     item73->Add( item74, wxSizerFlags().Center().Border(wxALL, 5) );
-    wxBitmapButton *item75 = new wxBitmapButton( parent, IDC_PREVFILE, amuleDlgImages( 11 ), wxDefaultPosition, wxDefaultSize );
+    wxBitmapButton *item75 = new wxBitmapButton( parent, IDC_PREVFILE, wxArtProvider::GetBitmapBundle( "amule:arrows_up" ), wxDefaultPosition, wxDefaultSize );
     item73->Add( item75, wxSizerFlags().Center().Border(wxALL, 5) );
     item73->Add( 20, 20, wxSizerFlags(1).Center().Border(wxALL, 5) );
     wxButton *item76 = new wxButton( parent, IDC_APPLY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -3187,7 +3188,7 @@ wxSizer *sharedfilesBottomDlg( wxWindow *parent, bool call_fit, bool set_sizer )
     item2->AddGrowableCol( 3 );
     s_sharedfilespeerHeader = item2;
 
-    wxBitmapButton *item3 = new wxBitmapButton( parent, ID_SHAREDCLIENTTOGGLE, amuleDlgImages( 10 ), wxDefaultPosition, wxDefaultSize );
+    wxBitmapButton *item3 = new wxBitmapButton( parent, ID_SHAREDCLIENTTOGGLE, wxArtProvider::GetBitmapBundle( "amule:arrows_down" ), wxDefaultPosition, wxDefaultSize );
     item2->Add( item3, 0, wxALIGN_CENTER_VERTICAL, 5 );
 
     wxFlexGridSizer *item4 = new wxFlexGridSizer( 3, 0, 0 );
@@ -4435,482 +4436,6 @@ wxBitmap clientImages( size_t index )
         "ccbccb          ",
         " cccb           ",
         "  cb            ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    return wxNullBitmap;
-}
-
-wxBitmap dlStatusImages( size_t index )
-{
-    if (index == 0)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 16 1",
-        "  c None",
-        "a c Black",
-        "b c #110000",
-        "c c #6F4848",
-        "d c #7F0000",
-        "e c #220000",
-        "g c #444444",
-        "h c #888888",
-        "i c #8C0000",
-        "j c #4C4040",
-        "k c #C10000",
-        "l c #191919",
-        "m c #2A2A2A",
-        "n c #FF0000",
-        "o c #666666",
-        "p c #333333",
-        /* pixels */
-        "          i     ",
-        "         dna    ",
-        "        dnkna   ",
-        "       dnkikna  ",
-        "      ankimikna ",
-        "      aapaopaaa ",
-        "         aha    ",
-        "     lpl aoa    ",
-        "     pop ppa    ",
-        "     ghj        ",
-        "  bebaoabeb     ",
-        "  cnkipiknj     ",
-        "   cnkiknj      ",
-        "    cnknj       ",
-        "     cnj        ",
-        "      i         "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 1)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 17 1",
-        "  c None",
-        "a c #444444",
-        "b c #114C11",
-        "c c #888888",
-        "d c #790000",
-        "e c #008000",
-        "f c #007700",
-        "g c #191919",
-        "h c #00B700",
-        "i c #B70000",
-        "j c #2A2A2A",
-        "k c #FF0000",
-        "l c #666666",
-        "m c #002A00",
-        "o c #00FF00",
-        "p c #333333",
-        "q c #001500",
-        /* pixels */
-        "          d     ",
-        "         dkd    ",
-        "        dkikd   ",
-        "       dkidikd  ",
-        "      dkidjdikd ",
-        "          l     ",
-        "          c     ",
-        "     gpg  l     ",
-        "     plp pp     ",
-        "     aca        ",
-        "  qmqlllqmq     ",
-        "  eohbpbhoe     ",
-        "   eohfhoe      ",
-        "    eohoe       ",
-        "     eoe        ",
-        "      e         "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 2)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 16 1",
-        "  c None",
-        "a c #110000",
-        "b c #6F4848",
-        "c c #220000",
-        "d c #444444",
-        "e c #888888",
-        "f c #008000",
-        "g c #770000",
-        "h c #191919",
-        "i c #BB0000",
-        "j c #00AE00",
-        "k c #2A2A2A",
-        "l c #FF0000",
-        "m c #666666",
-        "o c #00FF00",
-        "p c #333333",
-        /* pixels */
-        "          f     ",
-        "         fof    ",
-        "        fojof   ",
-        "       fojfjof  ",
-        "      fojfkfjof ",
-        "          mp    ",
-        "          e     ",
-        "     hph  m     ",
-        "     pmp pp     ",
-        "     ded        ",
-        "  acammmaca     ",
-        "  bligpgilg     ",
-        "   bligilg      ",
-        "    glilg       ",
-        "     glg        ",
-        "      g         "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 3)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 12 1",
-        "  c None",
-        "a c #006F00",
-        "b c #888888",
-        "c c #191919",
-        "d c #404F40",
-        "e c #00D400",
-        "f c #666666",
-        "g c #002A00",
-        "i c #00FF00",
-        "j c #333333",
-        "k c #001500",
-        "l c #00CA00",
-        /* pixels */
-        "          a     ",
-        "         aia    ",
-        "        ailia   ",
-        "       ailalia  ",
-        "      aila alia ",
-        "          fj    ",
-        "          b     ",
-        "     cjc  f     ",
-        "     jfj jj     ",
-        "     dbd        ",
-        "  kgk f kgk     ",
-        "  aila aeia     ",
-        "   ailalia      ",
-        "    ailia       ",
-        "     aia        ",
-        "      a         "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    return wxNullBitmap;
-}
-
-wxBitmap connImages( size_t index )
-{
-    if (index == 0)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 23 1",
-        "  c None",
-        "a c #6C0C0C",
-        "b c #A81313",
-        "c c #F05151",
-        "d c #6A0C0C",
-        "f c #FFFFFF",
-        "g c #F7ADAD",
-        "h c #C11515",
-        "i c #C41616",
-        "j c #7A0D0D",
-        "k c #9C1010",
-        "l c #B21414",
-        "m c #FBD8D8",
-        "n c #680B0B",
-        "o c #E51A1A",
-        "p c #ED2222",
-        "q c #C91616",
-        "r c #EF4848",
-        "s c #560909",
-        "t c #DA1919",
-        "u c #F59191",
-        "v c #F04C4C",
-        "w c #7B0D0D",
-        /* pixels */
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        " cgfmc          ",
-        "  vuro          ",
-        "  proq          ",
-        " lthwb          ",
-        " dij j          ",
-        " ak             ",
-        "  sn            ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 1)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 13 1",
-        "  c None",
-        "a c #4C4907",
-        "b c #E4DB13",
-        "c c #F0E943",
-        "d c #F0E945",
-        "e c #ECE31A",
-        "f c #FFFFFF",
-        "g c #EFE73B",
-        "i c #6D6909",
-        "j c #DAD112",
-        "k c #5E5A08",
-        "l c #FAF8C1",
-        "m c #605C08",
-        /* pixels */
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        " clfdc          ",
-        "  gdgb          ",
-        "  egbd          ",
-        " dddij          ",
-        " kdi j          ",
-        " md             ",
-        "  ak            ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 2)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 12 1",
-        "  c None",
-        "a c #41280D",
-        "b c #BD7625",
-        "c c #5D3A12",
-        "d c #513210",
-        "e c #CD8029",
-        "f c #D5852A",
-        "g c #523310",
-        "h c #F19730",
-        "j c #C77C27",
-        "k c #FE9F32",
-        "l c #D7862B",
-        /* pixels */
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        " lhkll          ",
-        "  flfj          ",
-        "  efjl          ",
-        " lllcb          ",
-        " dlc b          ",
-        " gl             ",
-        "  ad            ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 3)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 13 1",
-        "  c None",
-        "a c #126547",
-        "b c #134943",
-        "c c #CBFFBC",
-        "d c #38F639",
-        "e c #2ACB2A",
-        "f c #105835",
-        "h c #16632F",
-        "i c #43FC3F",
-        "j c #259230",
-        "k c #1B8136",
-        "l c #115342",
-        "m c #12542F",
-        /* pixels */
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        " eciii          ",
-        "  diii          ",
-        "  iiei          ",
-        " jiihi          ",
-        " mia e          ",
-        " fk             ",
-        "  bl            ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 4)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 23 1",
-        "  c None",
-        "a c #A81313",
-        "b c #F05151",
-        "c c #650B0B",
-        "d c #F6A3A3",
-        "e c #DD1919",
-        "f c #FFFFFF",
-        "g c #630B0B",
-        "h c #F15858",
-        "i c #7A0D0D",
-        "j c #9C1010",
-        "k c #F16060",
-        "l c #EC1B1B",
-        "m c #E51A1A",
-        "n c #F8B3B3",
-        "o c #ED2222",
-        "p c #A01212",
-        "q c #C91616",
-        "s c #7B0D0D",
-        "t c #F37F7F",
-        "u c #BA1515",
-        "v c #FCDEDE",
-        "w c #971010",
-        /* pixels */
-        "                ",
-        "            gg  ",
-        "             ji ",
-        "          t cqw ",
-        "          vkloa ",
-        "          fdhe  ",
-        "          nkmp  ",
-        "          bmqus ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 5)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 15 1",
-        "  c None",
-        "a c #E4DB13",
-        "b c #F0E943",
-        "c c #F0E945",
-        "d c #FDFCE2",
-        "e c #FBF9CC",
-        "f c #555207",
-        "g c #F3ED6F",
-        "h c #F1EA52",
-        "i c #5B5708",
-        "j c #948E0C",
-        "k c #9D970D",
-        "m c #6D6909",
-        "n c #B2AB0F",
-        "o c #EBE213",
-        /* pixels */
-        "                ",
-        "            if  ",
-        "             cc ",
-        "          g icc ",
-        "          dhocc ",
-        "          cccc  ",
-        "          eckj  ",
-        "          bacnm ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                ",
-        "                "
-        };
-        wxBitmap bitmap( xpm_data );
-        return bitmap;
-    }
-    if (index == 6)
-    {
-        /* XPM */
-        static const char *xpm_data[] = {
-        /* columns rows colors chars-per-pixel */
-        "16 16 9 1",
-        "  c None",
-        "b c #25853C",
-        "c c #134943",
-        "d c #31A941",
-        "e c #2ACB2A",
-        "f c #16632F",
-        "g c #1F812F",
-        "h c #43FC3F",
-        "i c #0E5245",
-        /* pixels */
-        "                ",
-        "            ic  ",
-        "             hd ",
-        "          h hhh ",
-        "          hehhb ",
-        "          hhhh  ",
-        "          hheg  ",
-        "          hhhhf ",
         "                ",
         "                ",
         "                ",
