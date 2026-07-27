@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-27 14:46+0200\n"
-"PO-Revision-Date: 2026-07-27 16:26+0000\n"
+"POT-Creation-Date: 2026-07-27 21:41+0200\n"
+"PO-Revision-Date: 2026-07-27 11:37+0000\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -124,7 +124,7 @@ msgstr "Argibideak"
 msgid "The specified userhash is not valid!"
 msgstr "Emandako erabiltzaile egiaztapena ez da baliozkoa!"
 
-#: src/AppImageIntegration.cpp:357
+#: src/AppImageIntegration.cpp:413
 msgid ""
 "aMule can install desktop launchers, icons, and shell command shortcuts into your home directory so it appears in your application menu like a regularly installed app.\n"
 "\n"
@@ -133,49 +133,49 @@ msgid ""
 "Install desktop integration now?"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:363
+#: src/AppImageIntegration.cpp:419
 #, fuzzy
 msgid "Add aMule to your application menu?"
 msgstr "Aplikazio izenaren ondoren"
 
-#: src/AppImageIntegration.cpp:365
+#: src/AppImageIntegration.cpp:421
 msgid "Install"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:365
+#: src/AppImageIntegration.cpp:421
 msgid "Not now"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:366 src/amuleDlg.cpp:600
+#: src/AppImageIntegration.cpp:422 src/amuleDlg.cpp:600
 msgid "Don't ask again"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:386
+#: src/AppImageIntegration.cpp:442
 msgid "Cannot install desktop integration: the APPDIR environment variable is not set. This usually means the AppImage was launched in a non-standard way."
 msgstr ""
 
-#: src/AppImageIntegration.cpp:389 src/AppImageIntegration.cpp:402
-#: src/AppImageIntegration.cpp:423
+#: src/AppImageIntegration.cpp:445 src/AppImageIntegration.cpp:458
+#: src/AppImageIntegration.cpp:479
 #, fuzzy
 msgid "aMule integration failed"
 msgstr "Konexioak huts egin du "
 
-#: src/AppImageIntegration.cpp:398
+#: src/AppImageIntegration.cpp:454
 #, c-format
 msgid "Cannot install desktop integration: failed to create %s. Check that your home directory is writable."
 msgstr ""
 
-#: src/AppImageIntegration.cpp:419
+#: src/AppImageIntegration.cpp:475
 #, c-format
 msgid "Cannot install desktop integration: failed to write %s. Check that your home directory is writable."
 msgstr ""
 
-#: src/AppImageIntegration.cpp:452
+#: src/AppImageIntegration.cpp:508
 #, c-format
 msgid "AppImage integration: aMule added to your application menu (%d shell shortcuts under ~/.local/bin)."
 msgstr ""
 
-#: src/AppImageIntegration.cpp:457
+#: src/AppImageIntegration.cpp:513
 msgid ""
 "aMule has been added to your application menu. You can now launch it from your applications list, and the launcher will run this same AppImage.\n"
 "\n"
@@ -184,15 +184,15 @@ msgid ""
 "Restart aMule now?"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:463
+#: src/AppImageIntegration.cpp:519
 msgid "aMule installed"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:465
+#: src/AppImageIntegration.cpp:521
 msgid "Restart now"
 msgstr ""
 
-#: src/AppImageIntegration.cpp:465
+#: src/AppImageIntegration.cpp:521
 msgid "Later"
 msgstr ""
 
@@ -200,7 +200,7 @@ msgstr ""
 msgid "Failed to open ED2KLinks file."
 msgstr "Huts ED2KLinks fitxategia irekitzerakoan."
 
-#: src/amuleAppCommon.cpp:275
+#: src/amuleAppCommon.cpp:282
 msgid "WARNING: You can't add yourself as a source for an eD2k link while having a lowid."
 msgstr "KONTUZ: Ezin duzu zure burua ezarri eD2k lotura batean Id baxua duzunean."
 
@@ -516,40 +516,40 @@ msgstr "IDAltuarekin"
 msgid "Connected to %s %s"
 msgstr "%s %s-ra konektaturik"
 
-#: src/amule.cpp:2639
+#: src/amule.cpp:2640
 #, c-format
 msgid "Connecting to %s"
 msgstr "%s-ra konektatzen"
 
-#: src/amule.cpp:2641
+#: src/amule.cpp:2642
 msgid "Disconnected from eD2k"
 msgstr "eD2k-tik deskonektatua"
 
-#: src/amule.cpp:2649
+#: src/amule.cpp:2651
 msgid "Kad started."
 msgstr "Kad abiarazirik."
 
-#: src/amule.cpp:2651
+#: src/amule.cpp:2653
 msgid "Kad stopped."
 msgstr "Kad gelditurik."
 
-#: src/amule.cpp:2659
+#: src/amule.cpp:2661
 msgid "Connected to Kad (ok)"
 msgstr "Kad-era Konektatuta (ondo)"
 
-#: src/amule.cpp:2661
+#: src/amule.cpp:2663
 msgid "Connected to Kad (firewalled)"
 msgstr "Kad-era Konektatuta (suebakirik)"
 
-#: src/amule.cpp:2664
+#: src/amule.cpp:2667
 msgid "Disconnected from Kad"
 msgstr "Kad-etik deskonektatua"
 
-#: src/amule.cpp:2695
+#: src/amule.cpp:2699
 msgid "Kad network cannot be used if UDP port is disabled on preferences, not starting."
 msgstr "Kad sarea ezin da erabili hobespenetan UDP ataka ezgaiturik badago, ez da abiaraziko."
 
-#: src/amule.cpp:2699
+#: src/amule.cpp:2703
 msgid "Kad network disabled on preferences, not connecting."
 msgstr "Kad sarea hobespenetan ezgaiturik, ez da konektatuko."
 
@@ -958,7 +958,7 @@ msgstr "Lotura baliogabea edo zerrendan dagoeneko."
 msgid "Can't create directory '%s' for category '%s', keeping directory '%s'."
 msgstr "Ezin da '%s' direktorioa sortu '%s' kategoriarentzat, '%s' direktorioa mantenduko da."
 
-#: src/amule-remote-gui.cpp:2331 src/BaseClient.cpp:1830
+#: src/amule-remote-gui.cpp:2341 src/BaseClient.cpp:1830
 #: src/BaseClient.cpp:2434 src/BaseClient.cpp:2445 src/BaseClient.cpp:2718
 #: src/ClientDetailDialog.cpp:72 src/ClientDetailDialog.cpp:73
 #: src/ClientDetailDialog.cpp:103 src/ClientDetailDialog.cpp:104
@@ -1188,12 +1188,12 @@ msgid "Disabled"
 msgstr "Ezgaitua"
 
 #: src/ClientDetailDialog.cpp:130 src/MuleTrayIcon.cpp:396
-#: src/ServerWnd.cpp:203 src/ServerWnd.cpp:250 src/TextClient.cpp:914
+#: src/ServerWnd.cpp:203 src/ServerWnd.cpp:258 src/TextClient.cpp:914
 msgid "Connected"
 msgstr "Konektaturik"
 
 #: src/ClientDetailDialog.cpp:132 src/MuleTrayIcon.cpp:386
-#: src/MuleTrayIcon.cpp:398 src/ServerWnd.cpp:250
+#: src/MuleTrayIcon.cpp:398 src/ServerWnd.cpp:258
 msgid "Disconnected"
 msgstr "Deskonektatuta"
 
@@ -2392,39 +2392,39 @@ msgstr ""
 msgid "Start aMule automatically when I log in"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:482 src/muuli_wdr.cpp:1281
+#: src/FirstRunWizard.cpp:484 src/muuli_wdr.cpp:1281
 #: packaging/windows/installer_strings.c:39
 msgid "Register aMule for ed2k:// links"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:490 src/muuli_wdr.cpp:1285
+#: src/FirstRunWizard.cpp:492 src/muuli_wdr.cpp:1285
 #: packaging/windows/installer_strings.c:40
 msgid "Register aMule for magnet: links"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:499
+#: src/FirstRunWizard.cpp:504
 msgid "Only eD2k-compatible magnets. Leave off if you use a BitTorrent client."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:510 src/muuli_wdr.cpp:1292
+#: src/FirstRunWizard.cpp:522 src/muuli_wdr.cpp:1292
 msgid "Open .emulecollection files with aMule"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:526
+#: src/FirstRunWizard.cpp:538
 msgid "Folders (optional)"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:529
+#: src/FirstRunWizard.cpp:541
 msgid ""
 "The defaults are fine for most people. Change them if you\n"
 "want downloads on a different (e.g. larger) disk."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:537 src/FirstRunWizard.cpp:599 src/muuli_wdr.cpp:1695
+#: src/FirstRunWizard.cpp:549 src/FirstRunWizard.cpp:611 src/muuli_wdr.cpp:1695
 msgid "Destination folder for downloads"
 msgstr "Deskargentzat helburu karpeta"
 
-#: src/FirstRunWizard.cpp:541 src/FirstRunWizard.cpp:557 src/muuli_wdr.cpp:1342
+#: src/FirstRunWizard.cpp:553 src/FirstRunWizard.cpp:569 src/muuli_wdr.cpp:1342
 #: src/muuli_wdr.cpp:1359 src/muuli_wdr.cpp:1670 src/muuli_wdr.cpp:1701
 #: src/muuli_wdr.cpp:1713 src/muuli_wdr.cpp:2756
 #: src/utils/aLinkCreator/src/alcframe.cpp:135
@@ -2432,26 +2432,26 @@ msgstr "Deskargentzat helburu karpeta"
 msgid "Browse"
 msgstr "Arakatu"
 
-#: src/FirstRunWizard.cpp:547 src/muuli_wdr.cpp:1706
+#: src/FirstRunWizard.cpp:559 src/muuli_wdr.cpp:1706
 msgid "(All files in this folder are shared with other peers)"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:553 src/FirstRunWizard.cpp:612 src/muuli_wdr.cpp:1708
+#: src/FirstRunWizard.cpp:565 src/FirstRunWizard.cpp:624 src/muuli_wdr.cpp:1708
 msgid "Folder for temporary download files"
 msgstr "Aldiroko deskarga fitxategientzat karpeta"
 
-#: src/FirstRunWizard.cpp:574
+#: src/FirstRunWizard.cpp:586
 #, c-format
 msgid ""
 "Based on this, aMule will allow up to %i sources per file\n"
 "and %i client connections."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:759
+#: src/FirstRunWizard.cpp:771
 msgid "Show this setup wizard again the next time you start aMule?"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:760
+#: src/FirstRunWizard.cpp:772
 msgid "Setup not finished"
 msgstr ""
 
@@ -2985,7 +2985,7 @@ msgstr "Itxi"
 msgid "Cut"
 msgstr "Ebaki"
 
-#: src/MuleTextCtrl.cpp:87 src/PartFileConvert.cpp:407 src/ServerWnd.cpp:422
+#: src/MuleTextCtrl.cpp:87 src/PartFileConvert.cpp:407 src/ServerWnd.cpp:437
 #: src/utils/aLinkCreator/src/alcframe.cpp:250
 msgid "Copy"
 msgstr "Kopiatu"
@@ -3161,7 +3161,7 @@ msgstr "Zerbitzari izena: "
 msgid "ServerIP: "
 msgstr "ZerbitzariIP: "
 
-#: src/MuleTrayIcon.cpp:838 src/ServerWnd.cpp:224
+#: src/MuleTrayIcon.cpp:838 src/ServerWnd.cpp:232
 #: src/utils/wxCas/src/onlinesig.cpp:248
 msgid "Not Connected"
 msgstr "Konektatu gabe"
@@ -3732,7 +3732,7 @@ msgstr "Bezero softwarea:"
 msgid "Client version:"
 msgstr "Bezero bertsioa:"
 
-#: src/muuli_wdr.cpp:1105 src/ServerWnd.cpp:294
+#: src/muuli_wdr.cpp:1105 src/ServerWnd.cpp:309
 msgid "IP address:"
 msgstr "IP helbidea:"
 
@@ -4520,8 +4520,8 @@ msgstr "Sistema lehenetsia"
 msgid "Reset the settings on the current page to their default values."
 msgstr ""
 
-#: src/muuli_wdr.cpp:2214 src/muuli_wdr.cpp:2300 src/ServerWnd.cpp:259
-#: src/ServerWnd.cpp:267
+#: src/muuli_wdr.cpp:2214 src/muuli_wdr.cpp:2300 src/ServerWnd.cpp:274
+#: src/ServerWnd.cpp:282
 msgid "OK"
 msgstr "Ados"
 
@@ -6630,95 +6630,100 @@ msgstr "ID"
 msgid "Connection Type:"
 msgstr "Konexio egoera:"
 
-#: src/ServerWnd.cpp:238
+#: src/ServerWnd.cpp:227 src/ServerWnd.cpp:263
+#, fuzzy
+msgid "Connected since:"
+msgstr "Konektaturik"
+
+#: src/ServerWnd.cpp:246
 msgid "Kademlia Status:"
 msgstr "Kademlia egoera:"
 
-#: src/ServerWnd.cpp:243
+#: src/ServerWnd.cpp:251
 msgid "Running in LAN mode"
 msgstr "LAN moduan abiarazirik"
 
-#: src/ServerWnd.cpp:243
+#: src/ServerWnd.cpp:251
 msgid "Running"
 msgstr "Martxan"
 
-#: src/ServerWnd.cpp:246
+#: src/ServerWnd.cpp:254
 #, fuzzy
 msgid "Kademlia client ID:"
 msgstr "Kademlia egoera:"
 
-#: src/ServerWnd.cpp:248
+#: src/ServerWnd.cpp:256
 msgid "Status:"
 msgstr "Egoera:"
 
-#: src/ServerWnd.cpp:252
+#: src/ServerWnd.cpp:267
 msgid "Connection State:"
 msgstr "Konexio egoera:"
 
-#: src/ServerWnd.cpp:256
+#: src/ServerWnd.cpp:271
 #, c-format
 msgid "Firewalled - open TCP port %d in your router or firewall"
 msgstr "Suebakirik - ireki %d TCP ataka zure router edo suebakian"
 
-#: src/ServerWnd.cpp:260
+#: src/ServerWnd.cpp:275
 msgid "UDP Connection State:"
 msgstr "UDP konexio egoera:"
 
-#: src/ServerWnd.cpp:264
+#: src/ServerWnd.cpp:279
 #, c-format
 msgid "Firewalled - open UDP port %d in your router or firewall"
 msgstr "Suebakirik - ireki %d UDP ataka zure router edo suebakian"
 
-#: src/ServerWnd.cpp:270
+#: src/ServerWnd.cpp:285
 msgid "Firewalled state: "
 msgstr "Suebaki egoera: "
 
-#: src/ServerWnd.cpp:275
+#: src/ServerWnd.cpp:290
 msgid "No buddy required - TCP port open"
 msgstr "Ez da lagunik behar - TCP ataka irekia"
 
-#: src/ServerWnd.cpp:277
+#: src/ServerWnd.cpp:292
 msgid "No buddy required - UDP port open"
 msgstr "Ez da lagunik behar - UDP ataka irekia"
 
-#: src/ServerWnd.cpp:279
+#: src/ServerWnd.cpp:294
 msgid "No buddy"
 msgstr "Laguna ez"
 
-#: src/ServerWnd.cpp:283
+#: src/ServerWnd.cpp:298
 msgid "Connecting to buddy"
 msgstr "Lagunera konektatzen"
 
-#: src/ServerWnd.cpp:286
+#: src/ServerWnd.cpp:301
 #, c-format
 msgid "Connected to buddy at %s"
 msgstr "Lagunera %s-en konektaturik"
 
-#: src/ServerWnd.cpp:298
+#: src/ServerWnd.cpp:313
 msgid "Indexed sources:"
 msgstr "Indexatutako jatorriak:"
 
-#: src/ServerWnd.cpp:300
+#: src/ServerWnd.cpp:315
 msgid "Indexed keywords:"
 msgstr "Indexaturiko gakoak:"
 
-#: src/ServerWnd.cpp:302
+#: src/ServerWnd.cpp:317
 msgid "Indexed notes:"
 msgstr "Indexatutako oharrak:"
 
-#: src/ServerWnd.cpp:304
+#: src/ServerWnd.cpp:319
 msgid "Indexed load:"
 msgstr "Indexaturiko karga:"
 
-#: src/ServerWnd.cpp:307
+#: src/ServerWnd.cpp:322
 msgid "Average Users:"
 msgstr "Bataz besteko erab:"
 
-#: src/ServerWnd.cpp:310
+#: src/ServerWnd.cpp:325
 msgid "Average Files:"
 msgstr "Bataz besteko fitxategiak:"
 
-#: src/ServerWnd.cpp:315 src/TextClient.cpp:925
+#: src/ServerWnd.cpp:330 src/TextClient.cpp:925
 msgid "Not running"
 msgstr "Geldirik"
 

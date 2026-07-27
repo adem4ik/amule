@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule 2.3.3\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-27 14:46+0200\n"
-"PO-Revision-Date: 2026-07-27 16:29+0000\n"
+"POT-Creation-Date: 2026-07-27 21:41+0200\n"
+"PO-Revision-Date: 2026-07-27 11:40+0000\n"
 "Last-Translator: got3nks <got3nks@users.noreply.github.com>\n"
 "Language-Team: SebastianoPistore.info@protonmail.ch\n"
 "Language: it\n"
@@ -127,7 +127,7 @@ msgstr "Informazione"
 msgid "The specified userhash is not valid!"
 msgstr "L'hash utente specificato non è valido!"
 
-#: src/AppImageIntegration.cpp:357
+#: src/AppImageIntegration.cpp:413
 msgid ""
 "aMule can install desktop launchers, icons, and shell command shortcuts into your home directory so it appears in your application menu like a regularly installed app.\n"
 "\n"
@@ -139,47 +139,47 @@ msgstr ""
 "\n"
 "Installare ora l'integrazione con il desktop?"
 
-#: src/AppImageIntegration.cpp:363
+#: src/AppImageIntegration.cpp:419
 msgid "Add aMule to your application menu?"
 msgstr "Aggiungere aMule al menu delle applicazioni?"
 
-#: src/AppImageIntegration.cpp:365
+#: src/AppImageIntegration.cpp:421
 msgid "Install"
 msgstr "Installa"
 
-#: src/AppImageIntegration.cpp:365
+#: src/AppImageIntegration.cpp:421
 msgid "Not now"
 msgstr "Non ora"
 
-#: src/AppImageIntegration.cpp:366 src/amuleDlg.cpp:600
+#: src/AppImageIntegration.cpp:422 src/amuleDlg.cpp:600
 msgid "Don't ask again"
 msgstr "Non chiedere più"
 
-#: src/AppImageIntegration.cpp:386
+#: src/AppImageIntegration.cpp:442
 msgid "Cannot install desktop integration: the APPDIR environment variable is not set. This usually means the AppImage was launched in a non-standard way."
 msgstr "Impossibile installare l'integrazione con il desktop: la variabile di ambiente APPDIR non è impostata. Di solito significa che l'AppImage è stata avviata in modo non standard."
 
-#: src/AppImageIntegration.cpp:389 src/AppImageIntegration.cpp:402
-#: src/AppImageIntegration.cpp:423
+#: src/AppImageIntegration.cpp:445 src/AppImageIntegration.cpp:458
+#: src/AppImageIntegration.cpp:479
 msgid "aMule integration failed"
 msgstr "Integrazione di aMule non riuscita"
 
-#: src/AppImageIntegration.cpp:398
+#: src/AppImageIntegration.cpp:454
 #, c-format
 msgid "Cannot install desktop integration: failed to create %s. Check that your home directory is writable."
 msgstr "Impossibile installare l'integrazione con il desktop: errore nella creazione di %s. Verificare che la home directory sia scrivibile."
 
-#: src/AppImageIntegration.cpp:419
+#: src/AppImageIntegration.cpp:475
 #, c-format
 msgid "Cannot install desktop integration: failed to write %s. Check that your home directory is writable."
 msgstr "Impossibile installare l'integrazione con il desktop: errore nella scrittura di %s. Verificare che la home directory sia scrivibile."
 
-#: src/AppImageIntegration.cpp:452
+#: src/AppImageIntegration.cpp:508
 #, c-format
 msgid "AppImage integration: aMule added to your application menu (%d shell shortcuts under ~/.local/bin)."
 msgstr "Integrazione AppImage: aMule aggiunto al menu delle applicazioni (%d collegamenti shell in ~/.local/bin)."
 
-#: src/AppImageIntegration.cpp:457
+#: src/AppImageIntegration.cpp:513
 msgid ""
 "aMule has been added to your application menu. You can now launch it from your applications list, and the launcher will run this same AppImage.\n"
 "\n"
@@ -193,15 +193,15 @@ msgstr ""
 "\n"
 "Riavviare aMule ora?"
 
-#: src/AppImageIntegration.cpp:463
+#: src/AppImageIntegration.cpp:519
 msgid "aMule installed"
 msgstr "aMule installato"
 
-#: src/AppImageIntegration.cpp:465
+#: src/AppImageIntegration.cpp:521
 msgid "Restart now"
 msgstr "Riavvia ora"
 
-#: src/AppImageIntegration.cpp:465
+#: src/AppImageIntegration.cpp:521
 msgid "Later"
 msgstr "Più tardi"
 
@@ -209,7 +209,7 @@ msgstr "Più tardi"
 msgid "Failed to open ED2KLinks file."
 msgstr "Impossibile aprire il link ed2k."
 
-#: src/amuleAppCommon.cpp:275
+#: src/amuleAppCommon.cpp:282
 msgid "WARNING: You can't add yourself as a source for an eD2k link while having a lowid."
 msgstr "ATTENZIONE: non è possibile aggiungere te stesso come fonte di un link eD2k finché avrai un ID basso."
 
@@ -527,40 +527,40 @@ msgstr "con ID alto"
 msgid "Connected to %s %s"
 msgstr "Connesso a %s %s"
 
-#: src/amule.cpp:2639
+#: src/amule.cpp:2640
 #, c-format
 msgid "Connecting to %s"
 msgstr "Connessione in corso a %s"
 
-#: src/amule.cpp:2641
+#: src/amule.cpp:2642
 msgid "Disconnected from eD2k"
 msgstr "Disconnesso dalla rete eD2k"
 
-#: src/amule.cpp:2649
+#: src/amule.cpp:2651
 msgid "Kad started."
 msgstr "Kad avviato."
 
-#: src/amule.cpp:2651
+#: src/amule.cpp:2653
 msgid "Kad stopped."
 msgstr "Kad arrestato."
 
-#: src/amule.cpp:2659
+#: src/amule.cpp:2661
 msgid "Connected to Kad (ok)"
 msgstr "Connesso alla rete Kad (ok)"
 
-#: src/amule.cpp:2661
+#: src/amule.cpp:2663
 msgid "Connected to Kad (firewalled)"
 msgstr "Connesso alla rete Kad (firewalled)"
 
-#: src/amule.cpp:2664
+#: src/amule.cpp:2667
 msgid "Disconnected from Kad"
 msgstr "Disconnesso dalla rete Kad"
 
-#: src/amule.cpp:2695
+#: src/amule.cpp:2699
 msgid "Kad network cannot be used if UDP port is disabled on preferences, not starting."
 msgstr "La rete Kad non può essere utilizzata se la porta UDP è disattivata dalle opzioni. Connessione non avviata."
 
-#: src/amule.cpp:2699
+#: src/amule.cpp:2703
 msgid "Kad network disabled on preferences, not connecting."
 msgstr "Rete Kad disattivata dalle opzioni. Connessione interrotta."
 
@@ -972,7 +972,7 @@ msgstr "Collegamento non valido o già nella lista."
 msgid "Can't create directory '%s' for category '%s', keeping directory '%s'."
 msgstr "Impossibile creare la directory '%s' per la categoria '%s', verrà mantenuta la directory '%s'."
 
-#: src/amule-remote-gui.cpp:2331 src/BaseClient.cpp:1830
+#: src/amule-remote-gui.cpp:2341 src/BaseClient.cpp:1830
 #: src/BaseClient.cpp:2434 src/BaseClient.cpp:2445 src/BaseClient.cpp:2718
 #: src/ClientDetailDialog.cpp:72 src/ClientDetailDialog.cpp:73
 #: src/ClientDetailDialog.cpp:103 src/ClientDetailDialog.cpp:104
@@ -1202,12 +1202,12 @@ msgid "Disabled"
 msgstr "Disabilitato"
 
 #: src/ClientDetailDialog.cpp:130 src/MuleTrayIcon.cpp:396
-#: src/ServerWnd.cpp:203 src/ServerWnd.cpp:250 src/TextClient.cpp:914
+#: src/ServerWnd.cpp:203 src/ServerWnd.cpp:258 src/TextClient.cpp:914
 msgid "Connected"
 msgstr "Connesso"
 
 #: src/ClientDetailDialog.cpp:132 src/MuleTrayIcon.cpp:386
-#: src/MuleTrayIcon.cpp:398 src/ServerWnd.cpp:250
+#: src/MuleTrayIcon.cpp:398 src/ServerWnd.cpp:258
 msgid "Disconnected"
 msgstr "Disconnesso"
 
@@ -2402,39 +2402,39 @@ msgstr ""
 msgid "Start aMule automatically when I log in"
 msgstr "Avvia aMule automaticamente all'accesso"
 
-#: src/FirstRunWizard.cpp:482 src/muuli_wdr.cpp:1281
+#: src/FirstRunWizard.cpp:484 src/muuli_wdr.cpp:1281
 #: packaging/windows/installer_strings.c:39
 msgid "Register aMule for ed2k:// links"
 msgstr "Registra aMule per i link ed2k://"
 
-#: src/FirstRunWizard.cpp:490 src/muuli_wdr.cpp:1285
+#: src/FirstRunWizard.cpp:492 src/muuli_wdr.cpp:1285
 #: packaging/windows/installer_strings.c:40
 msgid "Register aMule for magnet: links"
 msgstr "Registra aMule per i link magnet:"
 
-#: src/FirstRunWizard.cpp:499
+#: src/FirstRunWizard.cpp:504
 msgid "Only eD2k-compatible magnets. Leave off if you use a BitTorrent client."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:510 src/muuli_wdr.cpp:1292
+#: src/FirstRunWizard.cpp:522 src/muuli_wdr.cpp:1292
 msgid "Open .emulecollection files with aMule"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:526
+#: src/FirstRunWizard.cpp:538
 msgid "Folders (optional)"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:529
+#: src/FirstRunWizard.cpp:541
 msgid ""
 "The defaults are fine for most people. Change them if you\n"
 "want downloads on a different (e.g. larger) disk."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:537 src/FirstRunWizard.cpp:599 src/muuli_wdr.cpp:1695
+#: src/FirstRunWizard.cpp:549 src/FirstRunWizard.cpp:611 src/muuli_wdr.cpp:1695
 msgid "Destination folder for downloads"
 msgstr "Cartella di destinazione per i file scaricati"
 
-#: src/FirstRunWizard.cpp:541 src/FirstRunWizard.cpp:557 src/muuli_wdr.cpp:1342
+#: src/FirstRunWizard.cpp:553 src/FirstRunWizard.cpp:569 src/muuli_wdr.cpp:1342
 #: src/muuli_wdr.cpp:1359 src/muuli_wdr.cpp:1670 src/muuli_wdr.cpp:1701
 #: src/muuli_wdr.cpp:1713 src/muuli_wdr.cpp:2756
 #: src/utils/aLinkCreator/src/alcframe.cpp:135
@@ -2442,26 +2442,26 @@ msgstr "Cartella di destinazione per i file scaricati"
 msgid "Browse"
 msgstr "Sfoglia"
 
-#: src/FirstRunWizard.cpp:547 src/muuli_wdr.cpp:1706
+#: src/FirstRunWizard.cpp:559 src/muuli_wdr.cpp:1706
 msgid "(All files in this folder are shared with other peers)"
 msgstr "(Tutti i file in questa cartella sono condivisi con gli altri peer)"
 
-#: src/FirstRunWizard.cpp:553 src/FirstRunWizard.cpp:612 src/muuli_wdr.cpp:1708
+#: src/FirstRunWizard.cpp:565 src/FirstRunWizard.cpp:624 src/muuli_wdr.cpp:1708
 msgid "Folder for temporary download files"
 msgstr "Cartella per i file temporanei"
 
-#: src/FirstRunWizard.cpp:574
+#: src/FirstRunWizard.cpp:586
 #, c-format
 msgid ""
 "Based on this, aMule will allow up to %i sources per file\n"
 "and %i client connections."
 msgstr ""
 
-#: src/FirstRunWizard.cpp:759
+#: src/FirstRunWizard.cpp:771
 msgid "Show this setup wizard again the next time you start aMule?"
 msgstr ""
 
-#: src/FirstRunWizard.cpp:760
+#: src/FirstRunWizard.cpp:772
 msgid "Setup not finished"
 msgstr ""
 
@@ -2992,7 +2992,7 @@ msgstr "Chiudi"
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/MuleTextCtrl.cpp:87 src/PartFileConvert.cpp:407 src/ServerWnd.cpp:422
+#: src/MuleTextCtrl.cpp:87 src/PartFileConvert.cpp:407 src/ServerWnd.cpp:437
 #: src/utils/aLinkCreator/src/alcframe.cpp:250
 msgid "Copy"
 msgstr "Copia"
@@ -3161,7 +3161,7 @@ msgstr "Nome server: "
 msgid "ServerIP: "
 msgstr "IP server: "
 
-#: src/MuleTrayIcon.cpp:838 src/ServerWnd.cpp:224
+#: src/MuleTrayIcon.cpp:838 src/ServerWnd.cpp:232
 #: src/utils/wxCas/src/onlinesig.cpp:248
 msgid "Not Connected"
 msgstr "Non connesso"
@@ -3724,7 +3724,7 @@ msgstr "Software client:"
 msgid "Client version:"
 msgstr "Versione client:"
 
-#: src/muuli_wdr.cpp:1105 src/ServerWnd.cpp:294
+#: src/muuli_wdr.cpp:1105 src/ServerWnd.cpp:309
 msgid "IP address:"
 msgstr "Indirizzo IP:"
 
@@ -4502,8 +4502,8 @@ msgstr "Ripristina i valori predefiniti della pagina"
 msgid "Reset the settings on the current page to their default values."
 msgstr "Ripristina le impostazioni della pagina corrente ai loro valori predefiniti."
 
-#: src/muuli_wdr.cpp:2214 src/muuli_wdr.cpp:2300 src/ServerWnd.cpp:259
-#: src/ServerWnd.cpp:267
+#: src/muuli_wdr.cpp:2214 src/muuli_wdr.cpp:2300 src/ServerWnd.cpp:274
+#: src/ServerWnd.cpp:282
 msgid "OK"
 msgstr "OK"
 
@@ -6599,94 +6599,99 @@ msgstr "ID"
 msgid "Connection Type:"
 msgstr "Tipo di connessione:"
 
-#: src/ServerWnd.cpp:238
+#: src/ServerWnd.cpp:227 src/ServerWnd.cpp:263
+#, fuzzy
+msgid "Connected since:"
+msgstr "Connesso"
+
+#: src/ServerWnd.cpp:246
 msgid "Kademlia Status:"
 msgstr "Stato Kademlia:"
 
-#: src/ServerWnd.cpp:243
+#: src/ServerWnd.cpp:251
 msgid "Running in LAN mode"
 msgstr "Esecuzione in modalità LAN"
 
-#: src/ServerWnd.cpp:243
+#: src/ServerWnd.cpp:251
 msgid "Running"
 msgstr "Attivo"
 
-#: src/ServerWnd.cpp:246
+#: src/ServerWnd.cpp:254
 msgid "Kademlia client ID:"
 msgstr "ID client Kademlia:"
 
-#: src/ServerWnd.cpp:248
+#: src/ServerWnd.cpp:256
 msgid "Status:"
 msgstr "Stato:"
 
-#: src/ServerWnd.cpp:252
+#: src/ServerWnd.cpp:267
 msgid "Connection State:"
 msgstr "Stato connessione:"
 
-#: src/ServerWnd.cpp:256
+#: src/ServerWnd.cpp:271
 #, c-format
 msgid "Firewalled - open TCP port %d in your router or firewall"
 msgstr "Firewalled - apri la porta TCP %d nel tuo router o firewall"
 
-#: src/ServerWnd.cpp:260
+#: src/ServerWnd.cpp:275
 msgid "UDP Connection State:"
 msgstr "Stato connessione UDP:"
 
-#: src/ServerWnd.cpp:264
+#: src/ServerWnd.cpp:279
 #, c-format
 msgid "Firewalled - open UDP port %d in your router or firewall"
 msgstr "Firewalled - apri la porta UDP %d nel tuo router o firewall"
 
-#: src/ServerWnd.cpp:270
+#: src/ServerWnd.cpp:285
 msgid "Firewalled state: "
 msgstr "Stato del firewall: "
 
-#: src/ServerWnd.cpp:275
+#: src/ServerWnd.cpp:290
 msgid "No buddy required - TCP port open"
 msgstr "Nessun amico richiesto - porta TCP aperta"
 
-#: src/ServerWnd.cpp:277
+#: src/ServerWnd.cpp:292
 msgid "No buddy required - UDP port open"
 msgstr "Nessun amico richiesto - porta UDP aperta"
 
-#: src/ServerWnd.cpp:279
+#: src/ServerWnd.cpp:294
 msgid "No buddy"
 msgstr "Nessun amico"
 
-#: src/ServerWnd.cpp:283
+#: src/ServerWnd.cpp:298
 msgid "Connecting to buddy"
 msgstr "Connessione in corso all'amico"
 
-#: src/ServerWnd.cpp:286
+#: src/ServerWnd.cpp:301
 #, c-format
 msgid "Connected to buddy at %s"
 msgstr "Connesso all'amico a %s"
 
-#: src/ServerWnd.cpp:298
+#: src/ServerWnd.cpp:313
 msgid "Indexed sources:"
 msgstr "Fonti indicizzate:"
 
-#: src/ServerWnd.cpp:300
+#: src/ServerWnd.cpp:315
 msgid "Indexed keywords:"
 msgstr "Parole chiave indicizzate:"
 
-#: src/ServerWnd.cpp:302
+#: src/ServerWnd.cpp:317
 msgid "Indexed notes:"
 msgstr "Note indicizzate:"
 
-#: src/ServerWnd.cpp:304
+#: src/ServerWnd.cpp:319
 msgid "Indexed load:"
 msgstr "Utilizzo indicizzato:"
 
-#: src/ServerWnd.cpp:307
+#: src/ServerWnd.cpp:322
 msgid "Average Users:"
 msgstr "Numero medio utenti:"
 
-#: src/ServerWnd.cpp:310
+#: src/ServerWnd.cpp:325
 msgid "Average Files:"
 msgstr "Numero medio file:"
 
-#: src/ServerWnd.cpp:315 src/TextClient.cpp:925
+#: src/ServerWnd.cpp:330 src/TextClient.cpp:925
 msgid "Not running"
 msgstr "Non attivo"
 

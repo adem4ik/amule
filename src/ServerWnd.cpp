@@ -219,6 +219,14 @@ void CServerWnd::UpdateED2KInfo()
 		// Give it an explicit label so the row is self-explanatory.
 		ED2KInfoList->InsertItem(3, _("Connection Type:"));
 		ED2KInfoList->SetItem(3, 1, theApp->serverconnect->IsLowID() ? _("LowID") : _("HighID"));
+
+		// Carried over EC as EC_TAG_CONNSTATE's optional ED2K_CONNECTED_SINCE
+		// sub-tag (amule-org/amule#174), so this reads the same on amulegui
+		// as it does locally -- no CLIENT_GUI gate needed.
+		if (theApp->GetED2KConnectedSince().IsValid()) {
+			ED2KInfoList->InsertItem(4, _("Connected since:"));
+			ED2KInfoList->SetItem(4, 1, theApp->GetED2KConnectedSince().Format("%x %X"));
+		}
 	} else {
 		// No data
 		ED2KInfoList->SetItem(0, 1, _("Not Connected"));
@@ -249,6 +257,13 @@ void CServerWnd::UpdateKadInfo()
 		KadInfoList->SetItem(
 			next_row++, 1, theApp->IsConnectedKad() ? _("Connected") : _("Disconnected"));
 		if (theApp->IsConnectedKad()) {
+			// Carried over EC as EC_TAG_CONNSTATE's optional
+			// KAD_CONNECTED_SINCE sub-tag (amule-org/amule#174).
+			if (theApp->GetKadConnectedSince().IsValid()) {
+				KadInfoList->InsertItem(next_row, _("Connected since:"));
+				KadInfoList->SetItem(
+					next_row++, 1, theApp->GetKadConnectedSince().Format("%x %X"));
+			}
 			KadInfoList->InsertItem(next_row, _("Connection State:"));
 			KadInfoList->SetItem(next_row++,
 				1,
