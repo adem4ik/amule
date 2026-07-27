@@ -215,6 +215,7 @@ private:
 	wxCheckBox *m_autostartCtrl = nullptr;
 	wxCheckBox *m_registerEd2kCtrl = nullptr;
 	wxCheckBox *m_registerMagnetCtrl = nullptr;
+	wxCheckBox *m_assocCollectionCtrl = nullptr;
 	wxTextCtrl *m_incomingCtrl = NULL;
 	wxTextCtrl *m_tempCtrl = NULL;
 };
@@ -458,7 +459,9 @@ wxWizardPageSimple *CFirstRunWizard::BuildIntegrationsPage()
 	// same for magnet) all live in the OS, not in aMule.conf.
 	m_autostartCtrl = new wxCheckBox(page, wxID_ANY, _("Start aMule automatically when I log in"));
 	m_autostartCtrl->SetValue(AutostartManager::IsEnabled());
-	sizer->Add(m_autostartCtrl, 0, wxBOTTOM, 4);
+	// Wider gap than the 4 used between rows: autostart is its own thing,
+	// and the three registration toggles below read as a group.
+	sizer->Add(m_autostartCtrl, 0, wxBOTTOM, 12);
 
 	// On macOS the "un-register" path is a no-op (LaunchServices
 	// deliberately blocks programmatic reset), so once aMule already
@@ -466,13 +469,15 @@ wxWizardPageSimple *CFirstRunWizard::BuildIntegrationsPage()
 	// entirely — it would be a dead control. On Linux and Windows,
 	// Disable actually works, so the box is always created and simply
 	// reflects live state. Same rationale as the Preferences panel.
-	bool magnetEnabled = ProtocolHandlerManager::IsEnabled(UriScheme::Magnet);
+	bool magnetEnabled = ProtocolHandlerManager::IsEnabled(HandlerTarget::MagnetScheme);
 #ifdef __WXMAC__
-	const bool showEd2kBox = !ProtocolHandlerManager::IsEnabled(UriScheme::Ed2k);
+	const bool showEd2kBox = !ProtocolHandlerManager::IsEnabled(HandlerTarget::Ed2kScheme);
 	const bool showMagnetBox = !magnetEnabled;
+	const bool showAssocBox = !ProtocolHandlerManager::IsEnabled(HandlerTarget::CollectionFile);
 #else
 	const bool showEd2kBox = true;
 	const bool showMagnetBox = true;
+	const bool showAssocBox = true;
 #endif
 
 	if (showEd2kBox) {
@@ -491,13 +496,34 @@ wxWizardPageSimple *CFirstRunWizard::BuildIntegrationsPage()
 		// the current state if the user has already opted in elsewhere.
 		m_registerMagnetCtrl->SetValue(magnetEnabled);
 		sizer->Add(m_registerMagnetCtrl, 0, wxBOTTOM, 2);
+		// wxLEFT only: the 20 is the indent under the checkbox. Applying it
+		// to wxBOTTOM as well would leave a 20px gap before whatever comes
+		// next, which is five times the spacing every other row uses.
 		sizer->Add(new wxStaticText(page,
 				   wxID_ANY,
 				   _("Only eD2k-compatible magnets. Leave off if you use a BitTorrent "
 				     "client.")),
 			0,
-			wxLEFT | wxBOTTOM,
+			wxLEFT,
 			20);
+		sizer->AddSpacer(4);
+	}
+
+	if (showAssocBox) {
+		// Third section break, so the page reads as autostart / link
+		// handling / file handling. 8 here plus the 4 trailing the block
+		// above adds up to the same 12 that follows autostart - and when
+		// the magnet block is hidden (macOS, already registered) the 4
+		// after the ed2k row gets us to 12 just the same.
+		sizer->AddSpacer(8);
+		// String reused verbatim from the Preferences panel so translators
+		// only ever see it once.
+		m_assocCollectionCtrl =
+			new wxCheckBox(page, wxID_ANY, _("Open .emulecollection files with aMule"));
+		// Default ON: a collection is only useful opened in an eD2k
+		// client, and nothing else on a typical system claims the type.
+		m_assocCollectionCtrl->SetValue(true);
+		sizer->Add(m_assocCollectionCtrl, 0, wxBOTTOM, 4);
 	}
 
 	page->SetSizer(sizer);
@@ -687,16 +713,23 @@ void CFirstRunWizard::Apply(FirstRunWizard::Result &res)
 	}
 	if (m_registerEd2kCtrl) {
 		if (m_registerEd2kCtrl->GetValue()) {
-			ProtocolHandlerManager::Enable(UriScheme::Ed2k);
+			ProtocolHandlerManager::Enable(HandlerTarget::Ed2kScheme);
 		} else {
-			ProtocolHandlerManager::Disable(UriScheme::Ed2k);
+			ProtocolHandlerManager::Disable(HandlerTarget::Ed2kScheme);
+		}
+	}
+	if (m_assocCollectionCtrl) {
+		if (m_assocCollectionCtrl->GetValue()) {
+			ProtocolHandlerManager::Enable(HandlerTarget::CollectionFile);
+		} else {
+			ProtocolHandlerManager::Disable(HandlerTarget::CollectionFile);
 		}
 	}
 	if (m_registerMagnetCtrl) {
 		if (m_registerMagnetCtrl->GetValue()) {
-			ProtocolHandlerManager::Enable(UriScheme::Magnet);
+			ProtocolHandlerManager::Enable(HandlerTarget::MagnetScheme);
 		} else {
-			ProtocolHandlerManager::Disable(UriScheme::Magnet);
+			ProtocolHandlerManager::Disable(HandlerTarget::MagnetScheme);
 		}
 	}
 

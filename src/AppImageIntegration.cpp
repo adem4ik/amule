@@ -25,9 +25,11 @@
 #include "AppImageIntegration.h"
 
 #include "amule.h"
+#include "AppImageEnv.h" // Needed for GetSanitizedExecEnv
 #include "Logger.h"
 #include "Preferences.h"
 
+#include <wx/arrstr.h>
 #include <wx/dir.h>
 #include <wx/file.h>
 #include <wx/filefn.h>
@@ -39,6 +41,8 @@
 #include <wx/string.h>
 #include <wx/textfile.h>
 #include <wx/utils.h>
+
+#include <vector> // Needed for the argv vector in RunHelper
 
 #include <cstdlib>
 #include <sys/stat.h>
@@ -86,6 +90,11 @@ wxString GetUserIconsDir()
 	return GetUserDataHome() + wxT("/icons");
 }
 
+wxString GetUserMimePackagesDir()
+{
+	return GetUserDataHome() + wxT("/mime/packages");
+}
+
 // Read the bundled .desktop, swap Exec= and TryExec= to point at $APPIMAGE,
 // and write the result to ~/.local/share/applications/org.amule.aMule.desktop.
 // Returns true on success.
@@ -110,14 +119,13 @@ bool InstallDesktopFile(
 	for (size_t i = 0; i < in.GetLineCount(); ++i) {
 		wxString line = in[i];
 		if (line.StartsWith(wxT("Exec="))) {
-			// Quote the AppImage path so spaces survive. %u (single URL)
+			// Quote the AppImage path so spaces survive. %U (URL list)
 			// matches the shipped org.amule.aMule.desktop; aMule accepts
-			// both ed2k:// / magnet: URLs (via scheme handler clicks) and
-			// local file paths, and the .desktop spec's URL substitutions
-			// pass file paths through unmodified. Previously %F, which
-			// silently swallowed URL clicks once scheme registration was
-			// wired up (users would see aMule launch but the URL gone).
-			line = wxT("Exec=\"") + appimagePath + wxT("\" %u");
+			// ed2k:// / magnet: URLs (via scheme handler clicks) plus
+			// .emulecollection paths and file:// URLs, and takes any
+			// number of them. Must stay in step with the shipped file:
+			// it was %F once, which silently swallowed URL clicks.
+			line = wxT("Exec=\"") + appimagePath + wxT("\" %U");
 		} else if (line.StartsWith(wxT("TryExec="))) {
 			line = wxT("TryExec=") + appimagePath;
 		}
@@ -142,11 +150,17 @@ bool InstallIcons(const wxString &appdir, const wxString &userIconsDir)
 		return false;
 	}
 
+	// Two name shapes to collect: the application icons (org.amule.aMule.*
+	// under apps/) and the icon for the collection file type, whose name
+	// is dictated by the icon naming spec (the MIME type with '/' replaced
+	// by '-') and so does not carry the app id.
 	wxArrayString found;
 	wxDir::GetAllFiles(sourceHicolor, &found, wxT("org.amule.aMule.*"), wxDIR_FILES | wxDIR_DIRS);
+	wxDir::GetAllFiles(
+		sourceHicolor, &found, wxT("application-x-emule-collection.*"), wxDIR_FILES | wxDIR_DIRS);
 	if (found.IsEmpty()) {
-		AddDebugLogLineC(logGeneral,
-			wxT("AppImageIntegration: no org.amule.aMule.* icons under ") + sourceHicolor);
+		AddDebugLogLineC(
+			logGeneral, wxT("AppImageIntegration: no aMule icons under ") + sourceHicolor);
 		return false;
 	}
 
@@ -171,17 +185,99 @@ bool InstallIcons(const wxString &appdir, const wxString &userIconsDir)
 	return anyOk;
 }
 
-// update-desktop-database and gtk-update-icon-cache exist on every desktop
-// distro that ships a .desktop file system, but we don't fail integration
-// if they're missing — modern compositors inotify-watch the dirs and pick
-// up new files within seconds anyway. wxExecute with wxEXEC_SYNC still
-// returns instantly if the binary isn't found.
-void RefreshSystemCaches(const wxString &userAppsDir, const wxString &userIconsDir)
+// Copy the bundled shared-mime-info package into
+// ~/.local/share/mime/packages so the desktop learns what a
+// .emulecollection is. Without it the file is sniffed as text/plain or
+// application/octet-stream, the MimeType= line in the installed .desktop
+// never matches, and aMule is absent from the file manager's "Open With".
+// A system package install gets this from CMake instead; an AppImage has
+// no packager, so we do it ourselves.
+bool InstallMimePackage(const wxString &appdir, const wxString &userMimePackagesDir)
 {
-	wxExecute(wxT("update-desktop-database \"") + userAppsDir + wxT("\""),
-		wxEXEC_SYNC | wxEXEC_NODISABLE | wxEXEC_NOEVENTS);
-	wxExecute(wxT("gtk-update-icon-cache -f -t \"") + userIconsDir + wxT("/hicolor\""),
-		wxEXEC_SYNC | wxEXEC_NODISABLE | wxEXEC_NOEVENTS);
+	const wxString source = appdir + wxT("/usr/share/mime/packages/org.amule.aMule.xml");
+	if (!wxFileExists(source)) {
+		AddDebugLogLineC(logGeneral, wxT("AppImageIntegration: mime package missing at ") + source);
+		return false;
+	}
+
+	wxFileName destPath(userMimePackagesDir + wxT("/org.amule.aMule.xml"));
+	if (!destPath.DirExists()) {
+		destPath.Mkdir(0755, wxPATH_MKDIR_FULL);
+	}
+
+	const wxString dest = destPath.GetFullPath();
+	if (!wxCopyFile(source, dest, true)) {
+		AddDebugLogLineC(
+			logGeneral, wxT("AppImageIntegration: copy failed: ") + source + wxT(" -> ") + dest);
+		return false;
+	}
+	return true;
+}
+
+// Run a helper with its arguments passed as an argv vector rather than as
+// one command string.
+//
+// The string form of wxExecute does its own tokenising and hands the quote
+// characters through to the program, so `cmd "/home/me/dir"` arrives as a
+// path that literally starts with a quote and the helper fails with
+// "directory does not exist". Quoting was there to survive spaces in $HOME;
+// argv gives us that for free and without a shell.
+static void RunHelper(const wxString &program, const wxArrayString &args)
+{
+	std::vector<wxCharBuffer> storage;
+	std::vector<const char *> argv;
+	storage.reserve(args.GetCount() + 1);
+
+	storage.emplace_back(program.mb_str(wxConvUTF8));
+	argv.push_back(storage.back().data());
+	for (size_t i = 0; i < args.GetCount(); ++i) {
+		storage.emplace_back(args[i].mb_str(wxConvUTF8));
+		argv.push_back(storage.back().data());
+	}
+	argv.push_back(nullptr);
+
+	// These are system binaries, and AppRun has put the AppImage's own
+	// library directory at the front of LD_LIBRARY_PATH for our sake. A
+	// child inheriting that loads our bundled glib rather than the host's
+	// and dies before doing any work: update-mime-database exits with
+	// "undefined symbol: g_string_free_and_steal" against a host glib newer
+	// than the bundled copy. Same class of failure as #334, so reuse the
+	// helper written for it rather than stripping the paths again here.
+	wxExecuteEnv execEnv;
+	const bool sanitized = AppImageEnv::GetSanitizedExecEnv(execEnv);
+	const int flags = wxEXEC_SYNC | wxEXEC_NODISABLE | wxEXEC_NOEVENTS;
+
+	wxExecute(argv.data(), flags, nullptr, sanitized ? &execEnv : nullptr);
+}
+
+// update-desktop-database, gtk-update-icon-cache and update-mime-database
+// exist on every desktop distro that ships a .desktop file system, and we
+// don't fail integration if they're missing.
+//
+// The .desktop and icon caches have a safety net - desktop environments
+// watch those directories and rebuild on their own within seconds - which
+// is exactly why the broken quoting above went unnoticed for so long. The
+// shared-mime-info database has no such watcher: if update-mime-database
+// does not run, the collection type stays unknown and a double-click opens
+// whatever handles text/plain.
+void RefreshSystemCaches(
+	const wxString &userAppsDir, const wxString &userIconsDir, const wxString &userMimeDir)
+{
+	wxArrayString args;
+
+	args.Add(userAppsDir);
+	RunHelper(wxT("update-desktop-database"), args);
+
+	args.Clear();
+	args.Add(wxT("-f"));
+	args.Add(wxT("-t"));
+	args.Add(userIconsDir + wxT("/hicolor"));
+	RunHelper(wxT("gtk-update-icon-cache"), args);
+
+	args.Clear();
+	// Takes the mime dir itself, not the packages/ subdir inside it.
+	args.Add(userMimeDir);
+	RunHelper(wxT("update-mime-database"), args);
 }
 
 bool DesktopFileAlreadyInstalled()
@@ -403,7 +499,10 @@ void PromptAndInstall(wxWindow *parent)
 	}
 
 	InstallIcons(appdir, userIconsDir);
-	RefreshSystemCaches(userAppsDir, userIconsDir);
+	// Best-effort, like the icons: no mime package just means
+	// .emulecollection files aren't offered to aMule in the file manager.
+	InstallMimePackage(appdir, GetUserMimePackagesDir());
+	RefreshSystemCaches(userAppsDir, userIconsDir, GetUserDataHome() + wxT("/mime"));
 
 	AddLogLineN(wxString::Format(
 		_("AppImage integration: aMule added to your application menu (%d shell shortcuts under "

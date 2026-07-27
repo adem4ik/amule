@@ -199,6 +199,7 @@ LangString MYSTR_SEC_DESKTOP           ${LANG_ENGLISH} "Desktop shortcut"
 LangString MYSTR_SEC_AUTOSTART         ${LANG_ENGLISH} "Start aMule when I log in"
 LangString MYSTR_SEC_PROTO_ED2K        ${LANG_ENGLISH} "Register aMule for ed2k:// links"
 LangString MYSTR_SEC_PROTO_MAGNET      ${LANG_ENGLISH} "Register aMule for magnet: links"
+LangString MYSTR_SEC_ASSOC_COLLECTION  ${LANG_ENGLISH} "Associate .emulecollection files"
 LangString MYSTR_SEC_UNINSTALL         ${LANG_ENGLISH} "Uninstall"
 LangString MYSTR_SEC_REMOVE_USERDATA   ${LANG_ENGLISH} "Remove user data (config, ED2K servers, Kad nodes, partfiles)"
 
@@ -208,6 +209,7 @@ LangString MYSTR_DESC_DESKTOP          ${LANG_ENGLISH} "Place an aMule shortcut 
 LangString MYSTR_DESC_AUTOSTART        ${LANG_ENGLISH} "Launch aMule automatically when the current user logs in (per-user setting)."
 LangString MYSTR_DESC_PROTO_ED2K       ${LANG_ENGLISH} "Makes aMule the default handler for ed2k:// links so clicking one in your browser or file manager opens it here."
 LangString MYSTR_DESC_PROTO_MAGNET     ${LANG_ENGLISH} "aMule only handles eD2k-compatible magnets (containing xt=urn:ed2k:). BitTorrent magnets are NOT supported and clicking them will silently fail. If you use a BitTorrent client (Transmission, qBittorrent, etc.), leave this off."
+LangString MYSTR_DESC_ASSOC_COLLECTION ${LANG_ENGLISH} "Adds aMule to the $\"Open with$\" list for .emulecollection files, and makes it the default if no other program has claimed them. Opening a collection queues every eD2k link it contains."
 LangString MYSTR_DESC_UNINSTALL        ${LANG_ENGLISH} "Remove aMule application files, Start Menu / desktop shortcuts, autostart Run-key entry, URL scheme registrations, and Add/Remove Programs entry (required)."
 LangString MYSTR_DESC_REMOVE_USERDATA  ${LANG_ENGLISH} "Permanently delete %APPDATA%\aMule for the current user (aMule.conf, ED2K server list, Kad nodes, partfiles, IP filters, friends list). Leave unchecked to keep your settings."
 
@@ -384,6 +386,23 @@ Section /o "Register aMule for magnet: links" SecProtoMagnet
   ExecWait '"$INSTDIR\bin\amule.exe" --configure-protocols magnet:on'
 SectionEnd
 
+; .emulecollection file association. Delegates to --configure-file-assoc
+; for the same reason as the scheme sections above: the same registration
+; is reachable from the installer, the first-run wizard, the Preferences
+; panel and the CLI, so the key layout lives in one place
+; (ProtocolHandlerManager) instead of being duplicated here. It is also
+; what lets a portable copy register itself without an installer.
+;
+; Default ON: a collection is only useful opened in an eD2k client, and on
+; a typical system nothing else claims the type. Note "on" adds aMule to
+; the "Open with" list and takes the extension default only when no other
+; program has claimed it - from Windows 8 on, the user's *chosen* default
+; lives in a hash-protected UserChoice key no installer may write. Same
+; HKCU-under-UAC caveat as the autostart section above.
+Section "Associate .emulecollection files" SecAssocCollection
+  ExecWait '"$INSTDIR\bin\amule.exe" --configure-file-assoc on'
+SectionEnd
+
 ; Component descriptions surfaced on the Components page.
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecCore}        "$(MYSTR_DESC_CORE)"
@@ -391,6 +410,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAutostart}   "$(MYSTR_DESC_AUTOSTART)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecProtoEd2k}   "$(MYSTR_DESC_PROTO_ED2K)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecProtoMagnet} "$(MYSTR_DESC_PROTO_MAGNET)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocCollection} "$(MYSTR_DESC_ASSOC_COLLECTION)"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ; --------------------------------------------------------------------
@@ -462,6 +482,13 @@ Section "Uninstall" un.SecUninstall
   StrCmp $1 "" magnet_done 0
   DeleteRegKey HKCU "Software\Classes\magnet"
   magnet_done:
+
+  ; .emulecollection association - delegate to the binary, which owns
+  ; the key layout and already refuses to remove a registration that no
+  ; longer points at us. Run before the files are deleted below.
+  IfFileExists "$INSTDIR\bin\amule.exe" 0 assoc_done
+  ExecWait '"$INSTDIR\bin\amule.exe" --configure-file-assoc off'
+  assoc_done:
 
   ; Application files. Explicit RMDir /r on the known subtrees first
   ; for safety, then the catch-all on $INSTDIR.
@@ -547,6 +574,7 @@ Function .onInit
   SectionSetText ${SecAutostart} "$(MYSTR_SEC_AUTOSTART)"
   SectionSetText ${SecProtoEd2k}   "$(MYSTR_SEC_PROTO_ED2K)"
   SectionSetText ${SecProtoMagnet} "$(MYSTR_SEC_PROTO_MAGNET)"
+  SectionSetText ${SecAssocCollection} "$(MYSTR_SEC_ASSOC_COLLECTION)"
 FunctionEnd
 
 Function un.onInit

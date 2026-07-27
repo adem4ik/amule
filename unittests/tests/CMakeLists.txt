@@ -221,6 +221,29 @@ target_link_libraries (PhpArrayTest
 	muleunit
 )
 
+add_executable (CMuleCollectionTest
+	CMuleCollectionTest.cpp
+	${CMAKE_SOURCE_DIR}/src/MuleCollection.cpp
+	# muleunit's MuleDebug.cpp needs CFormat for its backtrace path, which
+	# is compiled in on glibc; without these the link fails on Linux while
+	# passing on macOS.
+	${CMAKE_SOURCE_DIR}/src/libs/common/Format.cpp
+	${CMAKE_SOURCE_DIR}/src/libs/common/strerror_r.c
+)
+
+add_test (NAME CMuleCollectionTest
+	COMMAND CMuleCollectionTest
+)
+
+target_include_directories (CMuleCollectionTest
+	PRIVATE ${CMAKE_SOURCE_DIR}/src
+	PRIVATE ${CMAKE_SOURCE_DIR}/src/include
+)
+
+target_link_libraries (CMuleCollectionTest
+	muleunit
+)
+
 add_executable (TextFileTest
 	TextFileTest.cpp
 	${CMAKE_SOURCE_DIR}/src/libs/common/Format.cpp
