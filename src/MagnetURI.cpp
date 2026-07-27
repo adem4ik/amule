@@ -113,6 +113,31 @@ bool CMagnetED2KConverter::CanConvertToED2K() const
 	return has_urn && has_xl;
 }
 
+namespace
+{
+
+// A base32-encoded AICH master hash is always 32 characters from [A-Z2-7]
+// (RFC 4648, no padding -- 20 raw bytes need exactly ceil(160/5) = 32
+// symbols). ED2KLink.cpp's parser throws on anything else, so a magnet
+// carrying a junk/truncated urn:aich: must have it dropped here rather than
+// embedded -- otherwise a perfectly valid ed2k hash would be rejected
+// wholesale just because the AICH tagalong was malformed. Plain char-range
+// check (no CAICHHash dependency) so it works in both build modes.
+bool IsWellFormedAich(const STRING &s)
+{
+	if (s.length() != 32) {
+		return false;
+	}
+	for (size_t i = 0; i < s.length(); ++i) {
+		if (!((s[i] >= _C('A') && s[i] <= _C('Z')) || (s[i] >= _C('2') && s[i] <= _C('7')))) {
+			return false;
+		}
+	}
+	return true;
+}
+
+} // namespace
+
 STRING CMagnetED2KConverter::GetED2KLink() const
 {
 	if (CanConvertToED2K()) {
@@ -129,23 +154,31 @@ STRING CMagnetED2KConverter::GetED2KLink() const
 			dn = _T("FileName.ext");
 		}
 		Value_List urn_list = GetField(_T("xt"));
-		// Use the first ed2k-hash found.
+		STRING aich;
+		// Use the first ed2k-hash found, and separately the first AICH
+		// urn if the magnet carries one (amule-org/amule#331) -- both
+		// loop over the same xt list since either can come in any order
+		// relative to the other.
 		for (Value_List::iterator it = urn_list.begin(); it != urn_list.end(); ++it) {
-			if (it->compare(0, 9, _T("urn:ed2k:")) == 0) {
+			if (hash.empty() && it->compare(0, 9, _T("urn:ed2k:")) == 0) {
 				hash = it->substr(9);
-				break;
-			} else if (it->compare(0, 13, _T("urn:ed2khash:")) == 0) {
+			} else if (hash.empty() && it->compare(0, 13, _T("urn:ed2khash:")) == 0) {
 				hash = it->substr(13);
-				break;
+			} else if (aich.empty() && it->compare(0, 9, _T("urn:aich:")) == 0) {
+				aich = it->substr(9);
 			}
 		}
-		return STRING(_T("ed2k://|file|"))
-			.append(dn)
-			.append(1, _C('|'))
-			.append(len)
-			.append(1, _C('|'))
-			.append(hash)
-			.append(_T("|/"));
+		STRING link = STRING(_T("ed2k://|file|"))
+				      .append(dn)
+				      .append(1, _C('|'))
+				      .append(len)
+				      .append(1, _C('|'))
+				      .append(hash)
+				      .append(1, _C('|'));
+		if (IsWellFormedAich(aich)) {
+			link.append(_T("h=")).append(aich).append(1, _C('|'));
+		}
+		return link.append(_T("/"));
 	} else {
 		return STRING();
 	}
