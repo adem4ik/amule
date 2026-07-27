@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
 "POT-Creation-Date: 2026-07-27 14:46+0200\n"
-"PO-Revision-Date: 2026-07-27 11:34+0000\n"
+"PO-Revision-Date: 2026-07-27 16:46+0000\n"
 "Last-Translator: David Watzke <david@watzke.cz>\n"
 "Language-Team: cs <cs@li.org>\n"
 "Language: cs\n"
@@ -55,7 +55,7 @@ msgstr "Část aMule je založena na \n"
 
 #: src/AboutDialog.cpp:86
 msgid "Kademlia: Peer-to-peer routing based on the XOR metric.\n"
-msgstr ""
+msgstr "Kademlia: Peer-to-peer směrování založené na metrice XOR.\n"
 
 #: src/AboutDialog.cpp:87
 msgid " Copyright (c) 2002-2011 Petar Maymounkov ( petar@maymounkov.org )\n"
