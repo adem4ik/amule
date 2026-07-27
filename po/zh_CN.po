@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
 "POT-Creation-Date: 2026-07-27 11:33+0200\n"
-"PO-Revision-Date: 2026-07-26 12:19+0000\n"
+"PO-Revision-Date: 2026-07-27 10:37+0000\n"
 "Last-Translator: Mike Akiba <mike2718@gmail.com>\n"
 "Language-Team: Chinese Simplified <kde-i18n-doc@kde.org>\n"
 "Language: zh_CN\n"
@@ -3823,7 +3823,7 @@ msgstr "如果"
 
 #: src/muuli_wdr.cpp:1517
 msgid "Static servers are never removed, even when unreachable."
-msgstr ""
+msgstr "即使静态服务器连不上也永远不删除。"
 
 #: src/muuli_wdr.cpp:1521
 msgid "retries"
@@ -6005,18 +6005,16 @@ msgid "New"
 msgstr "新建"
 
 #: src/ServerConnect.cpp:76
-#, fuzzy
 msgid "Failed to connect to all obfuscated static servers listed. Making another pass without obfuscation."
-msgstr "无法连接至列出的全部模糊协议服务器，尝试不使用模糊协议。"
+msgstr "无法连接至列出的全部混淆静态服务器，尝试不用混淆再连一次。"
 
 #: src/ServerConnect.cpp:80
 msgid "Failed to connect to all obfuscated servers listed. Making another pass without obfuscation."
 msgstr "无法连接至列出的全部模糊协议服务器，尝试不使用模糊协议。"
 
 #: src/ServerConnect.cpp:89
-#, fuzzy
 msgid "Failed to connect to all static servers listed. Making another pass."
-msgstr "无法连接列表中的所有服务器. 开始新的一轮尝试."
+msgstr "无法连接列出的所有静态服务器。开始新的一轮尝试。"
 
 #: src/ServerConnect.cpp:91
 msgid "Failed to connect to all servers listed. Making another pass."
