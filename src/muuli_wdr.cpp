@@ -1607,6 +1607,20 @@ wxSizer *PreferencesFilesTab( wxWindow *parent, bool call_fit, bool set_sizer )
     wxCheckBox *item13 = new wxCheckBox( parent, IDC_ALLOCFULLFILE, _("Preallocate disk space for new files"), wxDefaultPosition, wxDefaultSize, 0 );
     item13->SetToolTip( _("For new files preallocates disk space for the whole file, thus reduces fragmentation") );
     item5->Add( item13, wxSizerFlags().CenterVertical().Border(wxTOP, 0) );
+    // /eMule/CreateSparseFiles was EC-wired and settable via the Web UI
+    // (files.create_normal) but had no control here or in amuleGUI --
+    // hand-editing amule.conf was the only way (amule-org/amule#653).
+    // Only does real work when the *core* runs on Windows (PlatformSpecific.cpp
+    // vs. PartFile.cpp both call CFile::Create(name, true) identically on
+    // POSIX). Always created and bound here -- amuleGUI has no EC capability
+    // tag to know the core's platform, so it always shows the control; the
+    // monolithic non-Windows build (where the answer is a compile-time
+    // certainty) hides it post-creation in PrefsUnifiedDlg's ctor instead of
+    // skipping creation, so the Cfg_Tmpl binding still has a widget to
+    // connect to.
+    wxCheckBox *itemCreateSparse = new wxCheckBox( parent, IDC_CREATEFILESSPARSE, _("Create new files as sparse files"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemCreateSparse->SetToolTip( _("Sparse part files only occupy disk space for the parts already downloaded, so free space is used up gradually as the file fills in. Turn this off to use an ordinary file instead - useful where sparse files are unsupported or slow, or where backup/de-duplication tools handle them badly. Applies only when the core runs on Windows; on Linux and macOS part files are sparse anyway and this setting has no effect.") );
+    item5->Add( itemCreateSparse, wxSizerFlags().CenterVertical().Border(wxTOP, 0) );
     wxFlexGridSizer *item14 = new wxFlexGridSizer( 3, 0, 0 );
     item14->AddGrowableCol( 0 );
 
