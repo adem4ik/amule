@@ -2462,7 +2462,17 @@ wxSizer *serverListDlgUp( wxWindow *parent, bool call_fit, bool set_sizer )
     CMuleTextCtrl *item4 = new CMuleTextCtrl( parent, IDC_SERVERLISTURL, "", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
     item4->SetToolTip( _("Enter the url to a server.met file here and press the button to the left to update the list of known servers.") );
     item1->Add( item4, wxSizerFlags(1).Expand().CenterHorizontal().Border(wxLEFT, 5) );
+    item1->AddStretchSpacer(1);
+    // Placeholder label -- CServerWnd's ctor calls UpdateED2KConnectButton()
+    // right after construction, which sets the real label/bitmap for the
+    // current state. Kept on this top row, right-aligned via the stretch
+    // spacer above, so the primary control sits directly above the table --
+    // mirrors the Kad tab's "primary control on top, manual form below" shape.
+    wxButton *item14 = new wxButton( parent, IDC_ED2KDISCONNECT, _("Connect"), wxDefaultPosition, wxDefaultSize, 0 );
+    item1->Add( item14, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
     item0->Add( item1, wxSizerFlags().Expand().CenterVertical() );
+    CServerListCtrl *item15 = new CServerListCtrl( parent, ID_SERVERLIST, wxDefaultPosition, wxSize(200, 100), wxLC_REPORT|wxSUNKEN_BORDER );
+    item0->Add( item15, wxSizerFlags(1).Expand().CenterVertical() );
     wxBoxSizer *item5 = new wxBoxSizer( wxHORIZONTAL );
 
     wxStaticText *item6 = new wxStaticText( parent, -1, _("Add server manually: Name"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -2484,13 +2494,7 @@ wxSizer *serverListDlgUp( wxWindow *parent, bool call_fit, bool set_sizer )
     wxButton *item12 = new wxButton( parent, ID_ADDTOLIST, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
     item12->SetToolTip( _("Add manually a server (fill fields to the left before) ...") );
     item5->Add( item12, wxSizerFlags().Center().Border(wxLEFT, 5) );
-    wxStaticLine *item13 = new wxStaticLine( parent, -1, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-    item5->Add( item13, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
-    wxButton *item14 = new wxButton( parent, IDC_ED2KDISCONNECT, _("Disconnect"), wxDefaultPosition, wxDefaultSize, 0 );
-    item5->Add( item14, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, 5) );
     item0->Add( item5, wxSizerFlags().Expand().CenterVertical() );
-    CServerListCtrl *item15 = new CServerListCtrl( parent, ID_SERVERLIST, wxDefaultPosition, wxSize(200, 100), wxLC_REPORT|wxSUNKEN_BORDER );
-    item0->Add( item15, wxSizerFlags(1).Expand().CenterVertical() );
     if (set_sizer)
     {
         parent->SetSizer( item0 );
@@ -2542,9 +2546,18 @@ wxSizer *serverListDlgDown( wxWindow *parent, bool call_fit, bool set_sizer )
 
 wxSizer *KadDlg( wxWindow *parent, bool call_fit, bool set_sizer )
 {
-    wxFlexGridSizer *item0 = new wxFlexGridSizer( 1, 0, 0 );
-    item0->AddGrowableCol( 0 );
-    item0->AddGrowableRow( 0 );
+    wxBoxSizer *item0 = new wxBoxSizer( wxVERTICAL );
+
+    wxBoxSizer *itemTop = new wxBoxSizer( wxHORIZONTAL );
+    itemTop->AddStretchSpacer(1);
+    // Placeholder label -- CKadDlg::Init() calls UpdateConnectButton() right
+    // after construction, which sets the real label/bitmap for the current
+    // state. On its own top row, right-aligned, above the Bootstrap box --
+    // leads with the primary control, mirroring the ED2K pane's shape
+    // (#663 review).
+    wxButton *item38 = new wxButton( parent, ID_KADDISCONNECT, _("Connect"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemTop->Add( item38, wxSizerFlags().Center().Border(wxALL, 5) );
+    item0->Add( itemTop, wxSizerFlags().Expand() );
 
     wxFlexGridSizer *item1 = new wxFlexGridSizer( 2, 0, 0 );
     item1->AddGrowableCol( 0 );
@@ -2651,8 +2664,6 @@ item9->SetName("kadScope");
     // graph column beside it takes all the freed vertical space.
     wxButton *item37 = new wxButton( parent, ID_KNOWNNODECONNECT, _("Bootstrap from known clients"), wxDefaultPosition, wxDefaultSize, 0 );
     item20->Add( item37, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxTOP, 5) );
-    wxButton *item38 = new wxButton( parent, ID_KADDISCONNECT, _("Disconnect Kad"), wxDefaultPosition, wxDefaultSize, 0 );
-    item20->Add( item38, wxSizerFlags().Expand().Border(wxALL, 5) );
     item1->Add( item20, wxSizerFlags().Top() );
     item0->Add( item1, wxSizerFlags(1).Expand() );
     if (set_sizer)
@@ -5938,6 +5949,38 @@ wxBitmap connButImg( size_t index )
         return bitmap;
     }
     return wxNullBitmap;
+}
+
+void SetConnectButtonState(wxButton *button, EConnButtonState state, bool enabled)
+{
+	// The leading space (outside the translatable string, so no new msgid)
+	// is the portable way to put a gap between the icon and the label:
+	// wxButton::SetBitmapMargins() only does anything on wxOSX (see
+	// osx/anybutton.h) -- wxGTK inherits the base class's no-op, so using
+	// it here would fix macOS while silently doing nothing on Linux.
+	switch (state) {
+	case ConnButtonConnecting:
+		button->SetLabel(wxT(" ") + _("Cancel"));
+		button->SetBitmap(connButImg(2));
+		break;
+	case ConnButtonConnected:
+		button->SetLabel(wxT(" ") + _("Disconnect"));
+		button->SetBitmap(connButImg(1));
+		break;
+	default:
+		button->SetLabel(wxT(" ") + _("Connect"));
+		button->SetBitmap(connButImg(0));
+	}
+
+	button->Enable(enabled);
+
+	// SetBitmap() grows the button's best size; without a re-layout here,
+	// a pane laid out before its first UpdateXConnectButton() call (the
+	// Servers pane is visible at startup, unlike Kad's notebook page,
+	// which is first laid out only once shown -- after its bitmap already
+	// landed) paints with the stale text-only measurement, so the icon
+	// overlaps the label until the next window resize (#663 review).
+	button->GetParent()->Layout();
 }
 
 wxBitmap amuleDlgImages( size_t index )

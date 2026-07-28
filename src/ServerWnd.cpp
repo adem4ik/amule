@@ -41,6 +41,7 @@
 #include "amuleDlg.h" // Needed for CamuleDlg
 #include "amule.h"    // Needed for theApp
 #include "Logger.h"
+#include "IPFilter.h" // Needed for CIPFilter::IsReady
 #include "kademlia/utils/UInt128.h"
 
 #include "ClientList.h"
@@ -112,6 +113,8 @@ CServerWnd::CServerWnd(wxWindow *pParent /*=NULL*/, int splitter_pos)
 	}
 
 	sizer->Show(this, TRUE);
+
+	UpdateED2KConnectButton();
 }
 
 CServerWnd::~CServerWnd()
@@ -490,10 +493,32 @@ void CServerWnd::OnSashPositionChanged(wxSplitterEvent &WXUNUSED(evt))
 
 void CServerWnd::OnBnClickedED2KDisconnect(wxCommandEvent &WXUNUSED(evt))
 {
+	// Doubles as Connect/Cancel/Disconnect depending on the button's
+	// current state (see UpdateED2KConnectButton()).
 	if (theApp->serverconnect->IsConnecting()) {
 		theApp->serverconnect->StopConnectionTry();
-	} else {
+	} else if (theApp->IsConnectedED2K()) {
 		theApp->serverconnect->Disconnect();
+	} else {
+		AddLogLineC(_("Connecting"));
+		theApp->serverconnect->ConnectToAnyServer();
 	}
+}
+
+void CServerWnd::UpdateED2KConnectButton()
+{
+	wxButton *button = CastChild(IDC_ED2KDISCONNECT, wxButton);
+	wxCHECK_RET(button, "'IDC_ED2KDISCONNECT' widget not found");
+
+	EConnButtonState state;
+	if (theApp->IsConnectedED2K()) {
+		state = ConnButtonConnected;
+	} else if (theApp->serverconnect->IsConnecting()) {
+		state = ConnButtonConnecting;
+	} else {
+		state = ConnButtonOff;
+	}
+
+	SetConnectButtonState(button, state, thePrefs::GetNetworkED2K() && theApp->ipfilter->IsReady());
 }
 // File_checked_for_headers
