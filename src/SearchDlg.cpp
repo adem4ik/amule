@@ -24,13 +24,20 @@
 //
 
 #include <wx/app.h>
-#include <wx/config.h> // Needed to persist the default search type
+#include <wx/clipbrd.h>  // Needed for wxTheClipboard (search-name Paste enable check)
+#include <wx/combobox.h> // Needed for the IDC_SEARCHNAME history dropdown
+#include <wx/config.h>   // Needed to persist the default search type
+#include <wx/dataobj.h>  // Needed for wxTextDataObject (clipboard content check)
+#include <wx/menu.h>     // Needed for the search-history context menu
 
 #include <wx/gauge.h> // Do_not_auto_remove (win32)
+
+#include <algorithm> // Needed for std::min
 
 #include <tags/FileTags.h>
 
 #include "SearchDlg.h"      // Interface declarations.
+#include "SearchHistory.h"  // Needed for ApplySearchHistoryEntry
 #include "SearchListCtrl.h" // Needed for CSearchListCtrl
 #include "muuli_wdr.h"      // Needed for IDC_STARTS
 #include "amuleDlg.h"       // Needed for CamuleDlg
@@ -41,6 +48,7 @@
 #include "SearchList.h"   // Needed for CSearchList
 #include "updownclient.h" // Needed for EBrowseStatus (browse tab lifecycle)
 #include <common/Format.h>
+#include <common/TextFile.h> // Needed for CTextFile (searchhistory.dat)
 #include "Logger.h"
 
 #define ID_SEARCHLISTCTRL wxID_HIGHEST + 667
@@ -125,10 +133,161 @@ CSearchDlg::CSearchDlg(wxWindow *pParent)
 	s_search_sizer->Show(s_extended_sizer, false);
 	s_search_sizer->Show(s_filter_sizer, false);
 
+	LoadSearchHistory();
+	CastChild(IDC_SEARCHNAME, wxComboBox)
+		->Bind(wxEVT_CONTEXT_MENU, &CSearchDlg::OnSearchNameContextMenu, this);
+
 	Layout();
 }
 
 CSearchDlg::~CSearchDlg() {}
+
+namespace
+{
+// eMule's CCustomAutoComplete default (amule-org/amule#643 review).
+const int MAX_SEARCH_HISTORY_ENTRIES = 30;
+
+// Search *query* history -- the strings typed into the Name field, not the
+// results they returned (that's the separate, not-yet-implemented result
+// persistence eMule does via StoredSearches.met; see #641). Deliberately
+// not stored in amule.conf: query terms are arguably private, and putting
+// them in the main config both bloats it and makes them travel with the
+// file (config backups, the --amule-config-file push to amuleweb/amuleapi).
+// A dedicated file mirrors eMule's own AC_SearchStrings.dat.
+wxString SearchHistoryFilePath()
+{
+	return thePrefs::GetConfigDir() + "searchhistory.dat";
+}
+} // namespace
+
+void CSearchDlg::LoadSearchHistory()
+{
+	wxComboBox *combo = CastChild(IDC_SEARCHNAME, wxComboBox);
+	combo->Clear(); // item list, not the (empty at startup) text value
+
+	CTextFile file;
+	wxArrayString entries;
+	if (file.Open(SearchHistoryFilePath(), CTextFile::read)) {
+		// txtIgnoreEmptyLines|txtStripWhitespace has no single named
+		// EReadTextFile enumerator to cast to (clang-tidy
+		// clang-analyzer-optin.core.EnumCastOutOfRange, rightly --
+		// EReadTextFile isn't declared as a flag enum), and
+		// txtReadDefault also drops '#'-led lines, which would silently
+		// eat a legitimate search term. Read unfiltered and do the
+		// trim/empty-drop by hand instead.
+		for (const wxString &line : file.ReadLines(txtReadAll)) {
+			wxString trimmed = line;
+			trimmed.Trim(true).Trim(false);
+			if (!trimmed.IsEmpty()) {
+				entries.Add(trimmed);
+			}
+		}
+		file.Close();
+	}
+
+	size_t count = std::min<size_t>(entries.GetCount(), MAX_SEARCH_HISTORY_ENTRIES);
+	for (size_t i = 0; i < count; ++i) {
+		combo->Append(entries[i]);
+	}
+	// Feeds the dropdown's type-ahead suggestion (eMule's ACO_AUTOSUGGEST);
+	// re-armed here and after every RecordSearchHistory/ClearSearchHistory
+	// call so it always reflects the current entry set.
+	combo->AutoComplete(entries);
+}
+
+void CSearchDlg::RecordSearchHistory(const wxString &term)
+{
+	if (!CPreferences::RememberSearchHistory() || term.IsEmpty()) {
+		return;
+	}
+
+	wxComboBox *combo = CastChild(IDC_SEARCHNAME, wxComboBox);
+
+	wxArrayString current;
+	for (unsigned int i = 0; i < combo->GetCount(); ++i) {
+		current.Add(combo->GetString(i));
+	}
+	wxArrayString entries = ApplySearchHistoryEntry(current, term, MAX_SEARCH_HISTORY_ENTRIES);
+
+	combo->Clear();
+	for (const wxString &entry : entries) {
+		combo->Append(entry);
+	}
+	// combo->Clear() above only touches the item list, but set the value
+	// back explicitly anyway so behaviour doesn't depend on that not
+	// changing across wx versions/platforms.
+	combo->SetValue(term);
+	combo->AutoComplete(entries);
+
+	CTextFile file;
+	if (file.Open(SearchHistoryFilePath(), CTextFile::write)) {
+		file.WriteLines(entries);
+		file.Close();
+	}
+}
+
+void CSearchDlg::ClearSearchHistory()
+{
+	if (wxFileExists(SearchHistoryFilePath())) {
+		wxRemoveFile(SearchHistoryFilePath());
+	}
+
+	wxComboBox *combo = CastChild(IDC_SEARCHNAME, wxComboBox);
+	combo->Clear();
+	combo->AutoComplete(wxArrayString());
+}
+
+void CSearchDlg::OnSearchNameContextMenu(wxContextMenuEvent &WXUNUSED(evt))
+{
+	wxComboBox *combo = CastChild(IDC_SEARCHNAME, wxComboBox);
+
+	// Overriding the field's context menu (to append the history action
+	// below) must not silently drop the standard edit actions -- a plain
+	// wxComboBox's only other context menu is this one, so without these
+	// items right-clicking the field would offer no way to paste/copy
+	// (amule-org/amule#643 review). Same custom-Paste-ID idiom as
+	// CMuleTextCtrl::OnRightDown: wxMenu auto-enables Cut/Copy off Wx's own
+	// selection tracking for the wxID_CUT/wxID_COPY stock IDs, but is too
+	// permissive about wxID_PASTE (enabled even with an empty clipboard),
+	// so Paste gets a custom ID and an explicit clipboard-content check.
+	enum
+	{
+		ID_SEARCHNAME_PASTE = wxID_HIGHEST + 668
+	};
+
+	wxMenu menu;
+	menu.Append(wxID_CUT);
+	menu.Append(wxID_COPY);
+	menu.Append(ID_SEARCHNAME_PASTE, _("Paste"));
+	menu.Append(wxID_SELECTALL);
+
+	bool canPaste = false;
+	if (combo->CanPaste()) {
+		if (wxTheClipboard->Open()) {
+			if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
+				wxTextDataObject data;
+				wxTheClipboard->GetData(data);
+				canPaste = !data.GetText().IsEmpty();
+			}
+			wxTheClipboard->Close();
+		}
+	}
+	menu.Enable(ID_SEARCHNAME_PASTE, canPaste);
+
+	// Separator: "Clear" is a one-shot action, not another edit command --
+	// keeping it visually apart avoids reading it as one of the group above.
+	menu.AppendSeparator();
+	wxMenuItem *clearItem = menu.Append(wxID_ANY, _("Clear search history"));
+	clearItem->Enable(combo->GetCount() > 0);
+
+	menu.Bind(wxEVT_MENU, [combo](wxCommandEvent &) { combo->Cut(); }, wxID_CUT);
+	menu.Bind(wxEVT_MENU, [combo](wxCommandEvent &) { combo->Copy(); }, wxID_COPY);
+	menu.Bind(wxEVT_MENU, [combo](wxCommandEvent &) { combo->Paste(); }, ID_SEARCHNAME_PASTE);
+	menu.Bind(wxEVT_MENU, [combo](wxCommandEvent &) { combo->SetSelection(-1, -1); }, wxID_SELECTALL);
+	menu.Bind(wxEVT_MENU, [this](wxCommandEvent &) { ClearSearchHistory(); }, clearItem->GetId());
+
+	PopupMenu(&menu);
+}
 
 void CSearchDlg::FixSearchTypes()
 {
@@ -455,7 +614,7 @@ void CSearchDlg::OnFieldChanged(wxEvent &WXUNUSED(evt))
 	int textfields[] = { IDC_SEARCHNAME, IDC_EDITSEARCHEXTENSION };
 
 	for (int textfield : textfields) {
-		enable |= !CastChild(textfield, wxTextCtrl)->GetValue().IsEmpty();
+		enable |= !CastChild(textfield, wxTextEntry)->GetValue().IsEmpty();
 	}
 
 	// Check if either of the dropdowns have been changed
@@ -474,7 +633,7 @@ void CSearchDlg::OnFieldChanged(wxEvent &WXUNUSED(evt))
 	FindWindow(IDC_SEARCH_RESET)->Enable(enable);
 
 	// Enable the Server Search button if the Name field contains text
-	enable = !CastChild(IDC_SEARCHNAME, wxTextCtrl)->GetValue().IsEmpty();
+	enable = !CastChild(IDC_SEARCHNAME, wxTextEntry)->GetValue().IsEmpty();
 	FindWindow(IDC_STARTS)->Enable(enable);
 }
 
@@ -677,7 +836,7 @@ void CSearchDlg::ResetControls()
 	m_progressbar->SetValue(0);
 
 	FindWindow(IDC_CANCELS)->Disable();
-	FindWindow(IDC_STARTS)->Enable(!CastChild(IDC_SEARCHNAME, wxTextCtrl)->GetValue().IsEmpty());
+	FindWindow(IDC_STARTS)->Enable(!CastChild(IDC_SEARCHNAME, wxTextEntry)->GetValue().IsEmpty());
 }
 
 void CSearchDlg::LocalSearchEnd()
@@ -741,13 +900,15 @@ void CSearchDlg::StartNewSearch()
 
 	CSearchList::CSearchParams params;
 
-	params.searchString = CastChild(IDC_SEARCHNAME, wxTextCtrl)->GetValue();
+	params.searchString = CastChild(IDC_SEARCHNAME, wxTextEntry)->GetValue();
 	params.searchString.Trim(true);
 	params.searchString.Trim(false);
 
 	if (params.searchString.IsEmpty()) {
 		return;
 	}
+
+	RecordSearchHistory(params.searchString);
 
 	if (CastChild(IDC_EXTENDEDSEARCHCHECK, wxCheckBox)->GetValue()) {
 		params.extension = CastChild(IDC_EDITSEARCHEXTENSION, wxTextCtrl)->GetValue();
@@ -908,7 +1069,9 @@ void CSearchDlg::UpdateHitCount(CSearchListCtrl *page)
 
 void CSearchDlg::OnBnClickedReset(wxCommandEvent &WXUNUSED(evt))
 {
-	CastChild(IDC_SEARCHNAME, wxTextCtrl)->Clear();
+	// wxTextEntry::Clear(), not wxComboBox's own Clear() -- the latter empties
+	// the dropdown's item list (the history), not the typed value.
+	CastChild(IDC_SEARCHNAME, wxTextEntry)->Clear();
 	CastChild(IDC_EDITSEARCHEXTENSION, wxTextCtrl)->Clear();
 	CastChild(IDC_SPINSEARCHMIN, wxSpinCtrl)->SetValue(0);
 	CastChild(IDC_SEARCHMINSIZE, wxChoice)->SetSelection(2);

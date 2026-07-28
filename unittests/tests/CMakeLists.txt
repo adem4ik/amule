@@ -265,6 +265,27 @@ target_link_libraries (MagnetURITest
 	muleunit
 )
 
+add_executable (SearchHistoryTest
+	SearchHistoryTest.cpp
+	${CMAKE_SOURCE_DIR}/src/SearchHistory.cpp
+	# See the CMuleCollectionTest comment above -- same Linux-backtrace need.
+	${CMAKE_SOURCE_DIR}/src/libs/common/Format.cpp
+	${CMAKE_SOURCE_DIR}/src/libs/common/strerror_r.c
+)
+
+add_test (NAME SearchHistoryTest
+	COMMAND SearchHistoryTest
+)
+
+target_include_directories (SearchHistoryTest
+	PRIVATE ${CMAKE_SOURCE_DIR}/src
+	PRIVATE ${CMAKE_SOURCE_DIR}/src/include
+)
+
+target_link_libraries (SearchHistoryTest
+	muleunit
+)
+
 add_executable (TextFileTest
 	TextFileTest.cpp
 	${CMAKE_SOURCE_DIR}/src/libs/common/Format.cpp

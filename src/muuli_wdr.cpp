@@ -204,7 +204,7 @@ wxSizer *searchDlg( wxWindow *parent, bool call_fit, bool set_sizer )
 
     wxStaticText *item4 = new wxStaticText( parent, -1, _("Name:"), wxDefaultPosition, wxDefaultSize, 0 );
     item3->Add( item4, wxSizerFlags().Center().Border(wxALL, 5) );
-    CMuleTextCtrl *item5 = new CMuleTextCtrl( parent, IDC_SEARCHNAME, "", wxDefaultPosition, wxSize(80,-1), wxTE_PROCESS_ENTER );
+    wxComboBox *item5 = new wxComboBox( parent, IDC_SEARCHNAME, "", wxDefaultPosition, wxSize(80,-1), 0, nullptr, wxTE_PROCESS_ENTER );
     item3->Add( item5, wxSizerFlags(1).Center().Border(wxALL, 5) );
     wxFlexGridSizer *item6 = new wxFlexGridSizer( 1, 0, 0, 0 );
 
@@ -1316,6 +1316,13 @@ wxSizer *PreferencesGeneralTab( wxWindow *parent, bool call_fit, bool set_sizer 
     wxCheckBox *item13 = new wxCheckBox( parent, IDC_NOTIF, _("Show notifications when finished downloading"), wxDefaultPosition, wxDefaultSize, 0 );
     item13->SetToolTip( _("Enabling this will make aMule to show notifications when finished downloading.") );
     item0->Add( item13, 0, wxALIGN_CENTER_VERTICAL, 0 );
+
+    // Query history for the Search tab's Name field (amule-org/amule#641).
+    // A client-side-only setting (no EC/core involvement), so this one
+    // checkbox works unchanged in both amule and amuleGUI.
+    wxCheckBox *itemSearchHistory = new wxCheckBox( parent, IDC_SEARCHHISTORYENABLED, _("Remember search history"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemSearchHistory->SetToolTip( _("Keeps a dropdown list of your past search terms in the Search tab's Name field. This remembers the queries you typed, not the results they returned.") );
+    item0->Add( itemSearchHistory, 0, wxALIGN_CENTER_VERTICAL, 0 );
 
     wxBoxSizer *item14 = new wxBoxSizer( wxHORIZONTAL );
 
