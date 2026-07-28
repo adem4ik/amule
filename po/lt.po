@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-28 11:05+0200\n"
+"POT-Creation-Date: 2026-07-28 12:12+0200\n"
 "PO-Revision-Date: 2026-07-27 10:28+0000\n"
 "Last-Translator: Dovydas Sankauskas <laisve@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konf.lt>\n"
@@ -596,36 +596,36 @@ msgstr "Aplankykite https://github.com/amule-org/amule/releases/latest ir pasiti
 msgid "FATAL ERROR: Failed to create Timer"
 msgstr "KRITINĖ KLAIDA: nepavyko sukurti laiko skaitliuko"
 
-#: src/amuleDlg.cpp:361 src/amuleDlg.cpp:1787 src/amuleDlg.cpp:2033
+#: src/amuleDlg.cpp:361 src/amuleDlg.cpp:1810 src/amuleDlg.cpp:2056
 #: src/muuli_wdr.cpp:1492 src/muuli_wdr.cpp:3439
 msgid "Networks"
 msgstr "Tinklas"
 
-#: src/amuleDlg.cpp:362 src/amuleDlg.cpp:1793 src/muuli_wdr.cpp:3440
+#: src/amuleDlg.cpp:362 src/amuleDlg.cpp:1816 src/muuli_wdr.cpp:3440
 msgid "Searches"
 msgstr "Paieška"
 
-#: src/amuleDlg.cpp:363 src/amuleDlg.cpp:1799 src/DownloadListCtrl.cpp:740
+#: src/amuleDlg.cpp:363 src/amuleDlg.cpp:1822 src/DownloadListCtrl.cpp:740
 #: src/muuli_wdr.cpp:392 src/muuli_wdr.cpp:1585 src/muuli_wdr.cpp:3441
 #: src/Statistics.cpp:829
 msgid "Downloads"
 msgstr "Siuntimai"
 
-#: src/amuleDlg.cpp:364 src/amuleDlg.cpp:1805 src/muuli_wdr.cpp:3315
+#: src/amuleDlg.cpp:364 src/amuleDlg.cpp:1828 src/muuli_wdr.cpp:3315
 msgid "Shared files"
 msgstr "Dalinami failai"
 
-#: src/amuleDlg.cpp:365 src/amuleDlg.cpp:1811 src/muuli_wdr.cpp:2947
+#: src/amuleDlg.cpp:365 src/amuleDlg.cpp:1834 src/muuli_wdr.cpp:2947
 #: src/muuli_wdr.cpp:3397 src/muuli_wdr.cpp:3444
 msgid "Messages"
 msgstr "Žinutės"
 
-#: src/amuleDlg.cpp:366 src/amuleDlg.cpp:1817 src/muuli_wdr.cpp:3445
+#: src/amuleDlg.cpp:366 src/amuleDlg.cpp:1840 src/muuli_wdr.cpp:3445
 #: src/PrefsUnifiedDlg.cpp:314 src/Statistics.cpp:779 src/Statistics.cpp:1235
 msgid "Statistics"
 msgstr "Statistika"
 
-#: src/amuleDlg.cpp:368 src/amuleDlg.cpp:1824 src/muuli_wdr.cpp:3447
+#: src/amuleDlg.cpp:368 src/amuleDlg.cpp:1847 src/muuli_wdr.cpp:3447
 #: src/PrefsUnifiedDlg.cpp:330 src/utils/wxCas/src/wxcasprefs.cpp:39
 msgid "Preferences"
 msgstr "Parinktys"
@@ -774,61 +774,61 @@ msgstr "Išvaizdos failų aplankas %s neegzistuoja"
 msgid "WARNING: Unable to open skin file '%s' for read"
 msgstr "DĖMESIO: nepavyko atverti temos failo „%s“ skaitymui"
 
-#: src/amuleDlg.cpp:1791 src/muuli_wdr.cpp:3439
+#: src/amuleDlg.cpp:1814 src/muuli_wdr.cpp:3439
 msgid "Networks Window"
 msgstr "Tinklo langas"
 
-#: src/amuleDlg.cpp:1797 src/muuli_wdr.cpp:3440
+#: src/amuleDlg.cpp:1820 src/muuli_wdr.cpp:3440
 msgid "Searches Window"
 msgstr "Paieškos langas"
 
-#: src/amuleDlg.cpp:1803 src/muuli_wdr.cpp:3441
+#: src/amuleDlg.cpp:1826 src/muuli_wdr.cpp:3441
 #, fuzzy
 msgid "Downloads Window"
 msgstr "Atsiunčiama"
 
-#: src/amuleDlg.cpp:1809 src/muuli_wdr.cpp:3443
+#: src/amuleDlg.cpp:1832 src/muuli_wdr.cpp:3443
 msgid "Shared Files Window"
 msgstr "Dalinamų failų langas"
 
-#: src/amuleDlg.cpp:1815 src/muuli_wdr.cpp:3444
+#: src/amuleDlg.cpp:1838 src/muuli_wdr.cpp:3444
 msgid "Messages Window"
 msgstr "Žinučių langas"
 
-#: src/amuleDlg.cpp:1821 src/muuli_wdr.cpp:3445
+#: src/amuleDlg.cpp:1844 src/muuli_wdr.cpp:3445
 msgid "Statistics Graph Window"
 msgstr "Statistikos grafikų langas"
 
-#: src/amuleDlg.cpp:1828 src/muuli_wdr.cpp:3447
+#: src/amuleDlg.cpp:1851 src/muuli_wdr.cpp:3447
 msgid "Preferences Settings Window"
 msgstr "Parinkčių langas"
 
-#: src/amuleDlg.cpp:1831 src/muuli_wdr.cpp:3448
+#: src/amuleDlg.cpp:1854 src/muuli_wdr.cpp:3448
 msgid "Import"
 msgstr "Įkelti"
 
-#: src/amuleDlg.cpp:1835 src/muuli_wdr.cpp:3448
+#: src/amuleDlg.cpp:1858 src/muuli_wdr.cpp:3448
 msgid "The partfile importer tool"
 msgstr "Dalinai atsiųstų failų įkėlimo įrankis"
 
-#: src/amuleDlg.cpp:1838 src/muuli_wdr.cpp:3449
+#: src/amuleDlg.cpp:1861 src/muuli_wdr.cpp:3449
 #: src/utils/aLinkCreator/src/alcframe.cpp:262
 msgid "About"
 msgstr "Apie"
 
-#: src/amuleDlg.cpp:1838 src/muuli_wdr.cpp:3449
+#: src/amuleDlg.cpp:1861 src/muuli_wdr.cpp:3449
 msgid "About/Help"
 msgstr "Apie/pagalba"
 
-#: src/amuleDlg.cpp:2036
+#: src/amuleDlg.cpp:2059
 msgid "eD2k network"
 msgstr "eD2k tinklas"
 
-#: src/amuleDlg.cpp:2039
+#: src/amuleDlg.cpp:2062
 msgid "Kad network"
 msgstr "Kad tinklas"
 
-#: src/amuleDlg.cpp:2039
+#: src/amuleDlg.cpp:2062
 msgid "No network"
 msgstr "Jokio tinklo"
 
