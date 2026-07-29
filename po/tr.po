@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: Turkish <li@li.org>\n"
@@ -1396,7 +1396,8 @@ msgstr "Sunucu"
 msgid "Remote Server"
 msgstr "Uzak Sunucu"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2663,14 +2664,6 @@ msgid "IP filter is ready"
 msgstr "IP süzgeci hazır"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Bilinen kullanıcılardan\n"
-"Ön Yükleme"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Düğümler (%u)"
@@ -3000,7 +2993,7 @@ msgstr "Gönderim sınırı"
 msgid "Download limit"
 msgstr "Aktarım sınırı"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Bağlantıyı Kes"
 
@@ -3897,7 +3890,7 @@ msgstr "İndirilen dosya başına en fazla kaynak sayısı:"
 msgid "Max simultaneous connections:"
 msgstr "En cazla eş bağlantı sayısı:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4553,24 +4546,18 @@ msgid "Nodes stats"
 msgstr "Düğüm istatistikleri"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Ön Yükleme"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Bilinen kullanıcılardan Ön Yükleme"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Yeni düğüm"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Yeni sunucun IP numarasını x.x.x.x biçiminde buraya giriniz."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Bilinen kullanıcılardan Ön Yükleme"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -4986,13 +4973,24 @@ msgstr "Belirlenen iletiyi gönderir."
 msgid "Close this chat-session."
 msgstr "Bu sohbet oturumunu kapatır."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Herhangi bir sunucuya ve/veya Kad'a bağlan."
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Paylaşılan Dosyalar"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "İptal"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Bağlantıyı Kes"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Bağlan"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8504,8 +8502,27 @@ msgstr "Kullanıcı verileri $APPDATA\\aMule konumunda kaldırılıyor…"
 #~ msgid "Percent of total files"
 #~ msgstr "Toplam dosyaların yüzdesi"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Ön Yükleme"
+
+#~ msgid "New node"
+#~ msgstr "Yeni düğüm"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Daha Fazla"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Bilinen kullanıcılardan\n"
+#~ "Ön Yükleme"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Herhangi bir sunucuya ve/veya Kad'a bağlan."
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Kad Bağlantısını Kes"

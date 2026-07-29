@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:11+0000\n"
 "Last-Translator: Dovydas Sankauskas <laisve@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konf.lt>\n"
@@ -1408,7 +1408,8 @@ msgstr "Vietinis serveris"
 msgid "Remote Server"
 msgstr "Nutolęs serveris"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kademlia"
 
@@ -2692,14 +2693,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Inicializuoti iš \n"
-"žinomų klientų"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Mazgai (%u)"
@@ -3043,7 +3036,7 @@ msgstr "Išsiuntimo apribojimas"
 msgid "Download limit"
 msgstr "Atsiuntimo apribojimas"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Atsijungti"
 
@@ -3950,7 +3943,7 @@ msgstr ""
 msgid "Max simultaneous connections:"
 msgstr ""
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4613,27 +4606,20 @@ msgid "Nodes stats"
 msgstr "Mazgų statistika"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Inicializavimas"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"Inicializuoti iš \n"
+"žinomų klientų"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Naujas mazgas"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Įrašykite serverio IP adresą naudodami a.b.c.d formą."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Prievadas:"
-
-#: src/muuli_wdr.cpp
-#, fuzzy
-msgid "Bootstrap from known clients"
-msgstr ""
-"Inicializuoti iš \n"
-"žinomų klientų"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5049,13 +5035,24 @@ msgstr "Išsiųsti įrašytą žinutę."
 msgid "Close this chat-session."
 msgstr "Baigti pokalbį ir užverti pokalbio kortelę."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Prisijungti prie bet kurio serverio ir/ar Kademlia tinklo"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Dalinami failai"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Atšaukti"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Atsijungti"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Prisijungti"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8615,8 +8612,27 @@ msgstr ""
 msgid "Removing user data at $APPDATA\\aMule..."
 msgstr ""
 
+#~ msgid "Bootstrap"
+#~ msgstr "Inicializavimas"
+
+#~ msgid "New node"
+#~ msgstr "Naujas mazgas"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Daugiau"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Inicializuoti iš \n"
+#~ "žinomų klientų"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Prisijungti prie bet kurio serverio ir/ar Kademlia tinklo"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Atjungti Kademlia"

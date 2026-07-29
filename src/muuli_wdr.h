@@ -504,13 +504,9 @@ wxSizer *serverListDlgDown(wxWindow *parent, bool call_fit = TRUE, bool set_size
 #define ID_UPDATEKADLIST 10253
 #define IDC_NODESLISTURL 10254
 #define ID_KADSCOPE 10255
-#define ID_NODE_IP1 10256
-#define ID_NODE_IP2 10257
-#define ID_NODE_IP3 10258
-#define ID_NODE_IP4 10259
+#define ID_NODE_IP 10256
 #define ID_NODE_PORT 10260
 #define ID_NODECONNECT 10261
-#define ID_KNOWNNODECONNECT 10262
 #define ID_KADDISCONNECT 10263
 wxSizer *KadDlg(wxWindow *parent, bool call_fit = TRUE, bool set_sizer = TRUE);
 
@@ -624,7 +620,6 @@ wxSizer *messagePageMessages(wxWindow *parent, bool call_fit = TRUE, bool set_si
 
 // Declare toolbar functions
 
-#define ID_BUTTONCONNECT 10345
 #define ID_BUTTONNETWORKS 10346
 #define ID_BUTTONSEARCH 10347
 #define ID_BUTTONDOWNLOADS 10348
@@ -657,7 +652,8 @@ enum EConnButtonState
 	ConnButtonConnecting,
 	ConnButtonConnected
 };
-void SetConnectButtonState(wxButton *button, EConnButtonState state, bool enabled);
+void SetConnectButtonState(
+	wxButton *button, EConnButtonState state, bool enabled, const wxString &networkName);
 
 #endif
 

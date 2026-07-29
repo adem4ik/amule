@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:05+0000\n"
 "Last-Translator: Dimitris <dgalanak@yahoo.com>\n"
 "Language-Team: Greek\n"
@@ -1404,7 +1404,8 @@ msgstr "Τοπικός διακομιστής"
 msgid "Remote Server"
 msgstr "Απομακρυσμένος διακομιστής"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2683,14 +2684,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Εκκίνηση από\n"
-"γνωστούς πελάτες"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Κόμβοι (%u)"
@@ -3031,7 +3024,7 @@ msgstr "Όριο ανεβάσματος"
 msgid "Download limit"
 msgstr "Όριο κατεβάσματος"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Αποσύνδεση"
 
@@ -3941,7 +3934,7 @@ msgstr "Μέγιστος αριθμός πηγών ανά εισερχόμενο
 msgid "Max simultaneous connections:"
 msgstr "Μέγιστος αριθμός παράλληλων συνδέσεων:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4606,27 +4599,20 @@ msgid "Nodes stats"
 msgstr "Στατιστικές κόμβων"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Εκκινητήρας"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"Εκκίνηση από\n"
+"γνωστούς πελάτες"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Καινούριος κόμβος"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Γράψτε την IP του διακομιστή εδώ, σε μορφή x.x.x.x"
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Θύρα:"
-
-#: src/muuli_wdr.cpp
-#, fuzzy
-msgid "Bootstrap from known clients"
-msgstr ""
-"Εκκίνηση από\n"
-"γνωστούς πελάτες"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5042,13 +5028,24 @@ msgstr "Αποστολή του προσδιορισμένου μηνύματο�
 msgid "Close this chat-session."
 msgstr "Κλείσιμο της συνομιλίας."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Σύνδεση σε κάθε διακομιστή ή/και Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Κοινόχρηστα αρχεία"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Ακύρωση"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Αποσύνδεση"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Σύνδεση"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8598,8 +8595,27 @@ msgstr ""
 msgid "Removing user data at $APPDATA\\aMule..."
 msgstr ""
 
+#~ msgid "Bootstrap"
+#~ msgstr "Εκκινητήρας"
+
+#~ msgid "New node"
+#~ msgstr "Καινούριος κόμβος"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Περισσότερα"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Εκκίνηση από\n"
+#~ "γνωστούς πελάτες"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Σύνδεση σε κάθε διακομιστή ή/και Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Αποσυνδεδεμένο Kad"

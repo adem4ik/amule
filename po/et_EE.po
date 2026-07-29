@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: Estonian <kde-i18n-doc@kde.org>\n"
@@ -1394,7 +1394,8 @@ msgstr "Kohalik server"
 msgid "Remote Server"
 msgstr "Kaug server"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2665,14 +2666,6 @@ msgid "IP filter is ready"
 msgstr "IP filter on lähtestatud"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Tuntud klientide \n"
-"Bootstrap"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Sõlmed (%u)"
@@ -3011,7 +3004,7 @@ msgstr "Saatmise limiit"
 msgid "Download limit"
 msgstr "Tõmbamise limiit"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Ühendu lahti"
 
@@ -3919,7 +3912,7 @@ msgstr "Maksimaalseid allikaid tõmmatava faili kohta:"
 msgid "Max simultaneous connections:"
 msgstr "Maksimaalselt samaaegseid ühendusi:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4583,24 +4576,18 @@ msgid "Nodes stats"
 msgstr "Sõlmede statistika"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Bootstrap"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Tuntud klientide Bootstrap"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Uus sõlm"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Sisesta siia serveri IP aadrdess, kasutades x.x.x.x formaati."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Tuntud klientide Bootstrap"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5010,13 +4997,24 @@ msgstr "Saada määratud teade."
 msgid "Close this chat-session."
 msgstr "Sulge see vestlus-seanss."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Ühendu suvalise serveri ja/või Kad võrguga"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Jagatud failid"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Loobu"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Ühendu lahti"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Ühenda"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8527,8 +8525,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Protsenti kogufailidest"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Bootstrap"
+
+#~ msgid "New node"
+#~ msgstr "Uus sõlm"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Rohkem"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Tuntud klientide \n"
+#~ "Bootstrap"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Ühendu suvalise serveri ja/või Kad võrguga"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Lõpeta Kad ühendus"

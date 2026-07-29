@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:18+0000\n"
 "Last-Translator: Wayne Su <mstarmstar@gmail.com>\n"
 "Language-Team: \n"
@@ -1394,7 +1394,8 @@ msgstr "本地伺服器"
 msgid "Remote Server"
 msgstr "遠端伺服器"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2661,12 +2662,6 @@ msgid "IP filter is ready"
 msgstr "IP 過濾表已備妥"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr "從已知客戶端啓動"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "節點 (%u)"
@@ -3002,7 +2997,7 @@ msgstr "上傳限制"
 msgid "Download limit"
 msgstr "下載限制"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "中斷連線"
 
@@ -3910,7 +3905,7 @@ msgstr "每個檔案最大來源數："
 msgid "Max simultaneous connections:"
 msgstr "最大同時連線數："
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4573,24 +4568,18 @@ msgid "Nodes stats"
 msgstr "節點狀態"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "啓動"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "從已知客戶端啓動"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "新節點"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP："
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "輸入新伺服器的 IP (格式：x.x.x.x)。"
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "埠："
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "從已知客戶端啓動"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5000,13 +4989,24 @@ msgstr "傳送訊息。"
 msgid "Close this chat-session."
 msgstr "結束本次交談。"
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "連線到任何伺服器 和/或 Kad 網路"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "分享檔案"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "取消"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "中斷連線"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "連線"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8500,8 +8500,25 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "% (所有檔案中)"
 
+#~ msgid "Bootstrap"
+#~ msgstr "啓動"
+
+#~ msgid "New node"
+#~ msgstr "新節點"
+
+#~ msgid "IP:"
+#~ msgstr "IP："
+
 #~ msgid "More"
 #~ msgstr "其他"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr "從已知客戶端啓動"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "連線到任何伺服器 和/或 Kad 網路"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "中斷 Kad 連線"

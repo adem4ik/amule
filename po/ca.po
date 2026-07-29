@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:04+0000\n"
 "Last-Translator: minterior <minterior@gmail.com>\n"
 "Language-Team: Català\n"
@@ -1393,7 +1393,8 @@ msgstr "Servidor local"
 msgid "Remote Server"
 msgstr "Servidor remot"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2664,14 +2665,6 @@ msgid "IP filter is ready"
 msgstr "El filtre d'IP està llest"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Inicia des dels \n"
-"clients coneguts"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Nodes (%u)"
@@ -3010,7 +3003,7 @@ msgstr "Límit de pujada"
 msgid "Download limit"
 msgstr "Límit de baixada"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Desconnecta"
 
@@ -3918,7 +3911,7 @@ msgstr "Nombre màxim de fonts per descàrrega:"
 msgid "Max simultaneous connections:"
 msgstr "Nombre màxim de connexions simultànies:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4581,24 +4574,18 @@ msgid "Nodes stats"
 msgstr "Estadístiques de nodes"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Arrancada"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Inicia des dels clients coneguts"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Nou node"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Introduïu la IP del servidor, fent servir el format x.x.x.x."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Inicia des dels clients coneguts"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5007,13 +4994,24 @@ msgstr "Envia el missatge especificat."
 msgid "Close this chat-session."
 msgstr "Tanca aquesta sessió de xat."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Connecta amb qualsevol servidor i/o Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Compartits"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Cancel·la"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Desconnecta"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Connecta"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8524,8 +8522,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Percentatge del total de fitxers"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Arrancada"
+
+#~ msgid "New node"
+#~ msgstr "Nou node"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Més"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Inicia des dels \n"
+#~ "clients coneguts"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Connecta amb qualsevol servidor i/o Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Desconnecta Kad"

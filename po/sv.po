@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:16+0000\n"
 "Last-Translator: raffe <raffe@localhost.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1393,7 +1393,8 @@ msgstr "Lokal server"
 msgid "Remote Server"
 msgstr "Fjärrserver"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2664,14 +2665,6 @@ msgid "IP filter is ready"
 msgstr "IP-filter är redo"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Bootstrap från \n"
-"kända klienter"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Noder (%u)"
@@ -3010,7 +3003,7 @@ msgstr "Uppladdningsbegränsning"
 msgid "Download limit"
 msgstr "Nerladdningsbegränsning"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Koppla från"
 
@@ -3918,7 +3911,7 @@ msgstr "Max källor per hämtad fil:"
 msgid "Max simultaneous connections:"
 msgstr "Max samtidiga anslutningar:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4581,24 +4574,18 @@ msgid "Nodes stats"
 msgstr "Nodstatistik"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Bootstrap"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Bootstrap från kända klienter"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Ny nod"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Ange IP på servern här, med hjälp av xxxx format."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Bootstrap från kända klienter"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5007,13 +4994,24 @@ msgstr "Skickar det specificerade meddelandet."
 msgid "Close this chat-session."
 msgstr "Stäng denna chat-session."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Anslut till någon server och/eller Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Utdelade filer"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Avbryt"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Koppla från"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Anslut"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8524,8 +8522,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Procent av den totala filer"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Bootstrap"
+
+#~ msgid "New node"
+#~ msgstr "Ny nod"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Mer"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Bootstrap från \n"
+#~ "kända klienter"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Anslut till någon server och/eller Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Koppla från Kad"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:07+0000\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <librezale@librezale.org>\n"
@@ -1395,7 +1395,8 @@ msgstr "Zerbitzari lokala"
 msgid "Remote Server"
 msgstr "Urruneko zerbitzaria"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2666,14 +2667,6 @@ msgid "IP filter is ready"
 msgstr "IP iragazkia presta dago"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Hemendik abiarazi:\n"
-"bezero ezagunak"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Nodoak (%u)"
@@ -3012,7 +3005,7 @@ msgstr "Igoera muga"
 msgid "Download limit"
 msgstr "Deskarga muga"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Deskonektatu"
 
@@ -3920,7 +3913,7 @@ msgstr "Jatorri muga deskarga bakoitzerako:"
 msgid "Max simultaneous connections:"
 msgstr "Aldibereko konexioa muga:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4583,24 +4576,18 @@ msgid "Nodes stats"
 msgstr "Nodo estatistikak"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Autoabioa"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Bezero ezagunetarik abiarazi"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Nodo berria"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Idatzi x.x.x.x formatua erabiliaz zerbitzariaren ip helbidea."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Ataka:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Bezero ezagunetarik abiarazi"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5010,13 +4997,24 @@ msgstr "Zehaztutako mezua bidali."
 msgid "Close this chat-session."
 msgstr "Itxi elkarrizketa saio hau."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Konektatu edozein zerbitzari eta/edo Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Partekatutako fitxategiak"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Utzi"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Deskonektatu"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Konektatu"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8527,8 +8525,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "fitxategi guztien ehunekoa"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Autoabioa"
+
+#~ msgid "New node"
+#~ msgstr "Nodo berria"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Gehiago"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Hemendik abiarazi:\n"
+#~ "bezero ezagunak"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Konektatu edozein zerbitzari eta/edo Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Kad deskonektatu"

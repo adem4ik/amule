@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:12+0000\n"
 "Last-Translator: Michał Trzebiatowski <hippie_1968@hotmail.com>\n"
 "Language-Team: translationproject.org/team/pl.html <translation-team-pl@lists.sourceforge.net>\n"
@@ -1401,7 +1401,8 @@ msgstr "Serwer lokalny"
 msgid "Remote Server"
 msgstr "Serwer zdalny"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2676,14 +2677,6 @@ msgid "IP filter is ready"
 msgstr "Filtr IP jest gotowy"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Rozruch od \n"
-"znanych klientów"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Węzły (%u)"
@@ -3025,7 +3018,7 @@ msgstr "Limit wysyłania"
 msgid "Download limit"
 msgstr "Limit pobierania"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Rozłącz"
 
@@ -3933,7 +3926,7 @@ msgstr "Maks. ilość źródeł dla pobieranego pliku:"
 msgid "Max simultaneous connections:"
 msgstr "Maksymalne połączenia jednoczesne:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4598,24 +4591,18 @@ msgid "Nodes stats"
 msgstr "Statystyki węzłów"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Bootstrap"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Rozruch od znanych klientów"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Nowy węzeł"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Wpisz tu IP serwera, używając formatu x.x.x.x ."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Rozruch od znanych klientów"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5029,13 +5016,24 @@ msgstr "Wysyła wybraną wiadomość."
 msgid "Close this chat-session."
 msgstr "Zamknij tę sesję czata."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Podłącz do dowolnego serwera i/lub Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Udostępnione pliki"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Anuluj"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Rozłącz"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Podłącz"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8574,8 +8572,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "procent wszystkich plików"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Bootstrap"
+
+#~ msgid "New node"
+#~ msgstr "Nowy węzeł"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Więcej"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Rozruch od \n"
+#~ "znanych klientów"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Podłącz do dowolnego serwera i/lub Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Rozłącz z Kad"

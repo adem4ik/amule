@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:11+0000\n"
 "Last-Translator: Hyunju Kang <rexington@gmail.com>\n"
 "Language-Team: Korean <hoenny@daum.net>\n"
@@ -1403,7 +1403,8 @@ msgstr "지역 서버"
 msgid "Remote Server"
 msgstr "원격 서버"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2682,14 +2683,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"알려진 클라이언트로부터 \n"
-"초기적재"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "노드 (%u)"
@@ -3029,7 +3022,7 @@ msgstr ""
 msgid "Download limit"
 msgstr ""
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "연결 끊기"
 
@@ -3936,7 +3929,7 @@ msgstr ""
 msgid "Max simultaneous connections:"
 msgstr ""
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2k"
 
@@ -4598,27 +4591,20 @@ msgid "Nodes stats"
 msgstr "노드 상태"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "초기적재"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"알려진 클라이언트로부터 \n"
+"초기적재"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "새로운 노드"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "x.x.x.x형식으로 서버의 IP를 이곳에 입력하세요."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "포트:"
-
-#: src/muuli_wdr.cpp
-#, fuzzy
-msgid "Bootstrap from known clients"
-msgstr ""
-"알려진 클라이언트로부터 \n"
-"초기적재"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5033,13 +5019,24 @@ msgstr "지정된 메시지를 보냅니다."
 msgid "Close this chat-session."
 msgstr "이 채팅세션을 닫습니다."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "서버 혹은 Kad에 연결"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "공유 파일"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "취소"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "연결 끊기"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "연결"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8578,8 +8575,27 @@ msgstr ""
 msgid "Removing user data at $APPDATA\\aMule..."
 msgstr ""
 
+#~ msgid "Bootstrap"
+#~ msgstr "초기적재"
+
+#~ msgid "New node"
+#~ msgstr "새로운 노드"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "추가"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "알려진 클라이언트로부터 \n"
+#~ "초기적재"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "서버 혹은 Kad에 연결"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Kad 끊김"

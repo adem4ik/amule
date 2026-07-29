@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:12+0000\n"
 "Last-Translator: Marcel Pol <marcel@timelord.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -1395,7 +1395,8 @@ msgstr "Lokale server"
 msgid "Remote Server"
 msgstr "Server op Afstand"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2668,14 +2669,6 @@ msgid "IP filter is ready"
 msgstr "IP-filter is klaar"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Bootstrap van \n"
-"bekende clients"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Nodes (%u)"
@@ -3014,7 +3007,7 @@ msgstr "Uploadgrens"
 msgid "Download limit"
 msgstr "Downloadgrens"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Verbreek"
 
@@ -3923,7 +3916,7 @@ msgstr "Max bronnen per bestand aan het downloaden:"
 msgid "Max simultaneous connections:"
 msgstr "Max gelijktijdige verbindingen:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4586,24 +4579,18 @@ msgid "Nodes stats"
 msgstr "Nodes stats"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Bootstrap"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Bootstrap van bekende clients"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Nieuwe node"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Voer hier het IP van de server in, gebuik het x.x.x.x formaat."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Poort:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Bootstrap van bekende clients"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5012,13 +4999,24 @@ msgstr "Verstuurt het opgegeven bericht."
 msgid "Close this chat-session."
 msgstr "Sluit deze chat-sessie."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Verbind met een server en/of Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Gedeelde bestanden"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Annuleren"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Verbreek"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Verbinden"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8533,8 +8531,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Procent van alle bestanden"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Bootstrap"
+
+#~ msgid "New node"
+#~ msgstr "Nieuwe node"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Meer"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Bootstrap van \n"
+#~ "bekende clients"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Verbind met een server en/of Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Verbreek verbinding met Kad"

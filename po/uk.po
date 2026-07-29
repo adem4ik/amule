@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:17+0000\n"
 "Last-Translator: Oleksandr Kovalenko <alx.kovalenko@gmail.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -1404,7 +1404,8 @@ msgstr "Місцевий сервер"
 msgid "Remote Server"
 msgstr "Віддалений сервер"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2687,14 +2688,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Початковий запуск\n"
-"відомого клієнта"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Вузли (%u)"
@@ -3039,7 +3032,7 @@ msgstr "Обмеження вивантаження"
 msgid "Download limit"
 msgstr "Обмеження звантаження"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Від'єднатися"
 
@@ -3949,7 +3942,7 @@ msgstr "Найбільше джерел на звантажуваний файл
 msgid "Max simultaneous connections:"
 msgstr "Найбільше одночасних з'єднань:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "eD2k"
 
@@ -4614,27 +4607,20 @@ msgid "Nodes stats"
 msgstr "Статистика вузлів"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Початковий запуск"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"Початковий запуск\n"
+"відомого клієнта"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Новий вузол"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Тут введіть IP-адресу сервера, використовуючи формат x.x.x.x."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Порт:"
-
-#: src/muuli_wdr.cpp
-#, fuzzy
-msgid "Bootstrap from known clients"
-msgstr ""
-"Початковий запуск\n"
-"відомого клієнта"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5050,13 +5036,24 @@ msgstr "Надіслати вказане повідомлення."
 msgid "Close this chat-session."
 msgstr "Закрити цю розмову."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "З'єднатися з будь-яким сервером та/чи Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Спільні файли"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Скасувати"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Від'єднатися"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "З'єднатися"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8619,8 +8616,27 @@ msgstr ""
 msgid "Removing user data at $APPDATA\\aMule..."
 msgstr ""
 
+#~ msgid "Bootstrap"
+#~ msgstr "Початковий запуск"
+
+#~ msgid "New node"
+#~ msgstr "Новий вузол"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Більше"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Початковий запуск\n"
+#~ "відомого клієнта"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "З'єднатися з будь-яким сервером та/чи Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Від'єднатися від Kad"

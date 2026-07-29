@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
@@ -1395,7 +1395,8 @@ msgstr "ローカルサーバ"
 msgid "Remote Server"
 msgstr "リモートサーバ"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2665,14 +2666,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"既知のクライアントから\n"
-"ブートストラップする"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "ノード数（%u）"
@@ -3009,7 +3002,7 @@ msgstr ""
 msgid "Download limit"
 msgstr ""
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "切断する"
 
@@ -3916,7 +3909,7 @@ msgstr ""
 msgid "Max simultaneous connections:"
 msgstr ""
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4578,27 +4571,20 @@ msgid "Nodes stats"
 msgstr "ノードの統計"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "ブートストラップ"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"既知のクライアントから\n"
+"ブートストラップする"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "新しいノード"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP："
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "x.x.x.xフォーマットでサーバのIPアドレスを入力してください。"
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "ポート："
-
-#: src/muuli_wdr.cpp
-#, fuzzy
-msgid "Bootstrap from known clients"
-msgstr ""
-"既知のクライアントから\n"
-"ブートストラップする"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5014,13 +5000,24 @@ msgstr "指示するメッセージを送信します。"
 msgid "Close this chat-session."
 msgstr "チャット・セションを閉じます。"
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "すべてのサーバ、もしくはKadに接続する"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "共有ファイル"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "キャンセル"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "切断する"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "接続する"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8528,8 +8525,27 @@ msgstr ""
 msgid "Removing user data at $APPDATA\\aMule..."
 msgstr ""
 
+#~ msgid "Bootstrap"
+#~ msgstr "ブートストラップ"
+
+#~ msgid "New node"
+#~ msgstr "新しいノード"
+
+#~ msgid "IP:"
+#~ msgstr "IP："
+
 #~ msgid "More"
 #~ msgstr "もっと"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "既知のクライアントから\n"
+#~ "ブートストラップする"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "すべてのサーバ、もしくはKadに接続する"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Kadを切断する"

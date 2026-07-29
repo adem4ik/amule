@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:15+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian\n"
@@ -1407,7 +1407,8 @@ msgstr "Krajevni strežnik"
 msgid "Remote Server"
 msgstr "Oddaljni strežnik"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2687,14 +2688,6 @@ msgid "IP filter is ready"
 msgstr "Filter IP je pripravljen"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Naloži od znanih \n"
-"odjemalcev"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Vozlišča (%u)"
@@ -3039,7 +3032,7 @@ msgstr "Omejitev pošiljanja"
 msgid "Download limit"
 msgstr "Omejitev prejemanja"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Prekini povezave"
 
@@ -3948,7 +3941,7 @@ msgstr "Največ virov na prejemanje:"
 msgid "Max simultaneous connections:"
 msgstr "Največ istočasnih povezav:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "eD2k"
 
@@ -4611,26 +4604,20 @@ msgid "Nodes stats"
 msgstr "Statistika vozlišč"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Začetno nalaganje"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr ""
+"Naloži od znanih \n"
+"odjemalcev"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Novo vozlišče"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Sem vnesite IP strežnika v formatu x.x.x.x."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Vrata:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr ""
-"Naloži od znanih \n"
-"odjemalcev"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5039,13 +5026,24 @@ msgstr "Pošlje navedeno sporočilo."
 msgid "Close this chat-session."
 msgstr "Zapri to pogovorno sejo."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Poveži se s poljubnim strežnikom in/ali s Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Deljene datoteke"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Prekliči"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Prekini povezave"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Poveži se"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8587,8 +8585,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Odstotek vseh datotek"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Začetno nalaganje"
+
+#~ msgid "New node"
+#~ msgstr "Novo vozlišče"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Več"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Naloži od znanih \n"
+#~ "odjemalcev"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Poveži se s poljubnim strežnikom in/ali s Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Prekini povezavo s Kad"

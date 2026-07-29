@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:17+0000\n"
 "Last-Translator: Mike Akiba <mike2718@gmail.com>\n"
 "Language-Team: Chinese Simplified <kde-i18n-doc@kde.org>\n"
@@ -1400,7 +1400,8 @@ msgstr "本地服务器"
 msgid "Remote Server"
 msgstr "远程服务器"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2662,12 +2663,6 @@ msgid "IP filter is ready"
 msgstr "IP过滤器已准备好"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr "从已知用户启动"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "节点（%u）"
@@ -2997,7 +2992,7 @@ msgstr "上传限制"
 msgid "Download limit"
 msgstr "下载限制"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "断开连接"
 
@@ -3894,7 +3889,7 @@ msgstr "每个下载文件的最大的源数量:"
 msgid "Max simultaneous connections:"
 msgstr "最大同时连接数:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4550,24 +4545,18 @@ msgid "Nodes stats"
 msgstr "节点状态"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "启动"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "从已知用户启动"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "新节点"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP："
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "输入新服务器的 IP 地址 (x.x.x.x格式)。"
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "端口："
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "从已知用户启动"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -4983,13 +4972,24 @@ msgstr "发送指定消息。"
 msgid "Close this chat-session."
 msgstr "结束本次聊天。"
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "连接至任何服务器和/或 Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "共享文件"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "取消"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "断开连接"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "连接"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8498,8 +8498,25 @@ msgstr "正在删除 $APPDATA\\aMule 中的用户数据..."
 #~ msgid "Percent of total files"
 #~ msgstr "全部文件的百分比"
 
+#~ msgid "Bootstrap"
+#~ msgstr "启动"
+
+#~ msgid "New node"
+#~ msgstr "新节点"
+
+#~ msgid "IP:"
+#~ msgstr "IP："
+
 #~ msgid "More"
 #~ msgstr "更多"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr "从已知用户启动"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "连接至任何服务器和/或 Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "断开 Kad"

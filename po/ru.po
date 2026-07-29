@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:14+0000\n"
 "Last-Translator: Radist Morse <radist.morse@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -1410,7 +1410,8 @@ msgstr "Локальный сервер"
 msgid "Remote Server"
 msgstr "Удаленный сервер"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2687,15 +2688,6 @@ msgstr "Переименование нового файла %s неудачно
 msgid "IP filter is ready"
 msgstr "IP-фильтр готов"
 
-# Похоже, bootstrap в eMule перевели как инициализация
-#: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Инициализация от \n"
-"известных клиентов"
-
 #: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
@@ -3039,7 +3031,7 @@ msgstr "Ограничение отдачи"
 msgid "Download limit"
 msgstr "Ограничение приема"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Отключиться"
 
@@ -3953,7 +3945,7 @@ msgstr "Максимум источников на файл:"
 msgid "Max simultaneous connections:"
 msgstr "Максимум одновременных соединений:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4620,26 +4612,20 @@ msgstr "Ведите сюда URL к файлу nodes.dat и нажмите кн
 msgid "Nodes stats"
 msgstr "Статистика узлов"
 
+# Похоже, bootstrap в eMule перевели как инициализация
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Инициализация"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Инициализация от известных клиентов"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Новый узел"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Введите здесь IP-адрес сервера в формате: x.x.x.x"
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Порт:"
-
-# Похоже, bootstrap в eMule перевели как инициализация
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Инициализация от известных клиентов"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5050,14 +5036,25 @@ msgstr "Отправить данное сообщение."
 msgid "Close this chat-session."
 msgstr "Закрыть данный чат."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Соединиться с произвольным сервером и/или Kad"
-
 # подпись в главном окне. длинная просто не влезет.
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Файлы"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Отменить"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Отключиться"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Подключиться"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8603,8 +8600,28 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Процент от всех файлов"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Инициализация"
+
+#~ msgid "New node"
+#~ msgstr "Новый узел"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Дополнительно"
+
+# Похоже, bootstrap в eMule перевели как инициализация
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Инициализация от \n"
+#~ "известных клиентов"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Соединиться с произвольным сервером и/или Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Отключить Kad"

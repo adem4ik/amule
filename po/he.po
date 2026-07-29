@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:09+0000\n"
 "Last-Translator: Peace Kramer <kpeace1@gmail.com>\n"
 "Language-Team: Hebrew\n"
@@ -1385,7 +1385,8 @@ msgstr "שרת מקומי"
 msgid "Remote Server"
 msgstr "שרת מרוחק"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "קאד"
 
@@ -2636,12 +2637,6 @@ msgid "IP filter is ready"
 msgstr ""
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "צמתים (%u)"
@@ -2981,7 +2976,7 @@ msgstr ""
 msgid "Download limit"
 msgstr ""
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "מנותק"
 
@@ -3884,7 +3879,7 @@ msgstr ""
 msgid "Max simultaneous connections:"
 msgstr ""
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4544,23 +4539,16 @@ msgid "Nodes stats"
 msgstr ""
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr ""
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "קבצים זמניים"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr ""
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
+msgid "Enter the IP of the node here, using the x.x.x.x format."
 msgstr ""
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
-msgstr ""
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
 msgstr ""
 
 #: src/muuli_wdr.cpp
@@ -4974,13 +4962,24 @@ msgstr "שולח את ההודעה המצויינת."
 msgid "Close this chat-session."
 msgstr "סגור את הצ'אט הנוכחי."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr ""
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "קבצים משותפים"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "ביטול"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "מנותק"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "התחבר"
 
 #: src/OScopeCtrl.cpp
 #, c-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:14+0000\n"
 "Last-Translator: Angelescu Constantin <titus0818@yahoo.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1398,7 +1398,8 @@ msgstr "Server local"
 msgid "Remote Server"
 msgstr "Server distant"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2671,14 +2672,6 @@ msgid "IP filter is ready"
 msgstr "Filtrul IP este gata"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Bootstrap de la \n"
-"clienți cunoscuți"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Noduri (%u)"
@@ -3020,7 +3013,7 @@ msgstr "Limită încărcare"
 msgid "Download limit"
 msgstr "Limită descărcare"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Deconectează"
 
@@ -3928,7 +3921,7 @@ msgstr "Număr maxim de surse pe fișier descărcat:"
 msgid "Max simultaneous connections:"
 msgstr "Număr maxim de conexiuni simultane:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4591,24 +4584,18 @@ msgid "Nodes stats"
 msgstr "Stare noduri"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Bootstrap"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Bootstrap de la clienții cunoscuți"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Nod nou"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Introduceți aici adresa IP a serverului, utilizând formatul x.x.x.x  ."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Bootstrap de la clienții cunoscuți"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5017,13 +5004,24 @@ msgstr "Trimite mesajul specificat"
 msgid "Close this chat-session."
 msgstr "Închide această sesiune de chat."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Conectare la orice server și/sau Kad"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Fișiere partajate"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Anulare"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Deconectează"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Conectează"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8551,8 +8549,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Procentul din totalul fișierelor"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Bootstrap"
+
+#~ msgid "New node"
+#~ msgstr "Nod nou"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Mai mult"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Bootstrap de la \n"
+#~ "clienți cunoscuți"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Conectare la orice server și/sau Kad"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Deconectare Kad"

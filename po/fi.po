@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:07+0000\n"
 "Last-Translator: Tapio Rantala <tapio.rantala@iki.fi>\n"
 "Language-Team: aMule Team <https://github.com/amule-org/amule>\n"
@@ -1395,7 +1395,8 @@ msgstr "Paikallinen Palvelin"
 msgid "Remote Server"
 msgstr "Etäpalvelin"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2666,14 +2667,6 @@ msgid "IP filter is ready"
 msgstr "IP-suodatin on valmiina"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Käytä tunnettuja \n"
-"asiakkaita yhdistämisapuna"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Yhteyspisteitä (%u)"
@@ -3012,7 +3005,7 @@ msgstr "Lähetysraja"
 msgid "Download limit"
 msgstr "Latausraja"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Katkaise yhteys"
 
@@ -3920,7 +3913,7 @@ msgstr "Lähteitä enintään tiedostoa kohden:"
 msgid "Max simultaneous connections:"
 msgstr "Yhtäaikaisten yhteyksien enimmäismäärä:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4583,24 +4576,18 @@ msgid "Nodes stats"
 msgstr "Yhteyspisteiden tilastot"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Yhdistämisapu"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Käytä tunnettuja asiakkaita yhdistämisapuna"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Uusi yhteyspiste"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Syötä uuden palvelimen IP tähän, muodossa x.x.x.x."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Portti:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Käytä tunnettuja asiakkaita yhdistämisapuna"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -5010,13 +4997,24 @@ msgstr "Lähettää annetun viestin."
 msgid "Close this chat-session."
 msgstr "Sulje tämä keskustelu."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Yhdistä mihin tahansa palvelimeen ja/tai Kadiin"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Jaetut tiedostot"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Peruuta"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Katkaise yhteys"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Yhdistä"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8527,8 +8525,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Prosenttia kaikista tiedostoista"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Yhdistämisapu"
+
+#~ msgid "New node"
+#~ msgstr "Uusi yhteyspiste"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Hae lisää"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Käytä tunnettuja \n"
+#~ "asiakkaita yhdistämisapuna"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Yhdistä mihin tahansa palvelimeen ja/tai Kadiin"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Katkaise Kad-yhteys"

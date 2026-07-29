@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-29 11:47+0200\n"
+"POT-Creation-Date: 2026-07-29 12:49+0200\n"
 "PO-Revision-Date: 2026-07-28 20:09+0000\n"
 "Last-Translator: Dévai Tamás <gonosztopi@amule.org>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -1392,7 +1392,8 @@ msgstr "Helyi kiszolgáló"
 msgid "Remote Server"
 msgstr "Távoli kiszolgáló"
 
-#: src/DataToText.cpp src/muuli_wdr.cpp src/SearchDlg.cpp src/TextClient.cpp
+#: src/DataToText.cpp src/KadDlg.cpp src/muuli_wdr.cpp src/SearchDlg.cpp
+#: src/TextClient.cpp
 msgid "Kad"
 msgstr "Kad"
 
@@ -2655,14 +2656,6 @@ msgid "IP filter is ready"
 msgstr "IP szűrő készen áll"
 
 #: src/KadDlg.cpp
-msgid ""
-"Bootstrap from \n"
-"known clients"
-msgstr ""
-"Indítás ismert \n"
-"kliensektől"
-
-#: src/KadDlg.cpp
 #, c-format
 msgid "Nodes (%u)"
 msgstr "Csomópontok (%u)"
@@ -2991,7 +2984,7 @@ msgstr "Feltöltési korlát"
 msgid "Download limit"
 msgstr "Letöltési korlát"
 
-#: src/MuleTrayIcon.cpp src/muuli_wdr.cpp
+#: src/MuleTrayIcon.cpp
 msgid "Disconnect"
 msgstr "Szétkapcsolás"
 
@@ -3899,7 +3892,7 @@ msgstr "Max források letöltési fájlonként:"
 msgid "Max simultaneous connections:"
 msgstr "Max egyidejű kapcsolatok:"
 
-#: src/muuli_wdr.cpp
+#: src/muuli_wdr.cpp src/ServerWnd.cpp
 msgid "ED2K"
 msgstr "ED2K"
 
@@ -4562,24 +4555,18 @@ msgid "Nodes stats"
 msgstr "Csomópont statisztikák"
 
 #: src/muuli_wdr.cpp
-msgid "Bootstrap"
-msgstr "Rendszerbetöltés"
+#, fuzzy
+msgid "Bootstrap from node: IP"
+msgstr "Indítás ismert kliensektől"
 
 #: src/muuli_wdr.cpp
-msgid "New node"
-msgstr "Új csomópont (node)"
-
-#: src/muuli_wdr.cpp
-msgid "IP:"
-msgstr "IP:"
+#, fuzzy
+msgid "Enter the IP of the node here, using the x.x.x.x format."
+msgstr "Itt add meg a kiszolgálók IP-jét, használd az x.x.x.x formát."
 
 #: src/muuli_wdr.cpp
 msgid "Port:"
 msgstr "Port:"
-
-#: src/muuli_wdr.cpp
-msgid "Bootstrap from known clients"
-msgstr "Indítás ismert kliensektől"
 
 #: src/muuli_wdr.cpp
 msgid "Use Secure User Identification"
@@ -4995,13 +4982,24 @@ msgstr "Megadott üzenet küldése."
 msgid "Close this chat-session."
 msgstr "Csevegési folyamat bezárása."
 
-#: src/muuli_wdr.cpp
-msgid "Connect to any server and/or Kad"
-msgstr "Kapcsolódás bármelyik kiszolgálóhoz és/vagy a Kad-hoz"
-
 #: src/muuli_wdr.cpp src/SharedFilesCtrl.cpp src/Statistics.cpp
 msgid "Shared Files"
 msgstr "Megosztott fájlok"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Cancel %s"
+msgstr "Mégsem"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Disconnect %s"
+msgstr "Szétkapcsolás"
+
+#: src/muuli_wdr.cpp
+#, fuzzy, c-format
+msgid "Connect %s"
+msgstr "Kapcsolatfelvétel"
 
 #: src/OScopeCtrl.cpp
 #, c-format
@@ -8496,8 +8494,27 @@ msgstr ""
 #~ msgid "Percent of total files"
 #~ msgstr "Összes fájl százalékaként"
 
+#~ msgid "Bootstrap"
+#~ msgstr "Rendszerbetöltés"
+
+#~ msgid "New node"
+#~ msgstr "Új csomópont (node)"
+
+#~ msgid "IP:"
+#~ msgstr "IP:"
+
 #~ msgid "More"
 #~ msgstr "Több"
+
+#~ msgid ""
+#~ "Bootstrap from \n"
+#~ "known clients"
+#~ msgstr ""
+#~ "Indítás ismert \n"
+#~ "kliensektől"
+
+#~ msgid "Connect to any server and/or Kad"
+#~ msgstr "Kapcsolódás bármelyik kiszolgálóhoz és/vagy a Kad-hoz"
 
 #~ msgid "Disconnect Kad"
 #~ msgstr "Leválasztás a Kad-ról"
