@@ -147,6 +147,7 @@ private:
 	CHttpServer::Response HandleServerAdd(const CHttpServer::Request &);
 	CHttpServer::Response HandleServerConnect(const CHttpServer::Request &, const std::string &ecid_str);
 	CHttpServer::Response HandleServerDelete(const CHttpServer::Request &, const std::string &ecid_str);
+	CHttpServer::Response HandleServerPatch(const CHttpServer::Request &, const std::string &ecid_str);
 	// Refresh the server list from a `server.met` URL — operator-
 	// curated server-list update, same EC op the desktop GUI's "Update
 	// from URL" button uses.
@@ -157,6 +158,8 @@ private:
 	// ECID for a known address.
 	CHttpServer::Response HandleServerConnectByAddress(
 		const CHttpServer::Request &, const std::string &ip_port);
+	CHttpServer::Response HandleServerPatchByAddress(
+		const CHttpServer::Request &, const std::string &ip_port);
 	CHttpServer::Response HandleServerDeleteByAddress(
 		const CHttpServer::Request &, const std::string &ip_port);
 	// preferences PATCH.
@@ -165,6 +168,7 @@ private:
 	CHttpServer::Response HandleNetworksConnect(const CHttpServer::Request &);
 	CHttpServer::Response HandleNetworksDisconnect(const CHttpServer::Request &);
 	CHttpServer::Response HandleKadBootstrap(const CHttpServer::Request &);
+	CHttpServer::Response HandleKadUpdateFromUrl(const CHttpServer::Request &);
 	// single shared-file detail (GET / HEAD). `key` = 32-char MD4 hash.
 	CHttpServer::Response HandleSharedDetail(const CHttpServer::Request &, const std::string &key);
 	// shared file priority PATCH. `key` = hash OR ECID.

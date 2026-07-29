@@ -62,6 +62,7 @@ The API is versioned in the path. Breaking changes ship under `/api/v1/`; `/api/
 - [`POST /api/v0/servers`](#post-apiv0servers) — add server
 - [`POST /api/v0/servers/{ecid}/connect`](#post-apiv0serversecidconnect--post-apiv0serversipportconnect) — connect to specific server (ECID or `ip:port`)
 - [`DELETE /api/v0/servers/{ecid}`](#delete-apiv0serversecid--delete-apiv0serversipport) — remove server (ECID or `ip:port`)
+- [`PATCH /api/v0/servers/{ecid}`](#patch-apiv0serversecid--patch-apiv0serversipport) — set server priority / static flag (ECID or `ip:port`)
 - [`POST /api/v0/servers/update`](#post-apiv0serversupdate) — refresh from `server.met` URL
 
 **Categories**
@@ -78,6 +79,7 @@ The API is versioned in the path. Breaking changes ship under `/api/v1/`; `/api/
 - [`POST /api/v0/networks/connect`](#post-apiv0networksconnect) — connect ed2k / kad / both
 - [`POST /api/v0/networks/disconnect`](#post-apiv0networksdisconnect) — disconnect ed2k / kad / both
 - [`POST /api/v0/kad/bootstrap`](#post-apiv0kadbootstrap) — single-contact Kad bootstrap
+- [`POST /api/v0/kad/update`](#post-apiv0kadupdate) — refresh the Kad node list from a `nodes.dat` URL
 - [`GET /api/v0/kad`](#get-apiv0kad) — Kad-only status subtree
 
 **Logs**
@@ -1437,6 +1439,31 @@ Removes the server from amuled's list.
 
 **Errors:** `400 amuled_rejected`, `404 not_found`, `503 ec_unavailable`.
 
+#### `PATCH /api/v0/servers/{ecid}` / `PATCH /api/v0/servers/{ip}:{port}`
+
+**Auth:** `ADMIN`
+
+Sets an ed2k server's priority, its static flag, or both — the same operation the desktop server list offers from its context menu.
+
+**Body:** both fields are optional, and only the ones present are applied; a body with neither is a `400`.
+
+```json
+{ "priority": "high", "static": true }
+```
+
+`priority` is one of `"low"` / `"normal"` / `"high"` — the same values `GET /servers` reports. `static` marks the server as one amuled keeps across list updates.
+
+```sh
+curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"priority":"high","static":true}' \
+  "http://$HOST/api/v0/servers/1"
+```
+
+**Response:** `200 OK` → `{ "ok": true, "ecid": 1 }`.
+
+**Errors:** `400 bad_request` (unknown `priority`, non-bool `static`, or neither field present), `400 amuled_rejected`, `404 not_found`, `503 ec_unavailable`.
+
 #### `POST /api/v0/servers/update`
 
 **Auth:** `ADMIN`
@@ -1718,6 +1745,31 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 **Response:** `202 Accepted` → `{ "ok": true, "ip": <uint32>, "port": <uint16> }`. The Kad probe itself is fire-and-forget UDP; the `202` confirms amuled accepted the request, not that the contact was reachable.
 
 **Errors:** `400 bad_request` (missing/non-string-or-number `ip`, missing/non-numeric `port`, port outside `[0, 65535]`, malformed dotted-quad), `400 amuled_rejected`, `503 ec_unavailable`.
+
+#### `POST /api/v0/kad/update`
+
+**Auth:** `ADMIN`
+
+Downloads a `nodes.dat` from the supplied URL and rebuilds the Kad node list from it — the Kad counterpart of [`POST /api/v0/servers/update`](#post-apiv0serversupdate), and the same operation the desktop GUI's "Update node list from URL" button drives.
+
+**Body:**
+
+```json
+{ "nodes_url": "https://upd.emule-security.org/nodes.dat" }
+```
+
+```sh
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"nodes_url":"https://upd.emule-security.org/nodes.dat"}' \
+  "http://$HOST/api/v0/kad/update"
+```
+
+Two side effects are worth planning for. The URL is **persisted** into the `kademlia.update_url` preference, so a subsequent `GET /preferences` reflects it — there is no need to PATCH it separately. And once the download completes, amuled **stops Kad, swaps in the new `nodes.dat`, and starts Kad again**; expect a brief Kad outage and a `kad_state` transition on the SSE stream. The desktop GUI prompts before doing this; the API does not.
+
+**Response:** `202 Accepted` → `{ "ok": true, "nodes_url": "..." }`. The download is asynchronous, so the `202` confirms amuled accepted the request, not that the node list was replaced.
+
+**Errors:** `400 bad_request` (missing/non-string/empty `nodes_url`, or a scheme other than `http://` / `https://`), `400 amuled_rejected`, `503 ec_unavailable`.
 
 #### `GET /api/v0/kad`
 
