@@ -26,8 +26,11 @@ Makefile.user
 *.vcxproj.user
 .vscode
 
-# CMake
-build
+# Build and packaging output. The trailing slash keeps these to directories,
+# so ad-hoc build trees (build-macos, build-release, build-audit, ...) are all
+# covered while the tracked packaging/*/build.sh scripts are not.
+build*/
+dist/
 
 # Windows installer build artifacts
 packaging/windows/installer_strings_generated.nsh
@@ -44,8 +47,5 @@ packaging/windows/installer_strings_generated.nsh
 .gemini/
 .devin/
 .aider*
-
+.archive/
 .cache/
-
-build-macos/
-dist/
