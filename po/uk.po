@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-30 12:03+0200\n"
+"POT-Creation-Date: 2026-07-30 17:42+0200\n"
 "PO-Revision-Date: 2026-07-30 12:35+0000\n"
 "Last-Translator: Oleksandr Kovalenko <alx.kovalenko@gmail.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -1815,6 +1815,10 @@ msgid "Authentication failed: invalid hash specified as EC password."
 msgstr ""
 
 #: src/ExternalConn.cpp
+msgid "Authentication failed: this aMule requires an encrypted External Connection, and the client did not negotiate one."
+msgstr ""
+
+#: src/ExternalConn.cpp
 #, fuzzy
 msgid "Authentication failed: wrong password."
 msgstr "Аутентифікація не вдалася."
@@ -2186,6 +2190,10 @@ msgstr "Створити файл налаштувань оснований на
 #: src/ExternalConnector.cpp
 msgid "Print program version."
 msgstr "Друкувати версію програми."
+
+#: src/ExternalConnector.cpp
+msgid "Do not encrypt the External Connect session. Encryption is on by default whenever the remote aMule supports it; turning it off leaves everything after the login readable and modifiable by anyone on the path."
+msgstr ""
 
 #: src/ExternalConnector.cpp
 msgid "Force ZLIB compression regardless of dialed-IP locality (useful when the server is reachable over a VPN tunnel that resolves to a LAN IP)."
@@ -4416,6 +4424,10 @@ msgid "Password"
 msgstr "Пароль"
 
 #: src/muuli_wdr.cpp
+msgid "Require encrypted connections (rejects clients that cannot encrypt)"
+msgstr ""
+
+#: src/muuli_wdr.cpp
 #, fuzzy
 msgid "aMule API server parameters"
 msgstr "Налаштування веб-сервера"
@@ -4957,6 +4969,11 @@ msgstr "Ім'я користувача"
 #: src/muuli_wdr.cpp
 msgid "Remember those settings"
 msgstr "Запам'ятати ці налаштування"
+
+#: src/muuli_wdr.cpp
+#, fuzzy
+msgid "Encrypt the connection (recommended)"
+msgstr "Зовнішнє з'єднання розірвано."
 
 #: src/muuli_wdr.cpp
 #, fuzzy

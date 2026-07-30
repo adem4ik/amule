@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-30 12:03+0200\n"
+"POT-Creation-Date: 2026-07-30 17:42+0200\n"
 "PO-Revision-Date: 2026-07-30 12:20+0000\n"
 "Last-Translator: Dévai Tamás <gonosztopi@amule.org>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -1796,6 +1796,10 @@ msgid "Authentication failed: invalid hash specified as EC password."
 msgstr "Hitelesítés sikertelen: az EC jelszóként megadott hash érvénytelen."
 
 #: src/ExternalConn.cpp
+msgid "Authentication failed: this aMule requires an encrypted External Connection, and the client did not negotiate one."
+msgstr ""
+
+#: src/ExternalConn.cpp
 msgid "Authentication failed: wrong password."
 msgstr "Hitelesítés sikertelen: rossz jelszó."
 
@@ -2163,6 +2167,10 @@ msgstr "Konfig fájl létrehozása az aMule konfig fájlja alapján."
 #: src/ExternalConnector.cpp
 msgid "Print program version."
 msgstr "A program verziójának kiírása."
+
+#: src/ExternalConnector.cpp
+msgid "Do not encrypt the External Connect session. Encryption is on by default whenever the remote aMule supports it; turning it off leaves everything after the login readable and modifiable by anyone on the path."
+msgstr ""
 
 #: src/ExternalConnector.cpp
 msgid "Force ZLIB compression regardless of dialed-IP locality (useful when the server is reachable over a VPN tunnel that resolves to a LAN IP)."
@@ -4365,6 +4373,10 @@ msgid "Password"
 msgstr "Jelszó"
 
 #: src/muuli_wdr.cpp
+msgid "Require encrypted connections (rejects clients that cannot encrypt)"
+msgstr ""
+
+#: src/muuli_wdr.cpp
 #, fuzzy
 msgid "aMule API server parameters"
 msgstr "Web kiszolgáló paraméterek"
@@ -4911,6 +4923,11 @@ msgstr "Felhasználói név"
 #: src/muuli_wdr.cpp
 msgid "Remember those settings"
 msgstr "Emlékezzen ezekre a beállításokra"
+
+#: src/muuli_wdr.cpp
+#, fuzzy
+msgid "Encrypt the connection (recommended)"
+msgstr "Külső kapcsolat lezárva."
 
 #: src/muuli_wdr.cpp
 msgid "Force ZLIB compression"

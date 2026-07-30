@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-30 12:03+0200\n"
+"POT-Creation-Date: 2026-07-30 17:42+0200\n"
 "PO-Revision-Date: 2026-07-30 12:31+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian\n"
@@ -1819,6 +1819,10 @@ msgid "Authentication failed: invalid hash specified as EC password."
 msgstr "Overjanje ni uspelo: kot geslo za zunanje povezave je bila podana napačna koda."
 
 #: src/ExternalConn.cpp
+msgid "Authentication failed: this aMule requires an encrypted External Connection, and the client did not negotiate one."
+msgstr ""
+
+#: src/ExternalConn.cpp
 msgid "Authentication failed: wrong password."
 msgstr "Overjanje ni uspelo: napačno geslo."
 
@@ -2188,6 +2192,10 @@ msgstr "Ustvari nastavitveno datoteko, ki temelji na nastavitveni datoteki aMule
 #: src/ExternalConnector.cpp
 msgid "Print program version."
 msgstr "Izpiši različico programa."
+
+#: src/ExternalConnector.cpp
+msgid "Do not encrypt the External Connect session. Encryption is on by default whenever the remote aMule supports it; turning it off leaves everything after the login readable and modifiable by anyone on the path."
+msgstr ""
 
 #: src/ExternalConnector.cpp
 msgid "Force ZLIB compression regardless of dialed-IP locality (useful when the server is reachable over a VPN tunnel that resolves to a LAN IP)."
@@ -4414,6 +4422,10 @@ msgid "Password"
 msgstr "Geslo"
 
 #: src/muuli_wdr.cpp
+msgid "Require encrypted connections (rejects clients that cannot encrypt)"
+msgstr ""
+
+#: src/muuli_wdr.cpp
 #, fuzzy
 msgid "aMule API server parameters"
 msgstr "Parametri spletnega strežnika"
@@ -4954,6 +4966,11 @@ msgstr "Uporabniško ime"
 #: src/muuli_wdr.cpp
 msgid "Remember those settings"
 msgstr "Zapomni si te nastavitve"
+
+#: src/muuli_wdr.cpp
+#, fuzzy
+msgid "Encrypt the connection (recommended)"
+msgstr "Zunanja povezava se je zaprla."
 
 #: src/muuli_wdr.cpp
 #, fuzzy

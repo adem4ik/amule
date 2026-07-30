@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aMule\n"
 "Report-Msgid-Bugs-To: https://github.com/amule-org/amule/issues\n"
-"POT-Creation-Date: 2026-07-30 12:03+0200\n"
+"POT-Creation-Date: 2026-07-30 17:42+0200\n"
 "PO-Revision-Date: 2026-07-30 12:27+0000\n"
 "Last-Translator: Marcelo Jimenez <mroberto@users.sourceforge.com>\n"
 "Language-Team: Português (Brasileiro) <pt@li.org>\n"
@@ -1810,6 +1810,10 @@ msgid "Authentication failed: invalid hash specified as EC password."
 msgstr "Autenticação falhou: hash inválido especificado como senha EC."
 
 #: src/ExternalConn.cpp
+msgid "Authentication failed: this aMule requires an encrypted External Connection, and the client did not negotiate one."
+msgstr ""
+
+#: src/ExternalConn.cpp
 msgid "Authentication failed: wrong password."
 msgstr "Falha na autenticação: senha errada."
 
@@ -2177,6 +2181,10 @@ msgstr "Criar arquivo de configuração baseado no do aMule."
 #: src/ExternalConnector.cpp
 msgid "Print program version."
 msgstr "Exibir versão do programa."
+
+#: src/ExternalConnector.cpp
+msgid "Do not encrypt the External Connect session. Encryption is on by default whenever the remote aMule supports it; turning it off leaves everything after the login readable and modifiable by anyone on the path."
+msgstr ""
 
 #: src/ExternalConnector.cpp
 msgid "Force ZLIB compression regardless of dialed-IP locality (useful when the server is reachable over a VPN tunnel that resolves to a LAN IP)."
@@ -4377,6 +4385,10 @@ msgid "Password"
 msgstr "Senha"
 
 #: src/muuli_wdr.cpp
+msgid "Require encrypted connections (rejects clients that cannot encrypt)"
+msgstr ""
+
+#: src/muuli_wdr.cpp
 msgid "aMule API server parameters"
 msgstr "Parâmetros do servidor da API do aMule"
 
@@ -4915,6 +4927,11 @@ msgstr "Usuário"
 #: src/muuli_wdr.cpp
 msgid "Remember those settings"
 msgstr "Lembrar essas definições"
+
+#: src/muuli_wdr.cpp
+#, fuzzy
+msgid "Encrypt the connection (recommended)"
+msgstr "Conexão externa encerrada."
 
 #: src/muuli_wdr.cpp
 msgid "Force ZLIB compression"
