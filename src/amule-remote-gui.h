@@ -630,6 +630,38 @@ class CSearchListRem : public CRemoteContainer<CSearchFile, uint32, CEC_SearchFi
 public:
 	CSearchListRem(CRemoteConnect *);
 
+	// Reachability fix (#641): true when OnPollTimer should ask amuled
+	// what searches it currently holds (EC_OP_SEARCH_LIST) on its next
+	// poll. Starts true so a freshly (re)connected client discovers
+	// every search once up front; CreateItem sets it again whenever a
+	// result arrives for a search ID with no local tab, which is the
+	// only signal that amuled is holding a search this client doesn't
+	// know about yet. Cleared by OnPollTimer right after sending the
+	// request, so steady state (every tab already known) costs nothing.
+	bool m_needSearchListRequery;
+
+	// Optimistic local IDs of this session's own EC_OP_SEARCH_START requests
+	// sent but not yet remapped (see RemapSearch). While non-empty, the
+	// EC_OP_SEARCH_LIST discovery branch defers creating any new tab: the
+	// daemon already knows about a just-started search before this client's
+	// START reply (carrying EC_TAG_SEARCH_REF/EC_TAG_SEARCH_ID) comes back,
+	// so a list reply landing in that window would otherwise be
+	// indistinguishable from a genuinely foreign search and create a second
+	// tab for the same one, which RemapSearch then rekeys onto -- two tabs,
+	// one search (got3nks, PR #680 review). Inserted in StartNewSearch's
+	// multi-search branch, erased in RemapSearch.
+	//
+	// A set of IDs rather than a bare count so an unattributable reply can
+	// never clear it: EC_OP_FAILED reaches this same handler for a failed
+	// *browse* too (SendBrowseRequest routes EC_OP_FRIEND here, and the
+	// daemon's EC_TAG_FRIEND_SHARED branch has "Friend not found." /
+	// "Client not found." / malformed exits), and "client not found" is
+	// ordinary -- the peer gets reaped between the user seeing the row and
+	// clicking View Files. A count would have let that decrement lift the
+	// deferral a round trip early, reopening the very double-tab window
+	// this exists to close (got3nks, PR #680 review).
+	std::set<uint32> m_pendingSearchStarts;
+
 	// Most-recently-started search ID (0 = none). uint32 so it correctly
 	// holds a daemon-allocated Kad ID (top half of the range); as a signed
 	// int those wrapped negative and corrupted the STOP/remap round-trip.
@@ -669,6 +701,17 @@ public:
 	// Multi-search: remap the optimistic local tab ID to the daemon-allocated
 	// ID once the START reply echoes the correlation token.
 	void RemapSearch(uint32 localID, uint32 daemonID);
+
+	// Reachability fix (#641): a direct one-off EC_OP_SEARCH_LIST request,
+	// bypassing DoRequery's single-request-in-flight state machine on
+	// purpose. HandlePacket answers EC_OP_SEARCH_LIST in its own branch
+	// (below) and never reaches the base class's STATUS_REQ_SENT -> IDLE
+	// transition, so routing this through DoRequery wedges m_state
+	// permanently and silently drops every later
+	// DoRequery(EC_OP_SEARCH_RESULTS, ...) call -- exactly the mirror of
+	// Phase1Done's EC_OP_SEARCH_PROGRESS requests just below, which bypass
+	// the state machine the same way for the same reason.
+	void RequestSearchList();
 
 	// Monolithic CSearchList API parity over EC. IsKadSearch reports whether a
 	// given tab is a *live* Kad search — the SearchDlg "More" button gate —

@@ -3,6 +3,7 @@
 # amuleapi 19-search — search.
 #
 # Endpoints:
+#   GET  /api/v0/search                                    — EC_OP_SEARCH_LIST
 #   POST /api/v0/search                                   — EC_OP_SEARCH_START
 #       body: {query, type?, file_type?, extension?,
 #              min_size?, max_size?, min_avail?}
@@ -35,6 +36,14 @@ set -o pipefail
 HOST=${HOST:-localhost:4713}
 ADMIN_PASS=${ADMIN_PASS:-adminpass}
 GUEST_PASS=${GUEST_PASS:-guestpass}
+
+# EC connection info for the second amuleapi instance spun up in section
+# 3.2 below — must point at the SAME amuled as the primary instance at
+# $HOST. Defaults match run-all.sh's regtest daemon.
+EC_HOST=${EC_HOST:-127.0.0.1}
+EC_PORT=${EC_PORT:-4712}
+EC_PASSWORD=${EC_PASSWORD:-amule}
+AMULEAPI_BIN=${AMULEAPI_BIN:-$(cd "$(dirname "$0")/../../.." && pwd)/build-macos/src/webapi/amuleapi}
 
 # A query likely to return results on any operator's daemon connected
 # to ed2k. "ubuntu" is a safe choice — well-seeded across the network.
@@ -104,6 +113,9 @@ HAVE_GUEST=0
 sleep 4
 
 # --- 1. Auth + admin gate. -----------------------------------------
+_curl "$HOST/api/v0/search"
+_assert_status 401 "GET /search (no token) → 401"
+
 _curl -X POST -H "Content-Type: application/json" \
 	-d "{\"query\":\"$TEST_QUERY\"}" "$HOST/api/v0/search"
 _assert_status 401 "POST /search (no token) → 401"
@@ -166,6 +178,74 @@ _assert_json_eq '.search_id | type' number 'POST /search returns a numeric searc
 FIRST_SID=$(printf '%s' "$CURL_BODY" | jq -r '.search_id')
 _curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search/results"
 _assert_json_eq '.search_id' "$FIRST_SID" 'GET /search/results (no id) echoes the current search_id'
+
+# --- 3.1 GET /api/v0/search enumerates the search just started. ---
+# Reachability fix (issue #641): GET /api/v0/search reads live daemon
+# state via EC_OP_SEARCH_LIST rather than this session's own m_state
+# cache, so the search just started via POST /search must appear here
+# too -- proving the two endpoints agree on what amuled currently holds.
+_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+_assert_status 200 "GET /search → 200"
+_assert_json_eq '.searches | type' array 'GET /search .searches is an array'
+_assert_json_eq "[.searches[] | select(.search_id == $FIRST_SID)] | length" 1 \
+	'GET /search lists the search just started via POST /search'
+_assert_json_eq "[.searches[] | select(.search_id == $FIRST_SID)][0].query" "$TEST_QUERY" \
+	'GET /search entry echoes the query'
+_assert_json_eq "[.searches[] | select(.search_id == $FIRST_SID)][0].kind" global \
+	'GET /search entry reports kind==global'
+_assert_json_eq "[[.searches[] | select(.search_id == $FIRST_SID)][0].state] | inside([\"running\",\"finished\"])" \
+	true 'GET /search entry state is running or finished (never idle for an active search)'
+
+if [ "$HAVE_GUEST" = "1" ]; then
+	_curl -H "Authorization: Bearer $GUEST_TOKEN" "$HOST/api/v0/search"
+	_assert_status 200 "GET /search (guest) → 200 (GUEST-readable)"
+fi
+
+# --- 3.2 Cross-session discovery: a second amuleapi instance against the
+# same amuled sees $FIRST_SID even though it never called POST /search
+# itself (got3nks, PR #680 review point 6 — no amulecmd needed, two
+# amuleapi sessions against one daemon exercise the same discovery path).
+# SECOND_HOST's HTTP server is independent, but both instances share the
+# one daemon at EC_HOST:EC_PORT, so EC_OP_SEARCH_LIST on session B finds
+# the search session A started.
+SECOND_HOST="localhost:4714"
+SECOND_CONFIG_DIR=$(mktemp -d -t amuleapi_19_search_second.XXXXXX)
+SECOND_LOG=$(mktemp -t amuleapi_19_search_second_log.XXXXXX)
+"$AMULEAPI_BIN" --config-dir="$SECOND_CONFIG_DIR" \
+	--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+	--set-admin-pass="$ADMIN_PASS" >/dev/null 2>&1
+"$AMULEAPI_BIN" --config-dir="$SECOND_CONFIG_DIR" \
+	--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+	--http-port=4714 >"$SECOND_LOG" 2>&1 &
+SECOND_PID=$!
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+	curl -s -o /dev/null --max-time 1 "http://$SECOND_HOST/api/v0/version" 2>/dev/null && break
+	sleep 0.5
+done
+sleep 4
+
+SECOND_TOKEN=$(curl -s -X POST -H "Content-Type: application/json" \
+	-d "{\"password\":\"$ADMIN_PASS\"}" "http://$SECOND_HOST/api/v0/auth/login?type=bearer" \
+	| jq -r .token)
+
+if [ -n "$SECOND_TOKEN" ] && [ "$SECOND_TOKEN" != "null" ]; then
+	_curl -H "Authorization: Bearer $SECOND_TOKEN" "http://$SECOND_HOST/api/v0/search"
+	_assert_status 200 "second amuleapi instance: GET /search → 200"
+	_assert_json_eq "[.searches[] | select(.search_id == $FIRST_SID)] | length" 1 \
+		'second amuleapi instance (never POSTed) still lists the first instance'"'"'s search'
+
+	_curl -H "Authorization: Bearer $SECOND_TOKEN" \
+		"http://$SECOND_HOST/api/v0/search/results?search_id=$FIRST_SID"
+	_assert_status 200 'second amuleapi instance: GET /search/results?search_id=<foreign id> → 200 (not 404)'
+	_assert_json_eq '.search_id' "$FIRST_SID" 'second amuleapi instance /search/results echoes the discovered search_id'
+else
+	_fail "second amuleapi instance: admin login" "could not obtain a token; log: $(tail -c 300 "$SECOND_LOG")"
+fi
+
+kill "$SECOND_PID" >/dev/null 2>&1
+wait "$SECOND_PID" 2>/dev/null
+rm -rf "$SECOND_CONFIG_DIR" "$SECOND_LOG"
 
 # --- 3.5 Regression: progress shouldn't claim finished right after POST. -
 # amuled briefly reports raw=100 in the "queue-empty-at-start" window
@@ -298,8 +378,8 @@ else
 fi
 
 # --- 8. Method gates. ---------------------------------------------
-_curl -X GET -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
-_assert_status 405 "GET /search → 405"
+_curl -X PATCH -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+_assert_status 405 "PATCH /search → 405"
 
 _curl -X PATCH -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search/stop"
 _assert_status 405 "PATCH /search/stop → 405"
@@ -526,6 +606,194 @@ if [ -n "$SID_G" ] && [ -n "$SID_K" ] && [ "$SID_G" != "null" ] && [ "$SID_K" !=
 		-d "{\"search_id\":$SID_K,\"close\":true}" "$HOST/api/v0/search/stop" >/dev/null 2>&1
 else
 	_fail "Multi-search setup" "POST /search did not return search_ids (G=$SID_G K=$SID_K)"
+fi
+
+# --- 12. Close actually frees the search on the daemon. ------------
+# The assertion the earlier rounds were missing. Every previous check
+# here confirmed something *appeared* (a tab, an entry, a result); none
+# confirmed something was *gone*. That gap let a close path that never
+# reached the daemon look correct for several rounds: the GUI tab
+# vanished locally, so the symptom matched, while the search stayed
+# alive in the core (got3nks, PR #680 review point 6).
+#
+# GET /api/v0/search is the right oracle for this because it is a live
+# EC_OP_SEARCH_LIST round trip to amuled, not amuleapi's own m_state
+# cache -- so a search still listed here is still held by the core,
+# whatever any one client's local view says.
+#
+# POST /search/stop {close:true} sends exactly the EC request amulegui's
+# tab close sends (EC_OP_SEARCH_STOP + EC_TAG_SEARCH_CLOSE), so this
+# exercises the same daemon-side path from a scriptable client.
+CLOSE_RES=$(curl -s -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+	-H "Content-Type: application/json" \
+	-d "{\"query\":\"$TEST_QUERY\",\"type\":\"global\"}" "$HOST/api/v0/search")
+SID_CLOSE=$(printf '%s' "$CLOSE_RES" | jq -r '.search_id')
+
+if [ -n "$SID_CLOSE" ] && [ "$SID_CLOSE" != "null" ]; then
+	# Precondition: the daemon holds it. Without this the "gone" assertion
+	# below would also pass against a search that was never there.
+	_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+	_assert_json_eq "[.searches[] | select(.search_id == $SID_CLOSE)] | length" 1 \
+		'close: daemon lists the search before the close'
+
+	# A plain stop (no close) halts activity but must KEEP the search --
+	# the contrapositive that proves the removal below is close's doing
+	# and not a side effect of stopping.
+	curl -s -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+		-H "Content-Type: application/json" \
+		-d "{\"search_id\":$SID_CLOSE}" "$HOST/api/v0/search/stop" >/dev/null 2>&1
+	_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+	_assert_json_eq "[.searches[] | select(.search_id == $SID_CLOSE)] | length" 1 \
+		'close: a plain stop (no close) leaves the search on the daemon'
+
+	# Now close it, and assert it is GONE from the daemon's own list.
+	curl -s -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+		-H "Content-Type: application/json" \
+		-d "{\"search_id\":$SID_CLOSE,\"close\":true}" "$HOST/api/v0/search/stop" >/dev/null 2>&1
+	_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+	_assert_status 200 'close: GET /search after close → 200'
+	_assert_json_eq "[.searches[] | select(.search_id == $SID_CLOSE)] | length" 0 \
+		'close: the closed search is GONE from the daemon list'
+
+	# And it is gone for everyone, not just the session that closed it --
+	# a second instance re-reads the same core state. This is what a
+	# second amulegui would have shown had it still been open.
+	SECOND2_CONFIG_DIR=$(mktemp -d -t amuleapi_19_close_second.XXXXXX)
+	SECOND2_LOG=$(mktemp -t amuleapi_19_close_second_log.XXXXXX)
+	"$AMULEAPI_BIN" --config-dir="$SECOND2_CONFIG_DIR" \
+		--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+		--set-admin-pass="$ADMIN_PASS" >/dev/null 2>&1
+	"$AMULEAPI_BIN" --config-dir="$SECOND2_CONFIG_DIR" \
+		--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+		--http-port=4715 >"$SECOND2_LOG" 2>&1 &
+	SECOND2_PID=$!
+	for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+		curl -s -o /dev/null --max-time 1 "http://localhost:4715/api/v0/version" 2>/dev/null && break
+		sleep 0.5
+	done
+	sleep 2
+	SECOND2_TOKEN=$(curl -s -X POST -H "Content-Type: application/json" \
+		-d "{\"password\":\"$ADMIN_PASS\"}" \
+		"http://localhost:4715/api/v0/auth/login?type=bearer" | jq -r .token)
+	if [ -n "$SECOND2_TOKEN" ] && [ "$SECOND2_TOKEN" != "null" ]; then
+		_curl -H "Authorization: Bearer $SECOND2_TOKEN" "http://localhost:4715/api/v0/search"
+		_assert_json_eq "[.searches[] | select(.search_id == $SID_CLOSE)] | length" 0 \
+			'close: a second session also no longer sees the closed search'
+	else
+		_fail "close: second instance login" "no token; log: $(tail -c 300 "$SECOND2_LOG")"
+	fi
+	kill "$SECOND2_PID" >/dev/null 2>&1
+	wait "$SECOND2_PID" 2>/dev/null
+	rm -rf "$SECOND2_CONFIG_DIR" "$SECOND2_LOG"
+
+	# Its results are unaddressable afterwards, too -- the bucket is freed,
+	# not merely hidden from the listing.
+	_curl -H "Authorization: Bearer $ADMIN_TOKEN" \
+		"$HOST/api/v0/search/results?search_id=$SID_CLOSE"
+	_assert_status 404 'close: GET /search/results for the closed id → 404'
+else
+	_fail "close setup" "POST /search did not return a search_id ($CLOSE_RES)"
+fi
+
+# --- 12.1 A foreign search must be stoppable, not just visible. ----
+# Found by driving two clients against one daemon and using the other as
+# an oracle: GET /api/v0/search enumerates live core state, so it lists
+# searches this session never started -- but POST /search/stop gated on
+# the local m_state cache alone and answered 404 for exactly those. You
+# could see a search you could not close. Same contradiction previously
+# fixed for /search/results; the shared DiscoverSearchIfHeldByCore helper
+# is what stops it recurring a third time (got3nks, PR #680 review).
+#
+# Stage a genuinely foreign search: a second amuleapi instance starts it,
+# so the primary at $HOST has never seen the id in its own cache.
+FOREIGN_CONFIG_DIR=$(mktemp -d -t amuleapi_19_foreign.XXXXXX)
+FOREIGN_LOG=$(mktemp -t amuleapi_19_foreign_log.XXXXXX)
+"$AMULEAPI_BIN" --config-dir="$FOREIGN_CONFIG_DIR" \
+	--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+	--set-admin-pass="$ADMIN_PASS" >/dev/null 2>&1
+"$AMULEAPI_BIN" --config-dir="$FOREIGN_CONFIG_DIR" \
+	--host="$EC_HOST" --port="$EC_PORT" --password="$EC_PASSWORD" \
+	--http-port=4716 >"$FOREIGN_LOG" 2>&1 &
+FOREIGN_PID=$!
+for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+	curl -s -o /dev/null --max-time 1 "http://localhost:4716/api/v0/version" 2>/dev/null && break
+	sleep 0.5
+done
+sleep 2
+FOREIGN_TOKEN=$(curl -s -X POST -H "Content-Type: application/json" \
+	-d "{\"password\":\"$ADMIN_PASS\"}" \
+	"http://localhost:4716/api/v0/auth/login?type=bearer" | jq -r .token)
+
+if [ -n "$FOREIGN_TOKEN" ] && [ "$FOREIGN_TOKEN" != "null" ]; then
+	FOREIGN_RES=$(curl -s -X POST -H "Authorization: Bearer $FOREIGN_TOKEN" \
+		-H "Content-Type: application/json" \
+		-d "{\"query\":\"$TEST_QUERY\",\"type\":\"global\"}" \
+		"http://localhost:4716/api/v0/search")
+	SID_FOREIGN=$(printf '%s' "$FOREIGN_RES" | jq -r '.search_id')
+
+	if [ -n "$SID_FOREIGN" ] && [ "$SID_FOREIGN" != "null" ]; then
+		# The primary session can SEE it (this already worked).
+		_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+		_assert_json_eq "[.searches[] | select(.search_id == $SID_FOREIGN)] | length" 1 \
+			'foreign stop: primary session lists the foreign search'
+
+		# ...and can also CLOSE it. This is the assertion that was 404ing.
+		_curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+			-H "Content-Type: application/json" \
+			-d "{\"search_id\":$SID_FOREIGN,\"close\":true}" "$HOST/api/v0/search/stop"
+		_assert_status 200 'foreign stop: closing a foreign search → 200 (not 404)'
+
+		_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+		_assert_json_eq "[.searches[] | select(.search_id == $SID_FOREIGN)] | length" 0 \
+			'foreign stop: the foreign search is actually gone afterwards'
+	else
+		_fail "foreign stop setup" "second instance POST /search returned no id ($FOREIGN_RES)"
+	fi
+else
+	_fail "foreign stop: second instance login" "no token; log: $(tail -c 300 "$FOREIGN_LOG")"
+fi
+kill "$FOREIGN_PID" >/dev/null 2>&1
+wait "$FOREIGN_PID" 2>/dev/null
+rm -rf "$FOREIGN_CONFIG_DIR" "$FOREIGN_LOG"
+
+# --- 13. A failed search start must not wedge discovery. -----------
+# amulegui defers EC_OP_SEARCH_LIST-driven tab creation while it has a
+# START in flight, so a START that fails without ever being accounted
+# for used to leave that deferral armed for the rest of the session --
+# discovery silently dead, plus a per-tick EC round trip (got3nks, PR
+# #680 review point 5). amuleapi does not share amulegui's counter, but
+# it does share the daemon: this asserts the daemon stays healthy and
+# enumerable across a rejected start, which is the half a script can
+# observe. The client-side set-keyed-by-id fix is what closes the rest.
+BAD_START=$(curl -s -o /dev/null -w '%{http_code}' -X POST \
+	-H "Authorization: Bearer $ADMIN_TOKEN" -H "Content-Type: application/json" \
+	-d '{"query":"","type":"global"}' "$HOST/api/v0/search")
+if [ "$BAD_START" = "400" ] || [ "$BAD_START" = "422" ]; then
+	_pass "failed start: empty query rejected ($BAD_START)"
+else
+	_fail "failed start: empty query rejected" "expected 400/422, got $BAD_START"
+fi
+
+_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+_assert_status 200 'failed start: GET /search still 200 afterwards'
+_assert_json_eq '.searches | type' array 'failed start: /search still enumerable afterwards'
+
+# A good start still works right after a rejected one -- i.e. the
+# rejected attempt left no residue that blocks the next search.
+AFTER_BAD=$(curl -s -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+	-H "Content-Type: application/json" \
+	-d "{\"query\":\"$TEST_QUERY\",\"type\":\"global\"}" "$HOST/api/v0/search")
+SID_AFTER=$(printf '%s' "$AFTER_BAD" | jq -r '.search_id')
+if [ -n "$SID_AFTER" ] && [ "$SID_AFTER" != "null" ] && [ "$SID_AFTER" != "0" ]; then
+	_pass "failed start: a subsequent search still starts (id $SID_AFTER)"
+	_curl -H "Authorization: Bearer $ADMIN_TOKEN" "$HOST/api/v0/search"
+	_assert_json_eq "[.searches[] | select(.search_id == $SID_AFTER)] | length" 1 \
+		'failed start: the subsequent search is discoverable'
+	curl -s -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+		-H "Content-Type: application/json" \
+		-d "{\"search_id\":$SID_AFTER,\"close\":true}" "$HOST/api/v0/search/stop" >/dev/null 2>&1
+else
+	_fail "failed start: subsequent search" "POST /search returned no id ($AFTER_BAD)"
 fi
 
 # --- Browse ("View Files") contract. -------------------------------
