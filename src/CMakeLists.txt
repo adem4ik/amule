@@ -88,12 +88,20 @@ add_custom_command (
 	OUTPUT ${EC_INCLUDE_DIR}/ECCodes.h
 	COMMAND ${CMAKE_COMMAND} -DHEADER_FILE="${CMAKE_CURRENT_BINARY_DIR}/libs/ec/cpp/ECCodes.h" -P ${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/CMakeLists.txt
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts"
+	DEPENDS
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/ECCodes.abstract
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/License.abstract
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/CMakeLists.txt
 )
 
 add_custom_command (
 	OUTPUT ${EC_INCLUDE_DIR}/ECTagTypes.h
 	COMMAND ${CMAKE_COMMAND} -DHEADER_FILE="${CMAKE_CURRENT_BINARY_DIR}/libs/ec/cpp/ECTagTypes.h" -P ${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/CMakeLists.txt
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts"
+	DEPENDS
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/ECTagTypes.abstract
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/License.abstract
+		${CMAKE_CURRENT_SOURCE_DIR}/libs/ec/abstracts/CMakeLists.txt
 )
 
 if (Python3_FOUND)
