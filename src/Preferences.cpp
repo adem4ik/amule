@@ -2080,6 +2080,20 @@ void CPreferences::SavePreferences()
 
 	// Ensure that the changes are saved to disk.
 	cfg->Flush();
+
+	// On a fresh install the file did not exist when the startup pass ran, so
+	// wxFileConfig has only just created it -- with whatever the umask allows,
+	// which on Debian and Ubuntu is group-writable. Tighten it here, once it
+	// exists. Cheap to repeat: RestrictToOwner stats first and does nothing
+	// when the mode is already owner-only, which it stays, because wxFileConfig
+	// carries the mode across the replace it does on every later save.
+	// theApp->m_configFile, not a literal: this file is compiled into amulegui
+	// too, where the config is remote.conf. Hardcoding "amule.conf" here left a
+	// fresh amulegui install's remote.conf at the umask default until its next
+	// start -- the same gap this call exists to close for the daemon.
+	const wxString &configFile = theApp->m_configFile;
+	RestrictToOwner(CPath(GetConfigDir() + configFile));
+	RestrictToOwner(CPath(GetConfigDir() + configFile + ".bak"));
 }
 
 void CPreferences::SaveCats()
