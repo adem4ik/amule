@@ -2085,7 +2085,17 @@ wxSizer *PreferencesRemoteControlsTab( wxWindow *parent, bool call_fit, bool set
 
     wxStaticText *item5 = new wxStaticText( parent, IDC_EXT_CONN_IPTEXT, _("IP of the listening interface:"), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE );
     item4->Add( item5, wxSizerFlags().Expand().CenterVertical().Border(wxLEFT, 5) );
+#ifdef CLIENT_GUI
+    // Hidden in the remote GUI (the whole EC-listener config group is), so a
+    // plain text field is enough — no point offering a drop-down of the wrong
+    // host's addresses. See PrefsUnifiedDlg amuledOnlyPrefs[].
     CMuleTextCtrl *item6 = new CMuleTextCtrl( parent, IDC_EXT_CONN_IP, "", wxDefaultPosition, wxDefaultSize, 0 );
+#else
+    // Editable combo filled at runtime with 127.0.0.1, 0.0.0.0 and this
+    // machine's own addresses (PrefsUnifiedDlg); stays editable so an address
+    // belonging to an interface that is down right now can still be typed in.
+    wxComboBox *item6 = new wxComboBox( parent, IDC_EXT_CONN_IP, "", wxDefaultPosition, wxDefaultSize, 0, nullptr, wxCB_DROPDOWN );
+#endif
     item6->SetToolTip( _("Enter here a valid ip in the a.b.c.d format for the listening EC interface. An empty field or 0.0.0.0 will mean any interface.") );
     item4->Add( item6, wxSizerFlags(1).Expand().CenterVertical().Border(wxLEFT, 5) );
 
